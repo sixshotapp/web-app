@@ -1,3 +1,7 @@
-django
+Flask
+Flask-RESTful
 gunicorn
-django-heroku
+itsdangerous
+Jinja2
+peewee
+Werkzeug
