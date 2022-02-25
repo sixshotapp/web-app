@@ -23,3 +23,30 @@ I tried to deploy several of my python applications to Heroku. But it was a disa
 ## License and Usage :
 
 This project is completely open-source and free-to-use. But you will need to mention about its great, super awesome author XD (JK, use it anywhere you want, I really don't care.) PS, Happy Coding! 
+
+
+# 6Shot
+## For Developers
+### Set Up Environment
+Can be installed globablly but use virtual environment for consistency among developers
+#### Steps
+'''
+pip3 install virtualenv
+'''
+virtualenv env
+'''
+Mac/Linux:
+'''
+source env/bin/activate
+'''
+Windows:
+'''
+source .\env\Scripts\activate
+'''
+'''
+pip3 install flask flask-sqlalchemy
+'''
+##### To Run
+```
+python3 app.py
+```
