@@ -30,22 +30,22 @@ This project is completely open-source and free-to-use. But you will need to men
 ### Set Up Environment
 Can be installed globablly but use virtual environment for consistency among developers
 #### Steps
-'''
+```
 pip3 install virtualenv
-'''
+```
 virtualenv env
-'''
+```
 Mac/Linux:
-'''
+```
 source env/bin/activate
-'''
+```
 Windows:
-'''
+```
 source .\env\Scripts\activate
-'''
-'''
+```
+```
 pip3 install flask flask-sqlalchemy
-'''
+```
 ##### To Run
 ```
 python3 app.py
