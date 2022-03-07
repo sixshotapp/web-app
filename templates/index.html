@@ -1,38 +1,40 @@
 {% extends 'base.html' %}
 
 {% block head %}
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
 {% endblock %}
 
 {% block body %}
-<div class="container">
-  <div style="height: 95vh">
-    <div class="row h-25"></div>
-    <div class="row h-50">
-      <div class="col">
-        <div class="d-flex p-2 justify-content-center align-items-center">
-          <div class="mb-md-4 mt-md-4">
+<div style="background-color:#915551">
+  <div class="container">
+    <div style="height: 95vh">
+      <div class="row h-25"></div>
+      <div class="row h-50">
+        <div class="col">
+          <div class="d-flex p-2 justify-content-center align-items-center">
+            <div class="mb-md-4 mt-md-4">
 
-            <h2 class="fw-bold mb-2 text-center text-uppercase">6Shot</h2>
-            <p class="text-center text-50 mb-">welcome!</p>
-            <div class="form-outline form-white text-center mb-2">
-              <input type="email" id="typeEmailX" class="form-control form-control-lg" />
-              <label class="form-label" for="typeEmailX">username</label>
-            </div>
+              <h2 class="fw-bold mb-2 text-center text-uppercase">6Shot</h2>
+              <p class="text-center text-50 mb-">welcome!</p>
+              <div class="form-outline form-white text-center mb-2">
+                <input type="email" id="typeEmailX" class="form-control form-control-lg" />
+                <label class="form-label" for="typeEmailX">username</label>
+              </div>
 
-            <div class="form-outline form-white text-center mb-2">
-              <input type="password" id="typePasswordX" class="form-control form-control-lg" />
-              <label class="form-label" for="typePasswordX">password</label>
-            </div>
+              <div class="form-outline form-white text-center mb-2">
+                <input type="password" id="typePasswordX" class="form-control form-control-lg" />
+                <label class="form-label" for="typePasswordX">password</label>
+              </div>
 
-            <div class="form-outline form-white text-center mb-2">
-              <button class="btn btn-secondary btn-lg" type="submit">Login</button>
+              <div class="form-outline form-white text-center mb-2">
+                <button class="btn btn-secondary btn-lg" type="submit">Login</button>
+              </div>
             </div>
           </div>
         </div>
       </div>
+      <div class="row h-25"></div>
     </div>
-    <div class="row h-25"></div>
   </div>
 </div>
 {% endblock %}
