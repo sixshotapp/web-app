@@ -1,0 +1,53 @@
+{% extends 'base.html' %} 
+
+{% block head %}
+<title>6Shot | Menu</title>
+{% endblock %} 
+
+{% block nav %}
+<li class="nav-item">
+  <a class="nav-link" href="./employee_menu">Menu</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="./employee_profile">Profile</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link active" aria-current="page">Employees</a>
+</li>
+<!-- <li class="nav-item">
+    <a class="nav-link" href="./about">About</a>
+</li> -->
+<li class="nav-item">
+  <a class="nav-link" href="./logout">Logout</a>
+</li>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#addEmployeeModal">Add Employee</button>
+        <!-- Modal -->
+        <div class="modal fade reveal-modal" id="addEmployeeModal" role="dialog">
+            <div class="modal-dialog" role="document">
+                <!-- Modal content-->
+                <div class="modal-content" style="background-color: white; color: black;">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Add Employee</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="InputEmail">Enter employee email to add. </label>
+                            <input type="text" class="form-control" name="addEmployee" id="addEmployee" placeholder="Enter Employee Email"/>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <form role="form" id="add-employee-form" action="/menu" method="POST">
+                            <button type="submit" class="btn btn-primary" name="add-employee" value="add_employee" id="add-employee-submit">Add Employee
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
