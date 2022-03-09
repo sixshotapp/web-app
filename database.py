@@ -45,7 +45,7 @@ class Ingredients(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String(20), nullable = False)
     available = db.Column(db.Integer, nullable = False)
-    pump = db.Column(db.Integer, nullable = False)
+    pump = db.Column(db.Integer, nullable = True)
 
     def __repr__(self):
         return '<Drink %r>' % self.id

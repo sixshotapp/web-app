@@ -1,7 +1,8 @@
 # External Imports
+from crypt import methods
 from flask import Flask, flash, render_template, redirect, request, redirect, session
 from flask_bcrypt import Bcrypt
-from global_var import EmployeeInfo
+from global_var import EmployeeInfo, IngredientInfo
 
 # Local Imports
 from database import db, Employees, Users, Credentials, Drinks, Ingredients
@@ -218,17 +219,126 @@ def profile():
 def employee_profile():
     return render_template('employee_profile.html', user_info = session)
 
-@app.route('/employees')
+@app.route('/employees', methods=['POST', 'GET'])
 def employees():
-    employees = []
-    for employee in Employees.query.all():
-        new_emp = EmployeeInfo()
-        new_emp.first_name = employee.first_name
-        new_emp.last_name = employee.last_name
-        new_emp.email = Credentials.query.filter_by(id = employee.credential_id).first().email
-        employees.append(new_emp)
-    return render_template('employees.html', employees = employees)
+    if request.method == 'POST':
+        if "add-employee" in request.form:
+            new_employee = request.form.get("addEmployeeEmail")
+            try:
+                if new_employee != '':
+                    # credentials = Credentials.query.filter_by(email = new_employee).first().id
+                    emp = Users.query.filter_by(credential_id = Credentials.query.filter_by(email = new_employee).first().id).first()
+                    add_emp = Employees(first_name = emp.first_name,
+                            last_name = emp.last_name,
+                            credential_id = emp.credential_id)
+                    db.session.add(add_emp)
+                    db.session.commit()
+
+                    db.session.delete(emp)
+                    db.session.commit()
+                return redirect("/employees") 
+            except Exception:
+                flash('Error adding employee, please try again.')
+                return redirect("/employees") 
+
+        elif "remove-employee" in request.form:
+            remove_employee = request.form["remove-employee"]
+            try:
+                employee = Employees.query.filter_by(credential_id = Credentials.query.filter_by(email = remove_employee).first().id).first()
+                add_user = Users(first_name = employee.first_name,
+                            last_name = employee.last_name,
+                            credential_id = employee.credential_id)
+
+                # update employees table
+                db.session.delete(employee)
+                # update users friendship
+                db.session.add(add_user)
+                db.session.commit()
+                flash(remove_employee + ' was removed!')
+                return redirect('/employees')
+
+            except Exception:
+                flash("Error, couldn't remove employee.")
+                return redirect("/employees")
+    else:
+        employees = []
+        for employee in Employees.query.all():
+            new_emp = EmployeeInfo()
+            new_emp.first_name = employee.first_name
+            new_emp.last_name = employee.last_name
+            new_emp.email = Credentials.query.filter_by(id = employee.credential_id).first().email
+            employees.append(new_emp)
+        return render_template('employees.html', employees = employees)
     
+@app.route('/ingredients', methods=['POST', 'GET'])
+def ingredients():
+    if request.method == 'POST':
+        if "change-ingredient" in request.form:
+            # change_name = request.form["changeName"]
+            # change_availability = request.form.get("changeLastName", False)
+            # change_pump = request.form.get("changeUsername", False)
+            # try:
+            #     if (change_name != ''):
+            #         ingredient = Ingredients.query.filter_by(name = ).first()
+            #         flash('Name changed successfully.')
+            #         # return redirect('/ingredients')
+
+            #     if (change_availability != ''):
+            #         flash('Availability changed successfully.')
+            #         # return redirect('/ingredients')
+
+            #     if (change_pump != ''):
+            #         flash('Pump changed successfully.')
+            #         # return redirect('/ingredients')
+
+                # return redirect('/ingredients')
+            # except Exception:
+            #     flash('Error updating ingredient, please try again.')
+            return redirect("/ingredients") 
+
+        elif "add-ingredient" in request.form:
+            name = request.form.get("InputName")
+            availability = request.form.get("inputAvailability")
+            pump = request.form.get("inputPump")
+            try:
+                check_pump = Ingredients.query.filter_by(pump = pump).first()
+                if check_pump is None or check_pump.pump == -1:
+                    add_ingredient = Ingredients(name = name,
+                                                available = availability,
+                                                pump = pump)
+                    db.session.add(add_ingredient)
+                    db.session.commit()
+                    return redirect("/ingredients") 
+                else:
+                    flash('Error adding ingredient, pump is taken.')
+                    return redirect("/ingredients")
+            except Exception:
+                flash('Error adding ingredient, please try again.')
+                return redirect("/ingredients") 
+
+        elif "remove-ingredient" in request.form:
+            remove_ingredient = request.form["remove-ingredient"]
+            try:
+                ingredient = Ingredients.query.filter_by(name = remove_ingredient).first()
+                db.session.delete(ingredient)
+                db.session.commit()
+                flash(remove_ingredient + ' was removed!')
+                return redirect('/ingredients')
+
+            except Exception:
+                flash("Error, couldn't remove ingredient.")
+                return redirect("/ingredients")
+
+    ingredients = []
+    for ingredient in Ingredients.query.all():
+        new_ingredient = IngredientInfo()
+        new_ingredient.name = ingredient.name
+        new_ingredient.available = ingredient.available
+        new_ingredient.pump = ingredient.pump
+        ingredients.append(new_ingredient)
+    ingredients.sort(reverse=True, key=lambda x: x.pump)
+    return render_template('ingredients.html', ingredients = ingredients)
+
 @app.route('/order')
 def order():
     return render_template('order.html')
