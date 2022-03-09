@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
+
 {% endblock %}
 
 {% block body %}
@@ -16,13 +16,10 @@
             <div class="row row-cols-2">
                 {% for i in range(20) %}
                 <div class="col mb-3 mt-3 pr-2">
-                    <div class="card" style="background-color: #917B63!important; width: 45vw;">
-                        <div class="card text-center">
-                            <div class="card-body">
-                                <h5 class="card-title">Drink</h5>
-                                <p class="card-text">text</p>
-                                <a href="#" class="btn btn-primary">Order</a>
-                            </div>
+                    <div class="card" style="width: 45vw;">
+                        <div class="card_image"> <img src="https://i.redd.it/b3esnz5ra34y.jpg" /> </div>
+                        <div class="card_title title-white">
+                            <p>Card Title</p>
                         </div>
                     </div>
                 </div>
