@@ -13,5 +13,10 @@ body {
   background-color:#C09D73
 }
 
-.card {
+.card:hover {
+  transform: scale(0.98);
+  box-shadow: 0 0 5px -2px rgba(0,0,0,0.3);
+  .media {
+    img{ width:40%; }
+  }
 }
