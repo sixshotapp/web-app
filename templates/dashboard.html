@@ -8,88 +8,91 @@
 <body>
     <div style="height: 100vh">
 
-    <nav class="navbar navbar bg-light navbar-static-top">
-        <span class="navbar-brand mb-0 h1">6Shot</span>
+    <nav class="navbar sticky-top navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Sticky top</a>
+        </div>
     </nav>
 
-        <div class="container mt-2">
-            <div class="row row-cols-2">
-                {% for i in range(20) %}
-                <div class="col mb-2 mt-3 pr-2">
-                    <div class="card text-center border-0 mx-auto" style="background-color: #917B63!important; width: 40vw;">
-                        <div class="card-body" style="background-color: #917B63!important;">
-                            <img src="https://img.icons8.com/cotton/50/000000/alcoholic-cocktail.png" style="width:35%" class="card-img-top mt-2 mb-3" alt="...">
-                            <h5 class="card-title text-white">Drink</h5>
-                        </div>
+    <div class="container mt-2">
+        <div class="row row-cols-2">
+            {% for i in range(20) %}
+            <div class="col mb-2 mt-3 pr-2">
+                <div class="card text-center border-0 mx-auto" style="background-color: #917B63!important; width: 40vw;">
+                    <div class="card-body" style="background-color: #917B63!important;">
+                        <img src="https://img.icons8.com/cotton/50/000000/alcoholic-cocktail.png" style="width:35%" class="card-img-top mt-2 mb-3" alt="...">
+                        <h5 class="card-title text-white">Drink</h5>
                     </div>
                 </div>
-                {% endfor %}
-                    <!-- <div class="card" style="width: 45vw; height: 20vh;">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">hi.</p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col mb-3 mt-3">
-                    <div class="card" style="width: 45vw; height: 20vh;">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">hi.</p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col mb-3 mt-3">
-                    <div class="card" style="width: 45vw; height: 20vh;">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">hi.</p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col mb-3 mt-3">
-                    <div class="card" style="width: 45vw; height: 20vh;">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">hi.</p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col mb-3 mt-3">
-                    <div class="card" style="width: 45vw; height: 20vh;">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">hi.</p>
-                            <a href="#" class="btn btn-primary">Order</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col mb-3 mt-3">
-                    <div class="card" style="width: 45vw; height: 20vh;">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">hi.</p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
-                        </div>
-                    </div>
-                </div>--> 
             </div>
+            {% endfor %}
+                <!-- <div class="card" style="width: 45vw; height: 20vh;">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">hi.</p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col mb-3 mt-3">
+                <div class="card" style="width: 45vw; height: 20vh;">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">hi.</p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col mb-3 mt-3">
+                <div class="card" style="width: 45vw; height: 20vh;">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">hi.</p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col mb-3 mt-3">
+                <div class="card" style="width: 45vw; height: 20vh;">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">hi.</p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col mb-3 mt-3">
+                <div class="card" style="width: 45vw; height: 20vh;">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">hi.</p>
+                        <a href="#" class="btn btn-primary">Order</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col mb-3 mt-3">
+                <div class="card" style="width: 45vw; height: 20vh;">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">hi.</p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                </div>
+            </div>--> 
         </div>
+    </div>
     
-    <footer class ="footer">
+    <footer class ="fixed-bottom">
         <div class="container">
             <span class="text-muted">Place sticky footer content here.</span>
         </div>
     </footer>
+    
     </div>
 </body>
 {% endblock %}
