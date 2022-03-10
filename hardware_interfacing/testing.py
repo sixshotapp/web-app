@@ -1,4 +1,5 @@
 from dispenser import *
+from time import sleep
 
 #TEST FUNCTIONS
 def infotest():
@@ -10,11 +11,16 @@ def infotest():
 
 def drinktest():
     # testDrink = drink('test', False)
-    testDrink = drink('whiskey&coke', True)
-    testDrink.addIngredient("wildTurkey_bourbon", 100)
-    testDrink.addIngredient("coca_cola", 100)
+    testDrink = drink('whiskey&coke')
+    testDrink.addIngredient("wildTurkey_bourbon", 20, 0.4)
+    testDrink.addIngredient("coca_cola", 80)
     testDrink.info()
-    testDrink.clearIngredient("test")
+    sleep(1)
+    # testDrink.clearIngredient("test")
+    # sleep(1)
+    # testDrink.clearIngredient("wildTurkey_bourbon")
+    testDrink.clearIngredient("coca_cola")
+    testDrink.info()
 
 def waterTest():
     water = drink('glassOfWater', False)
@@ -28,7 +34,12 @@ def waterTest():
 #MAIN
 def main():
     # infotest()
-    # drinktest()
-    waterTest()
+    drinktest()
+    # waterTest()
+    # i = 0
+    # while 1:
+    #     print(i % 6)
+    #     sleep(1)
+    #     i += 1 
     
 main()
