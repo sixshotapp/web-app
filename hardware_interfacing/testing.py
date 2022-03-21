@@ -15,12 +15,12 @@ def drinktest():
     testDrink.addIngredient("wildTurkey_bourbon", 20, 0.4)
     testDrink.addIngredient("coca_cola", 80)
     testDrink.info()
-    sleep(1)
+    # sleep(1)
     # testDrink.clearIngredient("test")
     # sleep(1)
     # testDrink.clearIngredient("wildTurkey_bourbon")
-    testDrink.clearIngredient("coca_cola")
-    testDrink.info()
+    # testDrink.clearIngredient("coca_cola")
+    # testDrink.info()
 
 def waterTest():
     water = drink('glassOfWater', False)
@@ -31,15 +31,23 @@ def waterTest():
         water.addIngredient(s,10)
     water.info()
 
+def dispenseTest():
+    testCylinder = cylinder()
+    testCylinder.editCan(0, "stoli_vodka", 750)
+    testCylinder.editCan(1, "wildTurkey_bourbon", 750)
+    testCylinder.editCan(2, "coca_cola", 2000)
+    
+    testDrink = drink('whiskey&coke')
+    testDrink.addIngredient("wildTurkey_bourbon", 20, 0.4)
+    testDrink.addIngredient("coca_cola", 80)
+
+    makeDrink(testCylinder, testDrink)
+
 #MAIN
 def main():
     # infotest()
-    drinktest()
+    # drinktest()
     # waterTest()
-    # i = 0
-    # while 1:
-    #     print(i % 6)
-    #     sleep(1)
-    #     i += 1 
+    dispenseTest()
     
 main()

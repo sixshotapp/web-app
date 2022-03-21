@@ -36,7 +36,7 @@ class can:
 #DRINK
 class drink:
     name = ''
-    proof2 = 0 #alcohol content by %, between 0-1
+    alcohol_content = 0 #alcohol content by %, between 0-1
     volume = 0
     ingredients = []
     for i in range(6):
@@ -77,12 +77,12 @@ class drink:
         for ing in self.ingredients:
             self.volume += ing[1]
             alc_total += ing[1] * ing[2] # vol * %
-        self.proof2 = alc_total / self.volume
+        self.alcohol_content = alc_total / self.volume
 
     def info(self):
-        print("DRINK: %s" % (self.name))
-        if (self.proof2 > 0):
-            p = self.proof2 * 100
+        print("DRINK: %s %0.2fmL" % (self.name, self.volume))
+        if (self.alcohol_content > 0):
+            p = self.alcohol_content * 100
             print("ALCOHOLIC (%.2f%%)" % p) #  bruh why isn't % an escape character
         else:
             print("NON-ALCOHOLIC")
@@ -90,7 +90,7 @@ class drink:
         for i in range(len(self.ingredients)):
             ing = self.ingredients[i]
             if (ing != EMPTY_INGREDIENT):
-                print("\t%s: %.2f" % (ing[0], ing[1]))
+                print("\t%s: %.2fmL" % (ing[0], ing[1]))
 
 #CYLINDER
 class cylinder:
@@ -125,15 +125,30 @@ class cylinder:
         for i in range(n):
             self.rotate()
 
-    def dispense(self, d:drink, pos):
+    def dispense(self, vol, pos):
         if (self.spout != pos):
             while (self.spout != pos):
                 self.rotate()
         for i in range(len(self.slot)):
-            self.slot[i].drain(d[i])
+            self.slot[i].drain(vol)
 
 # drink loading from database?
 def loadDrink():
     # GET from database
     # return drink
     pass
+
+def makeDrink(cyl:cylinder, d:drink):
+    drink_ing = set()
+    cylinder_ing = set()
+
+    # valid drink check
+    for i in range(6):
+        if (d.ingredients[i] != EMPTY_INGREDIENT):
+            drink_ing.add(d.ingredients[i][0])
+    # print(drink_ing)
+    for s in cyl.slot:
+        cylinder_ing.add(s.ingredient_name)
+    # print(cylinder_ing)
+    if not (drink_ing.issubset(cylinder_ing)):
+        print("INGREDIENTS FOR [%s] ARE NOT LOADED" % d.name)
