@@ -7,13 +7,13 @@
 {% block body %}
 <body>
   <div style="height: 100vh">
-    <nav class="navbar sticky-top navbar-light" style="background-color: #50403E!important;">
+    <nav class="navbar sticky-top navbar-light overflow-hidden" style="background-color: #50403E!important;">
       <a class="navbar-brand mx-auto" href="#">
-        <img src="https://i.imgur.com/nD0ZH1P.png" alt="" width="auto" height="50vh">
+        <img src="https://i.imgur.com/nD0ZH1P.png" alt="" width="auto" height="40vh">
       </a>
     </nav>
 
-    <div class="container mt-2">
+    <div class="container mt-2 overflow-auto" style="flex: 1;">
       <div class="row row-cols-2">
         {% for i in range(10) %}
         <div class="col mb-2 mt-3 pr-2">
@@ -28,6 +28,12 @@
         {% endfor %}
       </div>
     </div>
+
+    <footer class="footer mt-auto py-3 bg-light" style="flex: 0 0 auto;">
+      <div class="container">
+        <span class="text-muted">Place sticky footer content here.</span>
+      </div>
+    </footer>
 
     <div id="popup1" class="overlay">
       <div class="popup">
