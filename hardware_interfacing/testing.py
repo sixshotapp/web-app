@@ -35,13 +35,14 @@ def dispenseTest():
     testCylinder = cylinder()
     testCylinder.editCan(0, "stoli_vodka", 750)
     testCylinder.editCan(1, "wildTurkey_bourbon", 750)
-    testCylinder.editCan(2, "coca_cola", 2000)
+    testCylinder.editCan(2, "coca_cola", 20)
     
     testDrink = drink('whiskey&coke')
     testDrink.addIngredient("wildTurkey_bourbon", 20, 0.4)
     testDrink.addIngredient("coca_cola", 80)
+    # testDrink.addIngredient("stuff", 10)
 
-    makeDrink(testCylinder, testDrink)
+    testCylinder.makeDrink(testDrink)
 
 #MAIN
 def main():
@@ -49,5 +50,7 @@ def main():
     # drinktest()
     # waterTest()
     dispenseTest()
+
+
     
 main()

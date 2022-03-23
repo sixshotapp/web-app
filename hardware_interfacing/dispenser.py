@@ -6,7 +6,7 @@ CAN_CAPACITY = 2000 #mL
 MAX_DRINK_VOLUME = 341 # mL ~= 12oz, top line of a red solo cup
 EMPTY_INGREDIENT = ['NONE', 0 , 0]
 
-#CANISTER
+# CANISTER
 class can:
     ingredient_name = 'EMPTY'
     current_volume = 0
@@ -32,8 +32,9 @@ class can:
     def info(self):
         print("\tINGREDIENT: " + self.ingredient_name)
         print("\tVOLUME: %.2f" % self.current_volume)
+# END OF CANISTER
 
-#DRINK
+# DRINK
 class drink:
     name = ''
     alcohol_content = 0 #alcohol content by %, between 0-1
@@ -91,8 +92,9 @@ class drink:
             ing = self.ingredients[i]
             if (ing != EMPTY_INGREDIENT):
                 print("\t%s: %.2fmL" % (ing[0], ing[1]))
+# END OF DRINK
 
-#CYLINDER
+# CYLINDER
 class cylinder:
     can1 = can()
     can2 = can()
@@ -132,23 +134,45 @@ class cylinder:
         for i in range(len(self.slot)):
             self.slot[i].drain(vol)
 
+    def checkDrink(self, d:drink):
+        # valid drink check
+        drink_ing = set()
+        cylinder_ing = set()
+        print("VALIDATING:")
+        for i in range(6):
+            if (d.ingredients[i] != EMPTY_INGREDIENT):
+                drink_ing.add(d.ingredients[i][0])
+        # print(drink_ing)
+        for s in self.slot:
+            cylinder_ing.add(s.ingredient_name)
+        # print(cylinder_ing)
+        if not (drink_ing.issubset(cylinder_ing)):
+            print("\tINGREDIENTS FOR <%s> ARE NOT LOADED" % d.name)
+            return False
+        # quantity check
+        for ing in d.ingredients:
+            for jng in self.slot:
+                if (jng.ingredient_name == ing[0]):
+                    print(jng.ingredient_name + ':')
+                    print("\tCURRENT\tNEEDED")
+                    print("\t%.2f\t%.2f\tmL" % (jng.current_volume, ing[1]))
+                    if (jng.current_volume < ing[1]):
+                        print("INSUFFICIENT <%s> VOLUME" % ing[0])
+                        return False
+                    else:
+                        continue
+    
+    def makeDrink(self, d:drink):
+        self.checkDrink(d)
+        #pull from queue
+# END OF CYLINDER
+
+class drinkQueue:
+    # database pull?
+    pass
+
 # drink loading from database?
 def loadDrink():
     # GET from database
     # return drink
     pass
-
-def makeDrink(cyl:cylinder, d:drink):
-    drink_ing = set()
-    cylinder_ing = set()
-
-    # valid drink check
-    for i in range(6):
-        if (d.ingredients[i] != EMPTY_INGREDIENT):
-            drink_ing.add(d.ingredients[i][0])
-    # print(drink_ing)
-    for s in cyl.slot:
-        cylinder_ing.add(s.ingredient_name)
-    # print(cylinder_ing)
-    if not (drink_ing.issubset(cylinder_ing)):
-        print("INGREDIENTS FOR [%s] ARE NOT LOADED" % d.name)

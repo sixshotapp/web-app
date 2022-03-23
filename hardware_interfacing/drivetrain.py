@@ -2,4 +2,10 @@
 #imports
 
 class drivetrain:
-    motor = 0 #API object?
+    pass #API object?
+
+# queue of customers
+    # pull from database?
+
+# location list?
+    # nav algorithm
