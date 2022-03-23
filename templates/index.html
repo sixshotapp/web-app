@@ -13,9 +13,31 @@
         <div class="col">
           <div class="d-flex p-2 justify-content-center align-items-center">
             <div class="mb-md-4 mt-md-4">
-
+              <!-- Button trigger modal -->
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                Launch static backdrop modal
+              </button>
+              
+              <!-- Modal -->
+              <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      ...
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-primary">Understood</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
               <h2 style="text-align: center;">
-              <img src="https://i.imgur.com/nD0ZH1P.png" alt="" width="auto" height="40vh">
+                <img src="https://i.imgur.com/nD0ZH1P.png" alt="" width="auto" height="40vh">
               </h2>
               <p class="text-center text-white text-50 mb-">welcome!</p>
               <div class="form-outline text-white form-white text-left mb-2">
@@ -28,21 +50,21 @@
                 <label class="form-label" for="typePasswordX">password</label>
               </div>
               <div class="text-center">
-              <a href="/dashboard" class="btn btn-secondary btn-lg" rol="button">login</a>
-              <a href="/register" class="btn btn-secondary btn-lg" rol="button">register</a>
+                <a href="/dashboard" class="btn btn-secondary btn-lg" rol="button">login</a>
+                <a href="/register" class="btn btn-secondary btn-lg" rol="button">register</a>
               </div>
               <!--<form id="login-form" action="/dashboard" method="POST">
-                <div class="form-outline form-white text-center mb-2">
-                  <button class="btn btn-secondary btn-lg" type="submit">login</button>
-                  <a href="/register" class="btn btn-secondary btn-lg" rol="button">register</a>
-                </div>
-              </form>-->
+              <div class="form-outline form-white text-center mb-2">
+              <button class="btn btn-secondary btn-lg" type="submit">login</button>
+              <a href="/register" class="btn btn-secondary btn-lg" rol="button">register</a>
             </div>
-          </div>
+          </form>-->
         </div>
       </div>
-      <div class="row h-25"></div>
     </div>
   </div>
+  <div class="row h-25"></div>
+</div>
+</div>
 </div>
 {% endblock %}
