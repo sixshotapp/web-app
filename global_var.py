@@ -1,5 +1,3 @@
-# Used in the future for any global variables
-
 class EmployeeInfo:
     first_name = ""
     last_name = ""
@@ -12,6 +10,7 @@ class IngredientInfo:
     pump = 0
 
 class DrinkInfo:
+    id = 0
     name = ""
     price = 0
     bev1 = ""

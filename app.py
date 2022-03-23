@@ -122,102 +122,133 @@ def employee_menu():
 def custom_drink():
     return render_template('custom_drink.html')
 
-@app.route('/profile')
+@app.route('/profile', methods=['POST', 'GET'])
 def profile():
+    # if "change-profile" in request.form:
+    #     change_first_name = request.form["changeFirstName"]
+    #     change_last_name = request.form["changeLastName"]
+    #     change_email = request.form["changeEmail"]
+    #     change_password = request.form["changePassword"]
+    #     try:
+    #         if (change_first_name != ''):
+    #             user = Users.query.filter_by(id=session['id']).first()
+    #             user.first_name = change_first_name
+    #             db.session.commit()
+    #             session['first_name'] = change_first_name
+    #             flash('First name changed successfully.')
+    #             # return redirect('/profile')
+
+    #         if (change_last_name != ''):
+    #             user = Users.query.filter_by(id=session['id']).first()
+    #             user.last_name = change_last_name
+    #             db.session.commit()
+    #             session['last_name'] = change_last_name
+    #             flash('Last name changed successfully.')
+    #             # return redirect('/profile')
+
+    #         # try:
+    #         #     if (change_username != ''):
+    #         #         user = Users.query.filter_by(id=session['id']).first()
+    #         #         user.username = change_username
+    #         #         db.session.commit()
+    #         #         session['username'] = change_username
+    #         #         flash('Username changed successfully.')
+    #         #         # return redirect('/profile')
+    #         # except Exception:
+    #         #     flash('Username is taken, please try different one.')
+
+    #         if (change_email != ''):
+    #             user = Users.query.filter_by(id=session['id']).first()
+    #             user.email = change_email
+    #             db.session.commit()
+    #             session['email'] = change_email
+    #             flash('Email changed successfully.')
+    #             # return redirect('/profile')
+
+    #         if (change_password != ''):
+    #             user = Users.query.filter_by(id=session['id']).first()
+    #             change_password = bcrypt.generate_password_hash(change_password).decode('utf-8')
+    #             user.password = change_password
+    #             db.session.commit()
+    #             session['password'] = change_password
+    #             flash('Password changed successfully.')
+    #             # return redirect('/profile')
+
+    #         return redirect('/profile')
+    #     except Exception:
+    #         flash('Error changing profile, please try again.')
+    #         return redirect("/profile") 
+
+    # else:
+    #     # return render_template('profile.html', horoscope = session['horoscope)
+    #     current_user = Users.query.filter_by(id = session['id']).first()
+    #     last_date = current_user.last_created
+    #     if not last_date or last_date.date() != date.today() or not session['songs']:
+    #         # print(session['horoscope'])
+    #         profile_playlist = generateHoroPlaylist(session['horoscope'])
+    #         current_user.last_created = date.today()
+    #         current_user.daily_playlist = song_to_dict(profile_playlist)
+    #         session['daily_playlist'] = current_user.daily_playlist
+    #         db.session.commit()
+    #     else:
+    #         # print("getting daily playlist for " + session['username'])
+    #         profile_playlist = getDailyPlaylist()
     return render_template('profile.html', user_info = session)
 
-        # if "change-profile" in request.form:
-        #     change_first_name = request.form["changeFirstName"]
-        #     change_last_name = request.form["changeLastName"]
-        #     change_username = request.form["changeUsername"]
-        #     change_email = request.form["changeEmail"]
-        #     change_password = request.form["changePassword"]
-        #     change_birthday = request.form.get("changeBirthday", False)
-        #     if (change_birthday != ''):
-        #         new_horoscope = horoscope_api.getHoroscope(change_birthday)
-        #     try:
-        #         if (change_first_name != ''):
-        #             user = Users.query.filter_by(id=session['id']).first()
-        #             user.first_name = change_first_name
-        #             db.session.commit()
-        #             session['first_name'] = change_first_name
-        #             flash('First name changed successfully.')
-        #             # return redirect('/profile')
-
-        #         if (change_last_name != ''):
-        #             user = Users.query.filter_by(id=session['id']).first()
-        #             user.last_name = change_last_name
-        #             db.session.commit()
-        #             session['last_name'] = change_last_name
-        #             flash('Last name changed successfully.')
-        #             # return redirect('/profile')
-
-        #         try:
-        #             if (change_username != ''):
-        #                 user = Users.query.filter_by(id=session['id']).first()
-        #                 user.username = change_username
-        #                 db.session.commit()
-        #                 session['username'] = change_username
-        #                 flash('Username changed successfully.')
-        #                 # return redirect('/profile')
-        #         except Exception:
-        #             flash('Username is taken, please try different one.')
-
-        #         if (change_email != ''):
-        #             user = Users.query.filter_by(id=session['id']).first()
-        #             user.email = change_email
-        #             db.session.commit()
-        #             session['email'] = change_email
-        #             flash('Email changed successfully.')
-        #             # return redirect('/profile')
-
-        #         if (change_password != ''):
-        #             user = Users.query.filter_by(id=session['id']).first()
-        #             change_password = bcrypt.generate_password_hash(change_password).decode('utf-8')
-        #             user.password = change_password
-        #             db.session.commit()
-        #             session['password'] = change_password
-        #             flash('Password changed successfully.')
-        #             # return redirect('/profile')
-
-        #         if (change_birthday != ''):
-        #             user = Users.query.filter_by(id=session['id']).first()
-        #             user.birthday = change_birthday
-        #             user.horoscope = new_horoscope
-        #             db.session.commit()
-        #             session['birthday'] = change_birthday
-        #             session['horoscope'] = new_horoscope
-        #             flash('Birthday changed successfully.')
-        #             # return redirect('/profile')
-
-        #         return redirect('/profile')
-        #     except Exception:
-        #         flash('Error changing profile, please try again.')
-        #         return redirect("/profile") 
-
-        # else:
-        #     # return render_template('profile.html', horoscope = session['horoscope)
-        #     my_desc = Horoscopes.query.filter_by(horoscope=session['horoscope']).first().description
-        #     current_user = Users.query.filter_by(id = session['id']).first()
-        #     last_date = current_user.last_created
-        #     if not last_date or last_date.date() != date.today() or not session['songs']:
-        #         # print(session['horoscope'])
-        #         profile_playlist = generateHoroPlaylist(session['horoscope'])
-        #         current_user.last_created = date.today()
-        #         current_user.daily_playlist = song_to_dict(profile_playlist)
-        #         session['daily_playlist'] = current_user.daily_playlist
-        #         db.session.commit()
-        #     else:
-        #         # print("getting daily playlist for " + session['username'])
-        #         profile_playlist = getDailyPlaylist()
-        #     return render_template('profile.html',
-        #                         #    user_info=session,
-        #                         my_desc=my_desc,
-        #                         playlist=profile_playlist)
-
-@app.route('/employee_profile')
+@app.route('/employee_profile', methods=['POST', 'GET'])
 def employee_profile():
-    return render_template('employee_profile.html', user_info = session)
+    if request.method == 'POST':
+        if "change-profile" in request.form:
+            change_first_name = request.form["changeFirstName"]
+            change_last_name = request.form["changeLastName"]
+            change_email = request.form["changeEmail"]
+            check_password = request.form["checkPassword"]
+            change_password = request.form["changePassword"]
+            try:
+                employee = Employees.query.filter_by(id = session['id']).first()
+                if (change_first_name != '' and change_first_name != employee.first_name):
+                    employee.first_name = change_first_name
+                    db.session.commit()
+                    session['first_name'] = change_first_name
+                    flash('First name changed successfully.')
+
+                if (change_last_name != '' and change_last_name != employee.last_name):
+                    employee.last_name = change_last_name
+                    db.session.commit()
+                    session['last_name'] = change_last_name
+                    flash('Last name changed successfully.')
+
+                try:
+                    if (change_email != ''):
+                        check_email = Credentials.query.filter_by(email = change_email).first()
+                        if check_email is None:
+                            credential = Credentials.query.filter_by(id = session['id']).first()
+                            credential.email = change_email
+                            db.session.commit()
+                            session['email'] = change_email
+                            flash('Email changed successfully.')
+                        else:
+                            flash('There is already an account associated with that email.')
+                except Exception:
+                    flash('Error with changing email. Please try again.')
+
+                if (check_password != '' and change_password != ''):
+                    credential = Credentials.query.filter_by(id = session['id']).first()
+                    if bcrypt.check_password_hash(credential.password, check_password):
+                        change_password = bcrypt.generate_password_hash(change_password).decode('utf-8')
+                        credential.password = change_password
+                        db.session.commit()
+                        session['password'] = change_password
+                        flash('Password changed successfully.')
+                    else:
+                        flash('Old password does not match.')
+
+                return redirect('/employee_profile')
+            except Exception:
+                flash('Error changing profile, please try again.')
+                return redirect("/employee_profile") 
+    else:
+        return render_template('employee_profile.html', user_info = session)
 
 @app.route('/employees', methods=['POST', 'GET'])
 def employees():
@@ -357,27 +388,62 @@ def ingredients():
 @app.route('/employee_drinks', methods=['POST', 'GET'])
 def employee_drinks():
     if request.method == 'POST':
-        if "change-drink" in request.form:
-            # change_name = request.form["changeName"]
-            # change_availability = request.form.get("changeLastName", False)
-            # change_pump = request.form.get("changeUsername", False)
-            # try:
-            #     if (change_name != ''):
-            #         ingredient = Ingredients.query.filter_by(name = ).first()
-            #         flash('Name changed successfully.')
-            #         # return redirect('/ingredients')
+        if "edit-drink" in request.form:
+            change_name = request.form["changeName"]
+            change_price = request.form.get("ChangePrice")
+            change_bev1 = request.form.get("ChangeBev1")
+            change_bev2 = request.form.get("ChangeBev2")
+            change_bev3 = request.form.get("ChangeBev3")
+            change_bev4 = request.form.get("ChangeBev4")
+            drink_id = request.form.get("drinkID")
+            try:
+                drink = Drinks.query.filter_by(id = drink_id).first()
+                print(change_price)
+                print(drink.price)
+                # change_price = drink.available if change_price == None else 0
+                change_bev1 = drink.bev1 if change_bev1 == "-1" else change_bev1
+                change_bev2 = drink.bev2 if change_bev2 == "-1" else change_bev2
+                change_bev3 = drink.bev3 if change_bev3 == "-1" else change_bev3
+                change_bev4 = drink.bev4 if change_bev4 == "-1" else change_bev4
 
-            #     if (change_availability != ''):
-            #         flash('Availability changed successfully.')
-            #         # return redirect('/ingredients')
+                if (change_name == drink.name and change_price == drink.price and change_bev1 == drink.bev1 and change_bev2 == drink.bev2 and change_bev3 == drink.bev3 and change_bev4 == drink.bev4):
+                    flash('No changes made.')
 
-            #     if (change_pump != ''):
-            #         flash('Pump changed successfully.')
-            #         # return redirect('/ingredients')
+                else:
+                    if (change_name != drink.name):
+                        drink.name = change_name
+                        db.session.commit()
+                        flash('Name changed successfully.')
 
-                # return redirect('/ingredients')
-            # except Exception:
-            #     flash('Error updating ingredient, please try again.')
+                    if (change_price != drink.price):
+                        drink.price = change_price
+                        db.session.commit()
+                        # flash('Price changed successfully.')
+
+                    if (change_bev1 != drink.bev1):
+                        drink.bev1 = change_bev1
+                        db.session.commit()
+                        flash('Beverage 1 changed successfully for.')
+
+                    if (change_bev2 != drink.bev2):
+                        drink.bev2 = change_bev2
+                        db.session.commit()
+                        flash('Beverage 2 changed successfully.')
+                    
+                    if (change_bev3 != drink.bev3):
+                        drink.bev3 = change_bev3
+                        db.session.commit()
+                        flash('Beverage 3 changed successfully.')
+
+                    if (change_bev4 != drink.bev4):
+                        drink.bev4 = change_bev4
+                        db.session.commit()
+                        flash('Beverage 4 changed successfully.')
+
+                return redirect('/employee_drinks')
+            except Exception:
+                flash('Error updating drink, please try again.')
+
             return redirect("/employee_drinks") 
 
         elif "add-drink" in request.form:
@@ -388,15 +454,6 @@ def employee_drinks():
             bev2 = request.form.get("InputBev2")
             bev3 = request.form.get("InputBev3")
             bev4 = request.form.get("InputBev4")
-
-            print("test2")
-            print("name ", name)
-            print("price ", price)
-            print("bev1 ", bev1)
-            print("bev2 ", bev2)
-            print("bev3 ", bev3)
-            print("bev4 ", bev4)
-
             try:
                 check_name = Drinks.query.filter_by(name = name).first()
                 if check_name is None:
@@ -419,7 +476,7 @@ def employee_drinks():
         elif "remove-drink" in request.form:
             remove_drink = request.form["remove-drink"]
             try:
-                drink = Drinks.query.filter_by(name = remove_drink).first()
+                drink = Drinks.query.filter_by(id = remove_drink).first()
                 db.session.delete(drink)
                 db.session.commit()
                 flash(remove_drink + ' was removed!')
@@ -432,6 +489,7 @@ def employee_drinks():
     drinks = []
     for drink in Drinks.query.all():
         new_drink = DrinkInfo()
+        new_drink.id = drink.id
         new_drink.name = drink.name
         new_drink.price = drink.price
         new_drink.bev1 = drink.bev1

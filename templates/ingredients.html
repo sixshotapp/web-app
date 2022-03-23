@@ -48,123 +48,123 @@
                 {% for ingredient in ingredients %}
                     <div class="ingredient">
                         <form method="post">
-                        <tr>
-                            <!-- <th>{{ ingredient.id }}</th> -->
-                            <input type="hidden" id="ingredientID" name="ingredientID" value="{{ ingredient.id }}">
-                            <th>
-                                <div class="form-group">
-                                    <input type="text" value="{{ingredient.name}}" class="form-control" name="changeName" id="changeName"/>
-                                </div>
-                            </th>
-                            <td>
-                                <!-- {% if ingredient.available == 0 %}
-                                    <h4>No</h4>
-                                {% else %}
-                                    <h4>Yes</h4>
-                                {% endif %} -->
-                                <div class="form-group">
-                                    <select id="changeAvailability" name="changeAvailability" style="background-color: black;">
-                                        <option value="none" selected disabled hidden>
-                                            {% if ingredient.available == 0 %}
-                                            <h4>No</h4>
-                                            {% else %}
-                                                <h4>Yes</h4>
-                                            {% endif %}
-                                        </option>
-                                        <option value="1">Available</option>
-                                        <option value="0">Not Available</option>
-                                    </select>
-                                </div>
-                            </th>
-                            <th>
-                                <!-- {% if ingredient.pump == -1 %}
-                                    <h4>None</h4>
-                                {% else %}
-                                    {{ ingredient.pump }}
-                                {% endif %} -->
-                                <div class="form-group">
-                                    <select id="changePump" name="changePump" style="background-color: black;">
-                                        <option value="none" selected disabled hidden>
-                                            {% if ingredient.pump == -1 %}
-                                                <h4>None</h4>
-                                            {% else %}
-                                                {{ ingredient.pump }}
-                                            {% endif %}
-                                        </option>
-                                        <option value="-1">None</option>
-                                        <option value="6">6</option>
-                                        <option value="5">5</option>
-                                        <option value="4">4</option>
-                                        <option value="3">3</option>
-                                        <option value="2">2</option>
-                                        <option value="1">1</option>
-                                    </select>
-                                </div>
-                            </th>
-                            <th>
-                                <form id = "edit-ingredient" action = "/ingredients" method = "POST" style="text-align: center;">
-                                    <button type="submit" class="btn btn-primary" style = "background-color: #ff7010; border: black" name ="edit-ingredient" value="{{ ingredient.id }}">Submit Changes</button>
-                                </form>
-                            </th>
-                            <th>
-                                <form id = "remove-ingredient" action = "/ingredients" method = "POST" style="text-align: center;">
-                                    <button type="submit" class="btn btn-primary" style = "background-color: #ff7010; border: black" name ="remove-ingredient" value="{{ ingredient.name }}">X</button>
-                                </form>
-                            </th>
-                            <!-- <th>
-                                <form method="post">
-                                    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#editIngredient">Edit</button>
-                                    Modal
-                                    <div class="modal fade reveal-modal" id="editIngredient" tabindex="-1" role="dialog" aria-labelledby="ingredientModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            Modal content
-                                            <div class="modal-content" style="background-color: white; color: black;">
-                                                <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                    <h4 class="modal-title">Edit Ingredient</h4>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <div class="form-group">
-                                                        <label for="InputID">Input ID</label>
-                                                        <input type="text" class="form-control" name="ingredientID" id="ingredientID" placeholder="Enter ingredient ID">
+                            <tr>
+                                <!-- <th>{{ ingredient.id }}</th> -->
+                                <input type="hidden" id="ingredientID" name="ingredientID" value="{{ ingredient.id }}">
+                                <th>
+                                    <div class="form-group">
+                                        <input type="text" value="{{ingredient.name}}" class="form-control" name="changeName" id="changeName"/>
+                                    </div>
+                                </th>
+                                <td>
+                                    <!-- {% if ingredient.available == 0 %}
+                                        <h4>No</h4>
+                                    {% else %}
+                                        <h4>Yes</h4>
+                                    {% endif %} -->
+                                    <div class="form-group">
+                                        <select id="changeAvailability" name="changeAvailability" style="background-color: black;">
+                                            <option value="none" selected disabled hidden>
+                                                {% if ingredient.available == 0 %}
+                                                <h4>No</h4>
+                                                {% else %}
+                                                    <h4>Yes</h4>
+                                                {% endif %}
+                                            </option>
+                                            <option value="1">Available</option>
+                                            <option value="0">Not Available</option>
+                                        </select>
+                                    </div>
+                                </th>
+                                <th>
+                                    <!-- {% if ingredient.pump == -1 %}
+                                        <h4>None</h4>
+                                    {% else %}
+                                        {{ ingredient.pump }}
+                                    {% endif %} -->
+                                    <div class="form-group">
+                                        <select id="changePump" name="changePump" style="background-color: black;">
+                                            <option value="none" selected disabled hidden>
+                                                {% if ingredient.pump == -1 %}
+                                                    <h4>None</h4>
+                                                {% else %}
+                                                    {{ ingredient.pump }}
+                                                {% endif %}
+                                            </option>
+                                            <option value="-1">None</option>
+                                            <option value="6">6</option>
+                                            <option value="5">5</option>
+                                            <option value="4">4</option>
+                                            <option value="3">3</option>
+                                            <option value="2">2</option>
+                                            <option value="1">1</option>
+                                        </select>
+                                    </div>
+                                </th>
+                                <th>
+                                    <form id = "edit-ingredient" action = "/ingredients" method = "POST" style="text-align: center;">
+                                        <button type="submit" class="btn btn-primary" style = "border: black" name ="edit-ingredient" value="{{ ingredient.id }}">Submit Changes</button>
+                                    </form>
+                                </th>
+                                <th>
+                                    <form id = "remove-ingredient" action = "/ingredients" method = "POST" style="text-align: center;">
+                                        <button type="submit" class="btn btn-primary" style = "border: black" name ="remove-ingredient" value="{{ ingredient.name }}">X</button>
+                                    </form>
+                                </th>
+                                <!-- <th>
+                                    <form method="post">
+                                        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#editIngredient">Edit</button>
+                                        Modal
+                                        <div class="modal fade reveal-modal" id="editIngredient" tabindex="-1" role="dialog" aria-labelledby="ingredientModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                Modal content
+                                                <div class="modal-content" style="background-color: white; color: black;">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                        <h4 class="modal-title">Edit Ingredient</h4>
                                                     </div>
-                                                    <div class="form-group">
-                                                        <label for="InputName">Change Name</label>
-                                                        <input type="text" class="form-control" name="changeName" id="changeName" placeholder="Enter name" />
+                                                    <div class="modal-body">
+                                                        <div class="form-group">
+                                                            <label for="InputID">Input ID</label>
+                                                            <input type="text" class="form-control" name="ingredientID" id="ingredientID" placeholder="Enter ingredient ID">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="InputName">Change Name</label>
+                                                            <input type="text" class="form-control" name="changeName" id="changeName" placeholder="Enter name" />
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="InputAvailability">Change Availability</label>
+                                                            <select id="changeAvailability" name="changeAvailability">
+                                                                <option value="1">Available</option>
+                                                                <option value="0">Not Available</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="InputPump">Change Pump</label>
+                                                            <select id="changePump" name="changePump">
+                                                                <option value="-1">None</option>
+                                                                <option value="6">6</option>
+                                                                <option value="5">5</option>
+                                                                <option value="4">4</option>
+                                                                <option value="3">3</option>
+                                                                <option value="2">2</option>
+                                                                <option value="1">1</option>
+                                                            </select>
+                                                        </div>
                                                     </div>
-                                                    <div class="form-group">
-                                                        <label for="InputAvailability">Change Availability</label>
-                                                        <select id="changeAvailability" name="changeAvailability">
-                                                            <option value="1">Available</option>
-                                                            <option value="0">Not Available</option>
-                                                        </select>
+                                                    <div class="modal-footer">
+                                                        <form role="form" id="change-ingredient-form" action="/ingredients" method="POST">
+                                                            <button type="submit" class="btn btn-primary" name="change-ingredient" value="{{ ingredient.id }}" id="change-ingredient-submit">Save Changes</button>
+                                                        </form>
                                                     </div>
-                                                    <div class="form-group">
-                                                        <label for="InputPump">Change Pump</label>
-                                                        <select id="changePump" name="changePump">
-                                                            <option value="-1">None</option>
-                                                            <option value="6">6</option>
-                                                            <option value="5">5</option>
-                                                            <option value="4">4</option>
-                                                            <option value="3">3</option>
-                                                            <option value="2">2</option>
-                                                            <option value="1">1</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <form role="form" id="change-ingredient-form" action="/ingredients" method="POST">
-                                                        <button type="submit" class="btn btn-primary" name="change-ingredient" value="{{ ingredient.id }}" id="change-ingredient-submit">Save Changes</button>
-                                                    </form>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </form>
-                            </th> -->
-                        </tr>
+                                    </form>
+                                </th> -->
+                            </tr>
                         </form>
-                </div> 
+                    </div> 
                 {% endfor %}
             </tbody>
             </table>
