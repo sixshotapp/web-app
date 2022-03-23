@@ -2,7 +2,7 @@
 from crypt import methods
 from flask import Flask, flash, render_template, redirect, request, redirect, session
 from flask_bcrypt import Bcrypt
-from global_var import EmployeeInfo, IngredientInfo
+from global_var import DrinkInfo, EmployeeInfo, IngredientInfo, DrinkInfo
 
 # Local Imports
 from database import db, Employees, Users, Credentials, Drinks, Ingredients
@@ -273,27 +273,41 @@ def employees():
 @app.route('/ingredients', methods=['POST', 'GET'])
 def ingredients():
     if request.method == 'POST':
-        if "change-ingredient" in request.form:
-            # change_name = request.form["changeName"]
-            # change_availability = request.form.get("changeLastName", False)
-            # change_pump = request.form.get("changeUsername", False)
-            # try:
-            #     if (change_name != ''):
-            #         ingredient = Ingredients.query.filter_by(name = ).first()
-            #         flash('Name changed successfully.')
-            #         # return redirect('/ingredients')
+        if "edit-ingredient" in request.form:
+            change_name = request.form["changeName"]
+            change_availability = request.form.get("changeAvailability")
+            change_pump = request.form.get("changePump")
+            ingredient_id = request.form.get("ingredientID")
+            try:
+                ingredient = Ingredients.query.filter_by(id = ingredient_id).first()
+                change_availability = ingredient.available if change_availability == None else 1 if change_availability == "1" else 0
+                change_pump = ingredient.pump if change_pump == None else change_pump
 
-            #     if (change_availability != ''):
-            #         flash('Availability changed successfully.')
-            #         # return redirect('/ingredients')
+                if (change_name == ingredient.name and change_availability == ingredient.available and change_pump == ingredient.pump):
+                    flash('No changes made.')
+                else:
+                    if (change_name != ingredient.name):
+                        ingredient.name = change_name
+                        db.session.commit()
+                        flash('Name changed successfully.')
 
-            #     if (change_pump != ''):
-            #         flash('Pump changed successfully.')
-            #         # return redirect('/ingredients')
+                    if (change_availability != ingredient.available):
+                        ingredient.available = change_availability
+                        db.session.commit()
+                        flash('Availability changed successfully.')
 
-                # return redirect('/ingredients')
-            # except Exception:
-            #     flash('Error updating ingredient, please try again.')
+                    if (change_pump != ingredient.pump):
+                        check_pump = Ingredients.query.filter_by(pump = change_pump).first()
+                        if check_pump is None or check_pump.pump == -1:
+                            ingredient.pump = change_pump
+                            db.session.commit()
+                            flash('Pump changed successfully.')
+                        else:
+                            flash('Error adding ingredient, pump is taken.')
+
+                return redirect('/ingredients')
+            except Exception:
+                flash('Error updating ingredient, please try again.')
             return redirect("/ingredients") 
 
         elif "add-ingredient" in request.form:
@@ -332,12 +346,106 @@ def ingredients():
     ingredients = []
     for ingredient in Ingredients.query.all():
         new_ingredient = IngredientInfo()
+        new_ingredient.id = ingredient.id
         new_ingredient.name = ingredient.name
         new_ingredient.available = ingredient.available
         new_ingredient.pump = ingredient.pump
         ingredients.append(new_ingredient)
     ingredients.sort(reverse=True, key=lambda x: x.pump)
     return render_template('ingredients.html', ingredients = ingredients)
+
+@app.route('/employee_drinks', methods=['POST', 'GET'])
+def employee_drinks():
+    if request.method == 'POST':
+        if "change-drink" in request.form:
+            # change_name = request.form["changeName"]
+            # change_availability = request.form.get("changeLastName", False)
+            # change_pump = request.form.get("changeUsername", False)
+            # try:
+            #     if (change_name != ''):
+            #         ingredient = Ingredients.query.filter_by(name = ).first()
+            #         flash('Name changed successfully.')
+            #         # return redirect('/ingredients')
+
+            #     if (change_availability != ''):
+            #         flash('Availability changed successfully.')
+            #         # return redirect('/ingredients')
+
+            #     if (change_pump != ''):
+            #         flash('Pump changed successfully.')
+            #         # return redirect('/ingredients')
+
+                # return redirect('/ingredients')
+            # except Exception:
+            #     flash('Error updating ingredient, please try again.')
+            return redirect("/employee_drinks") 
+
+        elif "add-drink" in request.form:
+            print("test1")
+            name = request.form.get("InputName")
+            price = request.form.get("InputPrice")
+            bev1 = request.form.get("InputBev1")
+            bev2 = request.form.get("InputBev2")
+            bev3 = request.form.get("InputBev3")
+            bev4 = request.form.get("InputBev4")
+
+            print("test2")
+            print("name ", name)
+            print("price ", price)
+            print("bev1 ", bev1)
+            print("bev2 ", bev2)
+            print("bev3 ", bev3)
+            print("bev4 ", bev4)
+
+            try:
+                check_name = Drinks.query.filter_by(name = name).first()
+                if check_name is None:
+                    add_drink = Drinks(name = name,
+                                        price = price,
+                                        bev1 = bev1,
+                                        bev2 = bev2,
+                                        bev3 = bev3,
+                                        bev4 = bev4)
+                    db.session.add(add_drink)
+                    db.session.commit()
+                    return redirect("/employee_drinks") 
+                else:
+                    flash('Error adding drink, name is taken.')
+                    return redirect("/employee_drinks")
+            except Exception:
+                flash('Error adding drink, please try again.')
+                return redirect("/employee_drinks") 
+
+        elif "remove-drink" in request.form:
+            remove_drink = request.form["remove-drink"]
+            try:
+                drink = Drinks.query.filter_by(name = remove_drink).first()
+                db.session.delete(drink)
+                db.session.commit()
+                flash(remove_drink + ' was removed!')
+                return redirect('/employee_drinks')
+
+            except Exception:
+                flash("Error, couldn't remove drink.")
+                return redirect("/employee_drinks")
+
+    drinks = []
+    for drink in Drinks.query.all():
+        new_drink = DrinkInfo()
+        new_drink.name = drink.name
+        new_drink.price = drink.price
+        new_drink.bev1 = drink.bev1
+        new_drink.bev2 = drink.bev2
+        new_drink.bev3 = drink.bev3
+        new_drink.bev4 = drink.bev4
+        drinks.append(drink)
+    drinks.sort()
+
+    ingredients = []
+    for ingredient in Ingredients.query.all():
+        ingredients.append(ingredient.name)
+    ingredients.sort()
+    return render_template('employee_drinks.html', ingredients = ingredients, drinks = drinks)
 
 @app.route('/order')
 def order():
