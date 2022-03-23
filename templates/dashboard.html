@@ -9,7 +9,7 @@
 <body>
   <div class="d-flex flex-column">
     <div style="height: 100vh">
-      <nav class="navbar mb-1 shadow-lg sticky-top navbar-light overflow-hidden" style="background-color: #50403E!important; height:10vh;">
+      <nav class="navbar shadow-lg sticky-top navbar-light overflow-hidden" style="background-color: #50403E!important; height:10vh;">
         <a class="navbar-brand mx-auto" href="#">
           <img src="https://i.imgur.com/nD0ZH1P.png" alt="" width="auto" height="40vh">
         </a>
@@ -20,17 +20,11 @@
           {% for i in range(10) %}
 
           <div class="col mt-3 d-flex">
-            <!--<div class="card shadow text-center border-0 rounded justify-content-center align-items-center" style="background-color: #917B63!important; width:45vw; height:45vw;">
-              <img src="https://img.icons8.com/cotton/50/000000/alcoholic-cocktail.png" style="width:35%" class="card-img-top mt-3 mb-3" alt="...">
-              <div class="card-body rounded" style="background-color: #917B63!important;">
-                <div class="card-text text-white align-middle"">Drink Name</div>
-                <a href="#popup1" class="btn stretched-link"></a>
-              </div>
-            </div>-->
               <div class="container">
                 <div class="row">
                     <div class="card mx-auto shadow border-0 rounded justify-content-center align-items-center" style="background-color: #917B63!important; width:35vw; height:35vw;">
                       <img src="https://img.icons8.com/cotton/50/000000/alcoholic-cocktail.png" style="width:50%" class="card-img-top mt-3 mb-3" alt="...">
+                      <div class="btn stretched-link" data-toggle="modal" data-target="#exampleModalCenter"></div>
                     </div>
                 </div>
 
@@ -52,16 +46,24 @@
         </a>
       </nav>
 
-      <div id="popup1" class="overlay">
-        <div class="popup">
-          <h2>Title</h2>
-          <a class="close" href="#">×</a>
-          <div class="content">
-            Content
+      <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              ...
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
 </body>
 {% endblock %}
