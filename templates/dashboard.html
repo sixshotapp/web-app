@@ -15,10 +15,10 @@
         </a>
       </nav>
 
-      <div class="container mt-2" style="height: 80vh; display: flex; overflow: scroll; flex-direction: column; flex-grow: 1;">
+      <div class="container" style="height: 80vh; display: flex; overflow: scroll; flex-direction: column; flex-grow: 1;">
         <div class="row row-cols-2">
           {% for i in range(10) %}
-          <div class="col mb-2 mt-3 pr-2">
+          <div class="col mb-2 mt-2 pr-2">
             <div class="card text-center border-0 mx-auto" style="background-color: #917B63!important; width: 40vw;">
               <div class="card-body" style="background-color: #917B63!important;">
                 <img src="https://img.icons8.com/cotton/50/000000/alcoholic-cocktail.png" style="width:35%" class="card-img-top mt-2 mb-3" alt="...">
@@ -33,7 +33,9 @@
 
       <nav class="navbar fixed-bottom navbar-light overflow-hidden" style="background-color: #50403E!important; height:10vh;">
         <a class="navbar-brand mx-auto" href="#">
-          <img src="/assets/img/bootstrap.svg" alt="Bootstrap" width="auto" height="8vh">
+          <svg class="bi" width="32" height="32" fill="currentColor">
+            <use xlink:href="bootstrap-icons.svg#heart-fill"/>
+          </svg>
         </a>
       </nav>
 
