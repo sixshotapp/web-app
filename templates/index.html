@@ -10,32 +10,56 @@
     <div style="height: 100vh">
       <div class="row h-25"></div>
       <div class="row h-50">
+        <div class="container">
+                <form method="post">
+                    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#addIngredientModal">Add Ingredient</button>
+                    <!-- Modal -->
+                    <div class="modal fade reveal-modal" id="addIngredientModal" tabindex="-1" role="dialog" aria-labelledby="newIngredientModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <!-- Modal content-->
+                            <div class="modal-content" style="background-color: white; color: black;">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Add Ingredient</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label for="InputName">Name</label>
+                                        <input type="text" class="form-control" name="InputName" id="InputName" placeholder="Enter name" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="InputAvailability">Availability</label>
+                                        <select id="inputAvailability" name="inputAvailability">
+                                            <option value="1">Available</option>
+                                            <option value="0">Not Available</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="InputPump">Pump</label>
+                                        <select id="inputPump" name="inputPump">
+                                            <option value="-1">None</option>
+                                            <option value="6">6</option>
+                                            <option value="5">5</option>
+                                            <option value="4">4</option>
+                                            <option value="3">3</option>
+                                            <option value="2">2</option>
+                                            <option value="1">1</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <form role="form" id="add-ingredient-form" action="/ingredients" method="POST">
+                                        <button type="submit" class="btn btn-primary" name="add-ingredient" value="add_ingredient" id="add-ingredient-submit">Add Ingredient</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
         <div class="col">
           <div class="d-flex p-2 justify-content-center align-items-center">
             <div class="mb-md-4 mt-md-4">
-              <!-- Button trigger modal -->
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                Launch static backdrop modal
-              </button>
-              
-              <!-- Modal -->
-              <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                      ...
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                      <button type="button" class="btn btn-primary">Understood</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
               <h2 style="text-align: center;">
                 <img src="https://i.imgur.com/nD0ZH1P.png" alt="" width="auto" height="40vh">
               </h2>
