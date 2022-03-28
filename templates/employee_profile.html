@@ -1,0 +1,89 @@
+{% extends 'base.html' %} 
+
+{% block head %}
+<title>6Shot | Profile</title>
+{% endblock %} 
+
+{% block nav %}
+<li class="nav-item">
+  <a class="nav-link" href="./employee_menu">Menu</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link active" aria-current="page">Profile</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="./employees">Employees</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="./ingredients">Ingredients</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="./employee_drinks">Drinks</a>
+</li>
+<!-- <li class="nav-item">
+    <a class="nav-link" href="./about">About</a>
+</li> -->
+<li class="nav-item">
+  <a class="nav-link" href="./logout">Logout</a>
+</li>
+{% endblock %}
+
+{% block body %}
+<h1>Employee Profile</h1>
+<h3>ID: {{ user_info.id }}</h3>
+<h3>First Name: {{ user_info.first_name }}</h3>
+<h3>Last Name: {{ user_info.last_name }} </h3>
+<h3>Email: {{ user_info.email }}</h3>
+<h3>Password: {{ user_info.password }}</h3>
+<h3>Role: {{ user_info.role }}</h3>
+
+<button type="button" class="btn btn-primary" style = "border: black"data-toggle="modal" data-target="#profileModal">
+  Edit Profile
+</button>
+<div class="container">
+  <form method="post">
+    <!-- Modal -->
+    <div class="modal fade reveal-modal" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="profileModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="profileModalLabel">{{ user_info.first_name }}'s Profile</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="InputFirstName">Change First Name</label>
+              <input type="text" class="form-control" name="changeFirstName" id="changeFirstName" placeholder="Enter first name" />
+            </div>
+            <div class="form-group">
+              <label for="InputLastName">Change Last Name</label>
+              <input type="text" class="form-control" name="changeLastName" id="changeLastName" placeholder="Enter last name" />
+            </div>
+            <div class="form-group">
+              <label for="InputEmail">Change Email Address</label>
+              <input type="text" class="form-control" name="changeEmail" id="changeEmail" placeholder="Enter email address" />
+            </div>
+            <br>
+            <h4>To change password, enter your old password and new password.</h4>
+            <div class="form-group">
+              <label for="InputOldPassword">Old Password</label>
+              <input type="password" class="form-control" name="checkPassword" id="checkPassword" placeholder="Enter old password" />
+            </div>  
+            <div class="form-group">
+              <label for="InputPassword">New Password</label>
+              <input type="password" class="form-control" name="changePassword" id="changePassword" placeholder="Enter new password" />
+            </div>
+          </div>
+          <div class="modal-footer">
+            <form role="form" id="change-profile-form" action="/employee_profile" method="POST">
+              <button type="submit" class="btn btn-primary" name="change-profile" value="change_profile" id="change-profile-submit">Save changes</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+{% endblock %}

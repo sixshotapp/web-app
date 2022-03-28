@@ -1,0 +1,77 @@
+{% extends 'base.html' %} 
+
+{% block head %}
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<title>6Shot | Create Account</title>
+{% endblock %} 
+
+{% block body %}
+<body style="background-color: white">
+  <div class="content" style="color:black">
+    <div class="row centered-form">
+      <div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-4">
+        <div class="panel panel-default" style="background-color:darkgrey;"> 
+          <div class="panel-heading">
+            <h1 class="panel-title text-center">Create New Profile</h1>
+            </div>
+              <div class="panel-body">
+                <form role="form" id="create-profile-form" action="/" method="POST">
+                  <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                      <div class="form-group">
+                        <label for="InputFirstName">First Name</label>
+                        <input type="text" class="form-control" name="firstName" id="firstName" placeholder="Enter first name" />
+                      </div>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                      <div class="form-group">
+                        <label for="InputLastName">Last Name</label>
+                        <input type="text" class="form-control" name="lastName" id="lastName" placeholder="Enter last name" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                      <div class="form-group">
+                        <label for="InputEmail">Email Address</label>
+                        <input type="text" class="form-control" name="email" id="email" placeholder="Enter email address" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                      <div class="form-group">
+                        <label for="InputPassword">Create a Password</label>
+                        <input type="password" class="form-control" name="password" id="password" placeholder="Enter password" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="text-center">
+                    <button type="submit" class="btn btn-primary"  style = "background-color: #ff7010; border: black;" name="return-to-login" value="return-to-login-submit">Back</button>  
+                    <button type="submit" class="btn btn-primary" style = "background-color: #ff7010; border: black;" value="create-profile" id="create-profile-submit">Submit</button>
+                  </div>
+                </form>
+              </div>
+            </div> 
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card mx-auto" style="background-color: #212529; color: rgb(255,255,255); width: 35rem; border-radius: 2%; animation: 1.5s ease-out 0s 1 comeFromBottom;">
+      <div class="card-body">
+        <p class="card-text">
+          <p class="text-center text-white" style="font-size: 100%;">
+            First name has a limit of 20 characters. <br>
+            Last name has a limit of 20 character. <br>
+            Username has a limit of 20 character. <br>
+            Email has a limit of 30 character. <br>
+            Password has a limit of 30 character.
+          </p>
+        </p>
+      </div>
+    </div>
+  </div>  
+</body>
+{% endblock %}

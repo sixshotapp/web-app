@@ -1,4 +1,6 @@
+bcrypt
 Flask
+Flask-Bcrypt
 Flask-RESTful
 gunicorn
 itsdangerous

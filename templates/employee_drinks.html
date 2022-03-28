@@ -1,0 +1,284 @@
+{% extends 'base.html' %} 
+
+{% block head %}
+<title>6Shot | Ingredients</title>
+{% endblock %} 
+
+{% block nav %}
+<li class="nav-item">
+  <a class="nav-link" href="./employee_menu">Menu</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="./employee_profile">Profile</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="./employees">Employees</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="./ingredients">Ingredients</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link active" aria-current="page">Drinks</a>
+  </li>
+<!-- <li class="nav-item">
+    <a class="nav-link" href="./about">About</a>
+</li> -->
+<li class="nav-item">
+  <a class="nav-link" href="./logout">Logout</a>
+</li>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row" style="background-color: grey; border-radius: 1rem; padding: 1%;">
+        <div class="col-sm">
+            <h1 class="as_heading as_heading_center" style="text-align: center;">Beverages</h1>
+            <table class="table" style="color: white">
+            <thead style="text-align: center;">
+                <tr>
+                <th>Name</th>
+                <th>Price</th> 
+                <th>Beverage 1</th>
+                <th>Beverage 2</th>
+                <th>Beverage 3</th>
+                <th>Beverage 4</th>
+                <th>Edit</th>
+                <th>Remove</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for drink in drinks %}
+                    <div class="drink">
+                        <form method="post">
+                            <tr>
+                                <input type="hidden" id="drinkID" name="drinkID" value="{{ drink.id }}">
+                                <th>
+                                    <div class="form-group">
+                                        <input type="text" value="{{ drink.name }}" class="form-control" name="changeName" id="changeName"/>
+                                    </div>
+                                </th>
+                                <td>
+                                    <div class="form-group">
+                                        <input type="number" min="0.00" max="10000.00" step="any" class="form-control" value="{{ drink.price }}" name="ChangePrice" id="ChangePrice"/>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="form-group">
+                                        <select id="ChangeBev1" name="ChangeBev1" style="background-color: black;">
+                                            <option value="-1">
+                                                {% if drink.bev1 == -1 %}
+                                                    <h4>None</h4>
+                                                {% else %}
+                                                    {{ drink.bev1 }}
+                                                {% endif %}
+                                            </option>
+                                            {% for ingredient in ingredients %}
+                                                <option value="{{ingredient}}">{{ ingredient }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="form-group">
+                                        <select id="ChangeBev2" name="ChangeBev2" style="background-color: black;">
+                                            <option value="-1">
+                                                {% if drink.bev2 == -1 %}
+                                                    <h4>None</h4>
+                                                {% else %}
+                                                    {{ drink.bev2 }}
+                                                {% endif %}
+                                            </option>
+                                            {% for ingredient in ingredients %}
+                                                <option value="{{ingredient}}">{{ ingredient }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="form-group">
+                                        <select id="ChangeBev3" name="ChangeBev3" style="background-color: black;">
+                                            <option value="-1">
+                                                {% if drink.bev3 == -1 %}
+                                                    <h4>None</h4>
+                                                {% else %}
+                                                    {{ drink.bev3 }}
+                                                {% endif %}
+                                            </option>
+                                            {% for ingredient in ingredients %}
+                                                <option value="{{ingredient}}">{{ ingredient }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="form-group">
+                                        <select id="ChangeBev4" name="ChangeBev4" style="background-color: black;">
+                                            <option value="-1">
+                                                {% if drink.bev4 == "-1" %}
+                                                    <h4>None</h4>
+                                                {% else %}
+                                                    {{ drink.bev4 }}
+                                                {% endif %}
+                                            </option>
+                                            {% for ingredient in ingredients %}
+                                                <option value="{{ingredient}}">{{ ingredient }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </th>
+                                <th>
+                                    <form id = "edit-drink" action = "/employee_drinks" method = "POST" style="text-align: center;">
+                                        <button type="submit" class="btn btn-primary" style = "border: black" name ="edit-drink" value="{{ drink.id }}">Submit Changes</button>
+                                    </form>
+                                </th>
+                                <th>
+                                    <form id = "remove-drink" action = "/employee_drinks" method = "POST" style="text-align: center;">
+                                        <button type="submit" class="btn btn-primary" style = "border: black" name ="remove-drink" value="{{ drink.id }}">X</button>
+                                    </form>
+                                </th>
+                                <!-- <th>
+                                    <form method="post">
+                                        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#editDrink">Submit Changes</button>
+                                        Modal
+                                        <div class="modal fade reveal-modal" id="editDrink" tabindex="-1" role="dialog" aria-labelledby="drinkModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                Modal content
+                                                <div class="modal-content" style="background-color: white; color: black;">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                        <h4 class="modal-title">Edit Drink</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="form-group">
+                                                            <label for="InputName">Change Name</label>
+                                                            <input type="text" class="form-control" name="changeName" id="changeName" placeholder="Enter name" />
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="InputPrice">Change Price</label>
+                                                            <input type="number" min="0.00" max="10000.00" step="any" class="form-control" name="ChangePrice" id="ChangePrice" placeholder="Enter Price"/>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="InputBev1">Change Beverage 1</label>
+                                                            <select id="ChangeBev1" name="ChangeBev1">
+                                                                <option value="-1">None</option>
+                                                                {% for ingredient in ingredients %}
+                                                                    <option value="{{ingredient}}">{{ ingredient }}</option>
+                                                                {% endfor %}
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="InputBev2">Change Beverage 2</label>
+                                                            <select id="ChangeBev2" name="ChangeBev2">
+                                                                <option value="-1">None</option>
+                                                                {% for ingredient in ingredients %}
+                                                                    <option value="{{ingredient}}">{{ ingredient }}</option>
+                                                                {% endfor %}
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="InputBev3">Change Beverage 3</label>
+                                                            <select id="ChangeBev3" name="ChangeBev3">
+                                                                <option value="-1">None</option>
+                                                                {% for ingredient in ingredients %}
+                                                                <option value="{{ingredient}}">{{ ingredient }}</option>
+                                                                {% endfor %}
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="InputBev4">Change Beverage 4</label>
+                                                            <select id="ChangeBev4" name="ChangeBev4">
+                                                                <option value="-1">None</option>
+                                                                {% for ingredient in ingredients %}
+                                                                    <option value="{{ingredient}}">{{ ingredient }}</option>
+                                                                {% endfor %}
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <form role="form" id="change-drink-form" action="/employee_drinks" method="POST">
+                                                            <button type="submit" class="btn btn-primary" name="change-drink" value="change_drink" id="change-drijk-submit">Save Changes</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </th> -->
+                            </tr>
+                        </form>
+                </div> 
+                {% endfor %}
+            </tbody>
+            </table>
+            <div class="container">
+                <form method="post">
+                    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#addDrinkModal">Add Drink</button>
+                    <!-- Modal -->
+                    <div class="modal fade reveal-modal" id="addDrinkModal" tabindex="-1" role="dialog" aria-labelledby="newDrinkModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <!-- Modal content-->
+                            <div class="modal-content" style="background-color: white; color: black;">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Add Drink</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label for="InputName">Name</label>
+                                        <input type="text" class="form-control" name="InputName" id="InputName" placeholder="Enter name" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="InputPrice">Price</label>
+                                        <input type="number" min="0.00" max="10000.00" step="any" class="form-control" name="InputPrice" id="InputPrice" placeholder="Enter Price" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="InputBev1">Beverage 1</label>
+                                        <select id="InputBev1" name="InputBev1">
+                                            <option value="-1">None</option>
+                                            {% for ingredient in ingredients %}
+                                                <option value="{{ingredient}}">{{ ingredient }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="InputBev2">Beverage 2</label>
+                                        <select id="InputBev2" name="InputBev2">
+                                            <option value="-1">None</option>
+                                            {% for ingredient in ingredients %}
+                                                <option value="{{ingredient}}">{{ ingredient }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="InputBev3">Beverage 3</label>
+                                        <select id="InputBev3" name="InputBev3">
+                                            <option value="-1">None</option>
+                                            {% for ingredient in ingredients %}
+                                                <option value="{{ingredient}}">{{ ingredient }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="InputBev4">Beverage 4</label>
+                                        <select id="InputBev4" name="InputBev4">
+                                            <option value="-1">None</option>
+                                            {% for ingredient in ingredients %}
+                                                <option value="{{ingredient}}">{{ ingredient }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <form role="form" id="add-drink-form" action="/employee_drinks" method="POST">
+                                        <button type="submit" class="btn btn-primary" name="add-drink" value="add_drink" id="add-drink-submit">Add Drink</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        </div>
+    </div>
+{% endblock %}
