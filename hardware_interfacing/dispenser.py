@@ -1,10 +1,15 @@
 #Control for 6Shot dispensing mechanism 
 #imports
+from global_var import DrinkInfo, EmployeeInfo, IngredientInfo
+from database import db, Employees, Users, Credentials, Drinks, Ingredients
 
 #global constants
 CAN_CAPACITY = 2000 #mL
 MAX_DRINK_VOLUME = 341 # mL ~= 12oz, top line of a red solo cup
 EMPTY_INGREDIENT = ['NONE', 0 , 0]
+
+# local vars
+drinkQueue = []
 
 # CANISTER
 class can:
@@ -167,13 +172,14 @@ class cylinder:
         #pull from queue
 # END OF CYLINDER
 
-class drinkQueue:
-    # database pull?
-    # class order?
-    dq = []
 
 # drink loading from database?
-def loadDrink():
+def loadDrink(drinkID):
     # GET from database
-    # return drink
+    db_drink = Drinks.query.filter_by(id = drinkID).first()
+    dname = db_drink.name
+    dr = drink(dname)
+    
+
+    # return dr
     pass
