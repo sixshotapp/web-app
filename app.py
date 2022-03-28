@@ -3,6 +3,7 @@ from crypt import methods
 from flask import Flask, flash, render_template, redirect, request, redirect, session
 from flask_bcrypt import Bcrypt
 from global_var import DrinkInfo, EmployeeInfo, IngredientInfo, DrinkInfo
+# from flask_sqlalchemy import SQLAlchemy
 
 # Local Imports
 from database import db, Employees, Users, Credentials, Drinks, Ingredients
@@ -12,6 +13,7 @@ bcrypt = Bcrypt(app)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///6shot_db.db'
 app.config.update(SESSION_COOKIE_SAMESITE = "None", SESSION_COOKIE_SECURE = True)
+# db = SQLAlchemy(app)
 db.init_app(app)
 db.app = app
 
@@ -308,13 +310,15 @@ def ingredients():
             change_name = request.form["changeName"]
             change_availability = request.form.get("changeAvailability")
             change_pump = request.form.get("changePump")
+            change_alcohol = request.form.get("ChangeAlcohol")
             ingredient_id = request.form.get("ingredientID")
             try:
                 ingredient = Ingredients.query.filter_by(id = ingredient_id).first()
                 change_availability = ingredient.available if change_availability == None else 1 if change_availability == "1" else 0
                 change_pump = ingredient.pump if change_pump == None else change_pump
+                change_alcohol = 0 if change_alcohol == "" else change_alcohol
 
-                if (change_name == ingredient.name and change_availability == ingredient.available and change_pump == ingredient.pump):
+                if (change_name == ingredient.name and change_availability == ingredient.available and change_pump == ingredient.pump and change_alcohol == ingredient.alcohol):
                     flash('No changes made.')
                 else:
                     if (change_name != ingredient.name):
@@ -336,6 +340,10 @@ def ingredients():
                         else:
                             flash('Error adding ingredient, pump is taken.')
 
+                    if (change_alcohol != ingredient.alcohol):
+                        ingredient.alcohol = change_alcohol
+                        db.session.commit()
+
                 return redirect('/ingredients')
             except Exception:
                 flash('Error updating ingredient, please try again.')
@@ -345,12 +353,15 @@ def ingredients():
             name = request.form.get("InputName")
             availability = request.form.get("inputAvailability")
             pump = request.form.get("inputPump")
+            alcohol = request.form.get("InputAlcohol")
             try:
+                alcohol = 0 if alcohol == "" else alcohol
                 check_pump = Ingredients.query.filter_by(pump = pump).first()
                 if check_pump is None or check_pump.pump == -1:
                     add_ingredient = Ingredients(name = name,
                                                 available = availability,
-                                                pump = pump)
+                                                pump = pump,
+                                                alcohol = alcohol)
                     db.session.add(add_ingredient)
                     db.session.commit()
                     return redirect("/ingredients") 
@@ -381,6 +392,7 @@ def ingredients():
         new_ingredient.name = ingredient.name
         new_ingredient.available = ingredient.available
         new_ingredient.pump = ingredient.pump
+        new_ingredient.alcohol = ingredient.alcohol
         ingredients.append(new_ingredient)
     ingredients.sort(reverse=True, key=lambda x: x.pump)
     return render_template('ingredients.html', ingredients = ingredients)
@@ -398,9 +410,9 @@ def employee_drinks():
             drink_id = request.form.get("drinkID")
             try:
                 drink = Drinks.query.filter_by(id = drink_id).first()
-                print(change_price)
-                print(drink.price)
-                # change_price = drink.available if change_price == None else 0
+                # print(change_price)
+                # print(drink.price)
+                # # change_price = drink.available if change_price == None else 0
                 change_bev1 = drink.bev1 if change_bev1 == "-1" else change_bev1
                 change_bev2 = drink.bev2 if change_bev2 == "-1" else change_bev2
                 change_bev3 = drink.bev3 if change_bev3 == "-1" else change_bev3
@@ -496,6 +508,8 @@ def employee_drinks():
         new_drink.bev2 = drink.bev2
         new_drink.bev3 = drink.bev3
         new_drink.bev4 = drink.bev4
+        new_drink.bev5 = drink.bev5
+        new_drink.bev6 = drink.bev6
         drinks.append(drink)
     drinks.sort()
 

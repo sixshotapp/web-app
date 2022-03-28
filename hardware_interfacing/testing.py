@@ -55,6 +55,7 @@ def main():
     # waterTest()
     # dispenseTest()
     qTest()
+    dispenseTest()
 
 
     

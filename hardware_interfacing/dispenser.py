@@ -11,6 +11,12 @@ EMPTY_INGREDIENT = ['NONE', 0 , 0]
 # local vars
 drinkQueue = []
 
+
+#global constants
+CAN_CAPACITY = 2000 # mL
+MAX_DRINK_VOLUME = 341 # mL ~= 12oz, top line of a red solo cup
+EMPTY_INGREDIENT = ['NONE', 0 , 0]
+
 # CANISTER
 class can:
     ingredient_name = 'EMPTY'
@@ -182,4 +188,13 @@ def loadDrink(drinkID):
     
 
     # return dr
+class drinkQueue:
+    # database pull?
+    # class order?
+    dq = []
+
+# drink loading from database?
+def loadDrink():
+    # GET from database
+    # return drink
     pass

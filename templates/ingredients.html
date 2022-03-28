@@ -40,6 +40,7 @@
                     <th>Name</th>
                     <th>Available</th> 
                     <th>Pump</th>
+                    <th>Alcohol Percentage</th>
                     <th>Edit</th>
                     <th>Remove</th>
                 </tr>
@@ -53,10 +54,10 @@
                                 <input type="hidden" id="ingredientID" name="ingredientID" value="{{ ingredient.id }}">
                                 <th>
                                     <div class="form-group">
-                                        <input type="text" value="{{ingredient.name}}" class="form-control" name="changeName" id="changeName"/>
+                                        <input type="text" value="{{ ingredient.name }}" class="form-control" name="changeName" id="changeName"/>
                                     </div>
                                 </th>
-                                <td>
+                                <th>
                                     <!-- {% if ingredient.available == 0 %}
                                         <h4>No</h4>
                                     {% else %}
@@ -99,6 +100,11 @@
                                             <option value="2">2</option>
                                             <option value="1">1</option>
                                         </select>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="form-group">
+                                        <input type="number" min="0.00" max="10000.00" step="any" class="form-control" value="{{ ingredient.alcohol }}" name="ChangeAlcohol" id="ChangeAlcohol"/>
                                     </div>
                                 </th>
                                 <th>
@@ -203,6 +209,10 @@
                                             <option value="2">2</option>
                                             <option value="1">1</option>
                                         </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="InputAlcohol">Alcohol Percentage</label>
+                                        <input type="number" min="0.00" max="10000.00" step="any" class="form-control" name="InputAlcohol" id="InputAlcohol" placeholder="Enter %" />
                                     </div>
                                 </div>
                                 <div class="modal-footer">
