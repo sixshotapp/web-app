@@ -169,7 +169,8 @@ class cylinder:
 
 class drinkQueue:
     # database pull?
-    pass
+    # class order?
+    dq = []
 
 # drink loading from database?
 def loadDrink():
