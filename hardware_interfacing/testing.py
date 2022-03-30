@@ -35,7 +35,9 @@ def dispenseTest():
     testCylinder = cylinder()
     testCylinder.editCan(0, "stoli_vodka", 750)
     testCylinder.editCan(1, "wildTurkey_bourbon", 750)
-    testCylinder.editCan(2, "coca_cola", 20)
+    testCylinder.editCan(2, "coca_cola", 2000)
+    testCylinder.info()
+    print('-'*20)
     
     testDrink = drink('whiskey&coke')
     testDrink.addIngredient("wildTurkey_bourbon", 20, 0.4)
@@ -43,6 +45,7 @@ def dispenseTest():
     # testDrink.addIngredient("stuff", 10)
 
     testCylinder.makeDrink(testDrink)
+    testCylinder.info()
 
 def qTest():
     drinkQueue.append('ur mom')
@@ -60,7 +63,7 @@ def main():
     # dispenseTest()
     # qTest()
     # dispenseTest()
-    pass
+    loadTest()
 
 
 

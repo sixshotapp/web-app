@@ -139,7 +139,8 @@ class cylinder:
             self.rotate()
 
     def dispense(self, vol, pos):
-        # for each can, if a cup under it needs the ingredient
+        # for each can, if a cup under it needs the ingredient,
+        # drain the can
         if (self.spout != pos):
             while (self.spout != pos):
                 self.rotate()
@@ -173,12 +174,18 @@ class cylinder:
                         return False
                     else:
                         continue
+        print("DRINK CAN BE MADE")
         return True
     
     def makeDrink(self, d:drink):
         if not (self.checkDrink(d)):
             return False
             print('DRINK CREATION FAILED')
+        for c in self.slot:
+            for i in d.ingredients:
+                if (c.ingredient_name==i[0]):
+                    c.drain(i[1])
+                    continue
         
 
 # END OF CYLINDER
@@ -190,37 +197,37 @@ def loadDrink(drinkID):
     dname = db_drink.name
     dr = drink(dname)
 
-    if 1: #not (db_drink.bev1.name != ''): 
+    if not (db_drink.bev1.name != ''): 
         dr.addIngredient(
             db_drink.bev1.name,
             db_drink.vol1,
             db_drink.bev1.alcohol)
     
-    if 1: #not (db_drink.bev2.name != ''): 
+    if not (db_drink.bev2.name != ''): 
         dr.addIngredient(
             db_drink.bev2.name,
             db_drink.vol2,
             db_drink.bev2.alcohol)
 
-    if 1: #not (db_drink.bev3.name != ''): 
+    if not (db_drink.bev3.name != ''): 
         dr.addIngredient(
             db_drink.bev3.name,
             db_drink.vol3,
             db_drink.bev3.alcohol)
 
-    if 1: #not (db_drink.bev4.name != ''): 
+    if not (db_drink.bev4.name != ''): 
         dr.addIngredient(
             db_drink.bev4.name,
             db_drink.vol4,
             db_drink.bev4.alcohol)
 
-    if 1: #not (db_drink.bev5.name != ''): 
+    if not (db_drink.bev5.name != ''): 
         dr.addIngredient(
             db_drink.bev5.name,
             db_drink.vol5,
             db_drink.bev5.alcohol)
 
-    if 1: #not (db_drink.bev6.name != ''): 
+    if not (db_drink.bev6.name != ''): 
         dr.addIngredient(
             db_drink.bev6.name,
             db_drink.vol6,
