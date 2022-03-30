@@ -3,7 +3,7 @@ from crypt import methods
 from flask import Flask, flash, render_template, redirect, request, redirect, session
 from flask_bcrypt import Bcrypt
 from global_var import DrinkInfo, EmployeeInfo, IngredientInfo, DrinkInfo
-from dlnvalidation import is_valid
+from hardware_interfacing.dispenser import * 
 
 # Local Imports
 from database import db, Employees, Users, Credentials, Drinks, Ingredients
@@ -455,7 +455,6 @@ def employee_drinks():
             return redirect("/employee_drinks") 
 
         elif "add-drink" in request.form:
-            print("test1")
             name = request.form.get("InputName")
             price = request.form.get("InputPrice")
             bev1 = request.form.get("InputBev1")
@@ -512,6 +511,7 @@ def employee_drinks():
 
     drinks = []
     for drink in Drinks.query.all():
+        print(drink.name)
         new_drink = DrinkInfo()
         new_drink.id = drink.id
         new_drink.name = drink.name
@@ -535,6 +535,11 @@ def employee_drinks():
     for ingredient in Ingredients.query.all():
         ingredients.append(ingredient.name)
     ingredients.sort()
+
+    db_drink = Drinks.query.filter_by(name = "testDrink").first()
+    print(db_drink.name)
+    testDrink = loadDrink(db_drink)
+    testDrink.info()
     return render_template('employee_drinks.html', ingredients = ingredients, drinks = drinks)
 
 @app.route('/order')
@@ -548,4 +553,8 @@ def logout():
     return redirect('/')
 
 if __name__ == '__main__':
+    # db_drink = Drinks.query.filter_by(id = 1).first()
+    # print(db_drink.id)
+    # testDrink = loadDrink(1)
+    # testDrink.info()
     app.run(debug=True)
