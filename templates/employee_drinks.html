@@ -39,9 +39,17 @@
                 <th>Name</th>
                 <th>Price</th> 
                 <th>Beverage 1</th>
+                <th>Volume 1</th>
                 <th>Beverage 2</th>
+                <th>Volume 2</th>
                 <th>Beverage 3</th>
+                <th>Volume 3</th>
                 <th>Beverage 4</th>
+                <th>Volume 4</th>
+                <th>Beverage 5</th>
+                <th>Volume 5</th>
+                <th>Beverage 6</th>
+                <th>Volume 6</th>
                 <th>Edit</th>
                 <th>Remove</th>
                 </tr>
@@ -80,6 +88,11 @@
                                 </th>
                                 <th>
                                     <div class="form-group">
+                                        <input type="text" value="{{ drink.vol1 }}" class="form-control" name="changeVol1" id="changeVol1"/>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="form-group">
                                         <select id="ChangeBev2" name="ChangeBev2" style="background-color: black;">
                                             <option value="-1">
                                                 {% if drink.bev2 == -1 %}
@@ -92,6 +105,11 @@
                                                 <option value="{{ingredient}}">{{ ingredient }}</option>
                                             {% endfor %}
                                         </select>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="form-group">
+                                        <input type="text" value="{{ drink.vol2 }}" class="form-control" name="changeVol2" id="changeVol2"/>
                                     </div>
                                 </th>
                                 <th>
@@ -112,6 +130,11 @@
                                 </th>
                                 <th>
                                     <div class="form-group">
+                                        <input type="text" value="{{ drink.vol3 }}" class="form-control" name="changeVol3" id="changeVol3"/>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="form-group">
                                         <select id="ChangeBev4" name="ChangeBev4" style="background-color: black;">
                                             <option value="-1">
                                                 {% if drink.bev4 == "-1" %}
@@ -127,6 +150,53 @@
                                     </div>
                                 </th>
                                 <th>
+                                    <div class="form-group">
+                                        <input type="text" value="{{ drink.vol4 }}" class="form-control" name="changeVol4" id="changeVol4"/>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="form-group">
+                                        <select id="ChangeBev5" name="ChangeBev5" style="background-color: black;">
+                                            <option value="-1">
+                                                {% if drink.bev5 == "-1" %}
+                                                    <h4>None</h4>
+                                                {% else %}
+                                                    {{ drink.bev5 }}
+                                                {% endif %}
+                                            </option>
+                                            {% for ingredient in ingredients %}
+                                                <option value="{{ingredient}}">{{ ingredient }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="form-group">
+                                        <input type="text" value="{{ drink.vol5 }}" class="form-control" name="changeVol5" id="changeVol5"/>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="form-group">
+                                        <select id="ChangeBev6" name="ChangeBev6" style="background-color: black;">
+                                            <option value="-1">
+                                                {% if drink.bev6 == "-1" %}
+                                                    <h4>None</h4>
+                                                {% else %}
+                                                    {{ drink.bev6 }}
+                                                {% endif %}
+                                            </option>
+                                            {% for ingredient in ingredients %}
+                                                <option value="{{ingredient}}">{{ ingredient }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="form-group">
+                                        <input type="text" value="{{ drink.vol6 }}" class="form-control" name="changeVol6" id="changeVol6"/>
+                                    </div>
+                                </th>
+                                <th>
                                     <form id = "edit-drink" action = "/employee_drinks" method = "POST" style="text-align: center;">
                                         <button type="submit" class="btn btn-primary" style = "border: black" name ="edit-drink" value="{{ drink.id }}">Submit Changes</button>
                                     </form>
@@ -136,74 +206,6 @@
                                         <button type="submit" class="btn btn-primary" style = "border: black" name ="remove-drink" value="{{ drink.id }}">X</button>
                                     </form>
                                 </th>
-                                <!-- <th>
-                                    <form method="post">
-                                        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#editDrink">Submit Changes</button>
-                                        Modal
-                                        <div class="modal fade reveal-modal" id="editDrink" tabindex="-1" role="dialog" aria-labelledby="drinkModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog" role="document">
-                                                Modal content
-                                                <div class="modal-content" style="background-color: white; color: black;">
-                                                    <div class="modal-header">
-                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                        <h4 class="modal-title">Edit Drink</h4>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <div class="form-group">
-                                                            <label for="InputName">Change Name</label>
-                                                            <input type="text" class="form-control" name="changeName" id="changeName" placeholder="Enter name" />
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="InputPrice">Change Price</label>
-                                                            <input type="number" min="0.00" max="10000.00" step="any" class="form-control" name="ChangePrice" id="ChangePrice" placeholder="Enter Price"/>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="InputBev1">Change Beverage 1</label>
-                                                            <select id="ChangeBev1" name="ChangeBev1">
-                                                                <option value="-1">None</option>
-                                                                {% for ingredient in ingredients %}
-                                                                    <option value="{{ingredient}}">{{ ingredient }}</option>
-                                                                {% endfor %}
-                                                            </select>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="InputBev2">Change Beverage 2</label>
-                                                            <select id="ChangeBev2" name="ChangeBev2">
-                                                                <option value="-1">None</option>
-                                                                {% for ingredient in ingredients %}
-                                                                    <option value="{{ingredient}}">{{ ingredient }}</option>
-                                                                {% endfor %}
-                                                            </select>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="InputBev3">Change Beverage 3</label>
-                                                            <select id="ChangeBev3" name="ChangeBev3">
-                                                                <option value="-1">None</option>
-                                                                {% for ingredient in ingredients %}
-                                                                <option value="{{ingredient}}">{{ ingredient }}</option>
-                                                                {% endfor %}
-                                                            </select>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="InputBev4">Change Beverage 4</label>
-                                                            <select id="ChangeBev4" name="ChangeBev4">
-                                                                <option value="-1">None</option>
-                                                                {% for ingredient in ingredients %}
-                                                                    <option value="{{ingredient}}">{{ ingredient }}</option>
-                                                                {% endfor %}
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <form role="form" id="change-drink-form" action="/employee_drinks" method="POST">
-                                                            <button type="submit" class="btn btn-primary" name="change-drink" value="change_drink" id="change-drijk-submit">Save Changes</button>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </th> -->
                             </tr>
                         </form>
                 </div> 
@@ -241,6 +243,10 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
+                                        <label for="InputVol1">Volume in mL</label>
+                                        <input type="number" min="0.00" max="10000.00" step="any" class="form-control" name="InputVol1" id="InputVol1" placeholder="Enter Volume" />
+                                    </div>
+                                    <div class="form-group">
                                         <label for="InputBev2">Beverage 2</label>
                                         <select id="InputBev2" name="InputBev2">
                                             <option value="-1">None</option>
@@ -248,6 +254,10 @@
                                                 <option value="{{ingredient}}">{{ ingredient }}</option>
                                             {% endfor %}
                                         </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="InputVol2">Volume in mL</label>
+                                        <input type="number" min="0.00" max="10000.00" step="any" class="form-control" name="InputVol2" id="InputVol2" placeholder="Enter Volume" />
                                     </div>
                                     <div class="form-group">
                                         <label for="InputBev3">Beverage 3</label>
@@ -259,6 +269,10 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
+                                        <label for="InputVol3">Volume in mL</label>
+                                        <input type="number" min="0.00" max="10000.00" step="any" class="form-control" name="InputVol3" id="InputVol3" placeholder="Enter Volume" />
+                                    </div>
+                                    <div class="form-group">
                                         <label for="InputBev4">Beverage 4</label>
                                         <select id="InputBev4" name="InputBev4">
                                             <option value="-1">None</option>
@@ -266,6 +280,10 @@
                                                 <option value="{{ingredient}}">{{ ingredient }}</option>
                                             {% endfor %}
                                         </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="InputVol4">Volume in mL</label>
+                                        <input type="number" min="0.00" max="10000.00" step="any" class="form-control" name="InputVol4" id="InputVol4" placeholder="Enter Volume" />
                                     </div>
                                 </div>
                                 <div class="modal-footer">
