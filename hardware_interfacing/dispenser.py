@@ -1,10 +1,21 @@
 #Control for 6Shot dispensing mechanism 
 #imports
+import sys
+import os
+current = os.path.dirname(os.path.realpath(__file__))
+parent = os.path.dirname(current)
+sys.path.append(parent)
+sys.path.append('../web-app')
+from global_var import DrinkInfo, EmployeeInfo, IngredientInfo
+from database import db, Employees, Users, Credentials, Drinks, Ingredients
 
 #global constants
-CAN_CAPACITY = 2000 # mL
+CAN_CAPACITY = 2000 #mL
 MAX_DRINK_VOLUME = 341 # mL ~= 12oz, top line of a red solo cup
 EMPTY_INGREDIENT = ['NONE', 0 , 0]
+
+# local vars
+drinkQueue = []
 
 # CANISTER
 class can:
@@ -48,7 +59,7 @@ class drink:
     def __init__(self, namestr):
         self.name = namestr
 
-    def addIngredient(self, ingstr, v, a=0):
+    def addIngredient(self, ingstr, v, a=0.00):
         if (self.volume + v > MAX_DRINK_VOLUME):
             print('2000mL volume per drink would be exceeded')
             return False
@@ -128,6 +139,7 @@ class cylinder:
             self.rotate()
 
     def dispense(self, vol, pos):
+        # for each can, if a cup under it needs the ingredient
         if (self.spout != pos):
             while (self.spout != pos):
                 self.rotate()
@@ -161,19 +173,58 @@ class cylinder:
                         return False
                     else:
                         continue
+        return True
     
     def makeDrink(self, d:drink):
-        self.checkDrink(d)
-        #pull from queue
+        if not (self.checkDrink(d)):
+            return False
+            print('DRINK CREATION FAILED')
+        
+
 # END OF CYLINDER
 
-class drinkQueue:
-    # database pull?
-    # class order?
-    dq = []
 
-# drink loading from database?
-def loadDrink():
-    # GET from database
-    # return drink
-    pass
+# drink loading from database
+def loadDrink(drinkID):
+    db_drink = Drinks.query.filter_by(id = drinkID).first()
+    dname = db_drink.name
+    dr = drink(dname)
+
+    if 1: #not (db_drink.bev1.name != ''): 
+        dr.addIngredient(
+            db_drink.bev1.name,
+            db_drink.vol1,
+            db_drink.bev1.alcohol)
+    
+    if 1: #not (db_drink.bev2.name != ''): 
+        dr.addIngredient(
+            db_drink.bev2.name,
+            db_drink.vol2,
+            db_drink.bev2.alcohol)
+
+    if 1: #not (db_drink.bev3.name != ''): 
+        dr.addIngredient(
+            db_drink.bev3.name,
+            db_drink.vol3,
+            db_drink.bev3.alcohol)
+
+    if 1: #not (db_drink.bev4.name != ''): 
+        dr.addIngredient(
+            db_drink.bev4.name,
+            db_drink.vol4,
+            db_drink.bev4.alcohol)
+
+    if 1: #not (db_drink.bev5.name != ''): 
+        dr.addIngredient(
+            db_drink.bev5.name,
+            db_drink.vol5,
+            db_drink.bev5.alcohol)
+
+    if 1: #not (db_drink.bev6.name != ''): 
+        dr.addIngredient(
+            db_drink.bev6.name,
+            db_drink.vol6,
+            db_drink.bev6.alcohol)
+
+    return dr
+    

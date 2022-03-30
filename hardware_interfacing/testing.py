@@ -44,12 +44,24 @@ def dispenseTest():
 
     testCylinder.makeDrink(testDrink)
 
+def qTest():
+    drinkQueue.append('ur mom')
+    print(drinkQueue)
+
+def loadTest():
+    testDrink = loadDrink(1)
+    testDrink.info()
+
 #MAIN
 def main():
     # infotest()
     # drinktest()
     # waterTest()
-    dispenseTest()
+    # dispenseTest()
+    # qTest()
+    # dispenseTest()
+    pass
+
 
 
     
