@@ -3,16 +3,18 @@ from crypt import methods
 from flask import Flask, flash, render_template, redirect, request, redirect, session
 from flask_bcrypt import Bcrypt
 from global_var import DrinkInfo, EmployeeInfo, IngredientInfo, DrinkInfo
-from dlnvalidation import is_valid
+from flask_sqlalchemy import SQLAlchemy
 
 # Local Imports
 from database import db, Employees, Users, Credentials, Drinks, Ingredients
+from hardware_interfacing.dispenser import *
 
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///6shot_db.db'
 app.config.update(SESSION_COOKIE_SAMESITE = "None", SESSION_COOKIE_SECURE = True)
+# db = SQLAlchemy(app)
 db.init_app(app)
 db.app = app
 
@@ -409,6 +411,9 @@ def employee_drinks():
             drink_id = request.form.get("drinkID")
             try:
                 drink = Drinks.query.filter_by(id = drink_id).first()
+                # print(change_price)
+                # print(drink.price)
+                # # change_price = drink.available if change_price == None else 0
                 change_bev1 = drink.bev1 if change_bev1 == "-1" else change_bev1
                 change_bev2 = drink.bev2 if change_bev2 == "-1" else change_bev2
                 change_bev3 = drink.bev3 if change_bev3 == "-1" else change_bev3
@@ -459,34 +464,18 @@ def employee_drinks():
             name = request.form.get("InputName")
             price = request.form.get("InputPrice")
             bev1 = request.form.get("InputBev1")
-            vol1 = request.form.get("InputVol1")
             bev2 = request.form.get("InputBev2")
-            vol2 = request.form.get("InputVol2")
             bev3 = request.form.get("InputBev3")
-            vol3 = request.form.get("InputVol3")
             bev4 = request.form.get("InputBev4")
-            vol4 = request.form.get("InputVol4")
-            bev5 = request.form.get("InputBev5")
-            vol5 = request.form.get("InputVol5")
-            bev6 = request.form.get("InputBev6")
-            vol6 = request.form.get("InputVol6")
             try:
                 check_name = Drinks.query.filter_by(name = name).first()
                 if check_name is None:
                     add_drink = Drinks(name = name,
                                         price = price,
                                         bev1 = bev1,
-                                        vol1 = vol1,
                                         bev2 = bev2,
-                                        vol2 = vol2,
                                         bev3 = bev3,
-                                        vol3 = vol3,
-                                        bev4 = bev4,
-                                        vol4 = vol4,
-                                        bev5 = bev5,
-                                        vol5 = vol5,
-                                        bev6 = bev6,
-                                        vol6 = vol6)
+                                        bev4 = bev4)
                     db.session.add(add_drink)
                     db.session.commit()
                     return redirect("/employee_drinks") 
@@ -517,19 +506,13 @@ def employee_drinks():
         new_drink.name = drink.name
         new_drink.price = drink.price
         new_drink.bev1 = drink.bev1
-        new_drink.vol1 = drink.vol1
         new_drink.bev2 = drink.bev2
-        new_drink.vol2 = drink.vol2
         new_drink.bev3 = drink.bev3
-        new_drink.vol3 = drink.vol3
         new_drink.bev4 = drink.bev4
-        new_drink.vol4 = drink.vol4
         new_drink.bev5 = drink.bev5
-        new_drink.vol5 = drink.vol5
         new_drink.bev6 = drink.bev6
-        new_drink.vol6 = drink.vol6
         drinks.append(drink)
-    # drinks.sort()
+    drinks.sort()
 
     ingredients = []
     for ingredient in Ingredients.query.all():
@@ -548,4 +531,6 @@ def logout():
     return redirect('/')
 
 if __name__ == '__main__':
+    testDrink = loadDrink(1)
+    testDrink.info()
     app.run(debug=True)

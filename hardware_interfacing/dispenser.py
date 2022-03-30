@@ -8,6 +8,8 @@ sys.path.append(parent)
 sys.path.append('../web-app')
 from global_var import DrinkInfo, EmployeeInfo, IngredientInfo
 from database import db, Employees, Users, Credentials, Drinks, Ingredients
+from flask_sqlalchemy import SQLAlchemy
+
 
 #global constants
 CAN_CAPACITY = 2000 #mL
