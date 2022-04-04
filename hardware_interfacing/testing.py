@@ -52,18 +52,17 @@ def qTest():
     print(drinkQueue)
 
 def loadTest():
-    testDrink = loadDrink(1)
-    testDrink.info()
+    testDrink = loadDrink(2)
+    # testDrink.info()
 
 #MAIN
 def main():
     # infotest()
     # drinktest()
     # waterTest()
-    # dispenseTest()
     # qTest()
-    # dispenseTest()
-    loadTest()
+    dispenseTest()
+    # loadTest()
 
 
 

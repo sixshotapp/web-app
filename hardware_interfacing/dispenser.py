@@ -194,46 +194,45 @@ class cylinder:
 
 
 # drink loading from database
-def loadDrink(db_drink):
-    # db_drink = Drinks.query.filter_by(id = drinkID).first()
-    dname = db_drink.name
-    dr = drink(dname)
+def loadDrink(drinkID):
+    db_drink = Drinks.query.filter_by(id = drinkID).first()
+    print(db_drink)
 
-    if not (db_drink.bev1 != ''): 
-        dr.addIngredient(
-            db_drink.bev1,
-            db_drink.vol1,
-            db_drink.bev1.alcohol)
+    # if not (db_drink.bev1 != ''): 
+    #     dr.addIngredient(
+    #         db_drink.bev1,
+    #         db_drink.vol1,
+    #         db_drink.bev1.alcohol)
     
-    if not (db_drink.bev2 != ''): 
-        dr.addIngredient(
-            db_drink.bev2,
-            db_drink.vol2,
-            db_drink.bev2.alcohol)
+    # if not (db_drink.bev2 != ''): 
+    #     dr.addIngredient(
+    #         db_drink.bev2,
+    #         db_drink.vol2,
+    #         db_drink.bev2.alcohol)
 
-    if not (db_drink.bev3 != ''): 
-        dr.addIngredient(
-            db_drink.bev3,
-            db_drink.vol3,
-            db_drink.bev3.alcohol)
+    # if not (db_drink.bev3 != ''): 
+    #     dr.addIngredient(
+    #         db_drink.bev3,
+    #         db_drink.vol3,
+    #         db_drink.bev3.alcohol)
 
-    if not (db_drink.bev4 != ''): 
-        dr.addIngredient(
-            db_drink.bev4,
-            db_drink.vol4,
-            db_drink.bev4.alcohol)
+    # if not (db_drink.bev4 != ''): 
+    #     dr.addIngredient(
+    #         db_drink.bev4,
+    #         db_drink.vol4,
+    #         db_drink.bev4.alcohol)
 
-    if not (db_drink.bev5 != ''): 
-        dr.addIngredient(
-            db_drink.bev5,
-            db_drink.vol5,
-            db_drink.bev5.alcohol)
+    # if not (db_drink.bev5 != ''): 
+    #     dr.addIngredient(
+    #         db_drink.bev5,
+    #         db_drink.vol5,
+    #         db_drink.bev5.alcohol)
 
-    if not (db_drink.bev6 != ''): 
-        dr.addIngredient(
-            db_drink.bev6,
-            db_drink.vol6,
-            db_drink.bev6.alcohol)
+    # if not (db_drink.bev6 != ''): 
+    #     dr.addIngredient(
+    #         db_drink.bev6,
+    #         db_drink.vol6,
+    #         db_drink.bev6.alcohol)
 
-    return dr
+    # return dr
     

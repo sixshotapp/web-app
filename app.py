@@ -519,10 +519,10 @@ def employee_drinks():
         ingredients.append(ingredient.name)
     ingredients.sort()
 
-    db_drink = Drinks.query.filter_by(name = "testDrink").first()
-    print(db_drink.name)
-    testDrink = loadDrink(db_drink)
-    testDrink.info()
+    # db_drink = Drinks.query.filter_by(name = "testDrink").first()
+    # print(db_drink.name)
+    # testDrink = loadDrink(db_drink)
+    # testDrink.info()
     return render_template('employee_drinks.html', ingredients = ingredients, drinks = drinks)
 
 @app.route('/order')
@@ -536,11 +536,8 @@ def logout():
     return redirect('/')
 
 if __name__ == '__main__':
-    print('test')
-    testDrink = loadDrink(1)
-    testDrink.info()
-    # db_drink = Drinks.query.filter_by(id = 1).first()
-    # print(db_drink.id)
-    # testDrink = loadDrink(1)
+    # print('test')
+    testDrink = loadDrink(2)
     # testDrink.info()
+    
     app.run(debug=True)
