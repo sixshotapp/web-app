@@ -7,7 +7,7 @@ parent = os.path.dirname(current)
 sys.path.append(parent)
 sys.path.append('../web-app')
 from global_var import DrinkInfo, EmployeeInfo, IngredientInfo
-from database import db, Employees, Users, Credentials, Drinks, Ingredients
+from database import db, Employees, Users, Credentials, Drinks, Ingredients, Orders
 from flask_sqlalchemy import SQLAlchemy
 
 
@@ -66,7 +66,7 @@ class drink:
             print('2000mL volume per drink would be exceeded')
             return False
         if (0 > a or a > 1):
-            print('non-percentage alcohol content')
+            print('NON-PERCENTAGE ALCOHOL CONTENT FOR')
             return False
         for i in range(len(self.ingredients)):
             if (self.ingredients[i] == EMPTY_INGREDIENT):
@@ -182,8 +182,8 @@ class cylinder:
     
     def makeDrink(self, d:drink):
         if not (self.checkDrink(d)):
-            return False
             print('DRINK CREATION FAILED')
+            return False
         for c in self.slot:
             for i in d.ingredients:
                 if (c.ingredient_name==i[0]):
@@ -239,3 +239,6 @@ def loadDrink(drinkID):
 
     return dr
     
+def MakeOrder(cyl:cylinder):
+    order = Orders.query.first()
+    print(order.id)

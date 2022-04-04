@@ -58,3 +58,20 @@ class Ingredients(db.Model):
 
     def __repr__(self):
         return '<Drink %r>' % self.id
+
+class Orders(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    user_id = db.Column(db.Integer, nullable = False)
+    drink_id = db.Column(db.Integer, nullable = False)
+
+    def __repr__(self):
+        return '<Orders %r>' % self.id
+
+class DispenserSlots(db.Model): # NEEDS TO BE ADDED TO .DB FILE
+    slot = db.Column(db.Integer, primary_key = True)
+    ingredient_id = db.Column(db.Integer, nullable = False)
+    is_current_spout = db.Column(db.Boolean, nullable = False)
+    volume = db.Column(db.Double, nullable = False)
+
+    def __repr__(self):
+        return '<Slots %r>' % self.id

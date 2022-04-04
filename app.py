@@ -532,11 +532,10 @@ def logout():
     return redirect('/')
 
 if __name__ == '__main__':
-    # print('test')
     testDrink = loadDrink(2)
     testDrink.info()
-    # db_drink = Drinks.query.filter_by(id = 2).first()
-    # print(db_drink.name)
-
+    # testCylinder = cylinder()
+    # testCylinder.editCan("jackdaniels", 750)
+    # testCylinder.editCan("coke")
     
     app.run(debug=True)
