@@ -86,6 +86,7 @@ class drink:
         return False
 
     def update(self):
+        # print('updating')
         self.volume = 0
         alc_total = 0
         for ing in self.ingredients:
@@ -196,43 +197,45 @@ class cylinder:
 # drink loading from database
 def loadDrink(drinkID):
     db_drink = Drinks.query.filter_by(id = drinkID).first()
-    print(db_drink)
+    dr = drink(str(db_drink.name))
+    # print(db_drink.bev2)
+    # print(str(db_drink.bev2 != "None"))
+    if (str(db_drink.bev1) != "None"):
+        ingredient1 = Ingredients.query.filter_by(name = db_drink.bev1).first()
+        dr.addIngredient(
+            str(db_drink.bev1),
+            float(db_drink.vol1),
+            float(ingredient1.alcohol))
+    if (str(db_drink.bev2) != "None"):
+        ingredient2 = Ingredients.query.filter_by(name = db_drink.bev2).first()
+        dr.addIngredient(
+            str(db_drink.bev2),
+            float(db_drink.vol2),
+            float(ingredient2.alcohol))
+    if (str(db_drink.bev3) != "None"):
+        ingredient3 = Ingredients.query.filter_by(name = db_drink.bev3).first()
+        dr.addIngredient(
+            str(db_drink.bev3),
+            float(db_drink.vol3),
+            float(ingredient3.alcohol))
+    if (str(db_drink.bev4) != "None"):
+        ingredient4 = Ingredients.query.filter_by(name = db_drink.bev4).first()
+        dr.addIngredient(
+            str(db_drink.bev4),
+            float(db_drink.vol4),
+            float(ingredient4.alcohol))
+    if (str(db_drink.bev5) != "None"):
+        ingredient5 = Ingredients.query.filter_by(name = db_drink.bev5).first()
+        dr.addIngredient(
+            str(db_drink.bev5),
+            float(db_drink.vol5),
+            float(ingredient5.alcohol))
+    if (str(db_drink.bev6) != "None"):
+        ingredient6 = Ingredients.query.filter_by(name = db_drink.bev6).first()
+        dr.addIngredient(
+            str(db_drink.bev6),
+            float(db_drink.vol6),
+            float(ingredient6.alcohol))
 
-    # if not (db_drink.bev1 != ''): 
-    #     dr.addIngredient(
-    #         db_drink.bev1,
-    #         db_drink.vol1,
-    #         db_drink.bev1.alcohol)
-    
-    # if not (db_drink.bev2 != ''): 
-    #     dr.addIngredient(
-    #         db_drink.bev2,
-    #         db_drink.vol2,
-    #         db_drink.bev2.alcohol)
-
-    # if not (db_drink.bev3 != ''): 
-    #     dr.addIngredient(
-    #         db_drink.bev3,
-    #         db_drink.vol3,
-    #         db_drink.bev3.alcohol)
-
-    # if not (db_drink.bev4 != ''): 
-    #     dr.addIngredient(
-    #         db_drink.bev4,
-    #         db_drink.vol4,
-    #         db_drink.bev4.alcohol)
-
-    # if not (db_drink.bev5 != ''): 
-    #     dr.addIngredient(
-    #         db_drink.bev5,
-    #         db_drink.vol5,
-    #         db_drink.bev5.alcohol)
-
-    # if not (db_drink.bev6 != ''): 
-    #     dr.addIngredient(
-    #         db_drink.bev6,
-    #         db_drink.vol6,
-    #         db_drink.bev6.alcohol)
-
-    # return dr
+    return dr
     

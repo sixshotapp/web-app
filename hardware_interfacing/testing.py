@@ -53,7 +53,7 @@ def qTest():
 
 def loadTest():
     testDrink = loadDrink(2)
-    # testDrink.info()
+    testDrink.info()
 
 #MAIN
 def main():
@@ -61,8 +61,8 @@ def main():
     # drinktest()
     # waterTest()
     # qTest()
-    dispenseTest()
-    # loadTest()
+    # dispenseTest()
+    loadTest()
 
 
 
