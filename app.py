@@ -55,7 +55,10 @@ def index():
 
 @app.route('/dashboard', methods=['GET', 'POST'])
 def dashboard():
-    isEmployee = 1 if session['role'] == 'employee' else 0
+    if session['role'] == 'employee':
+        isEmployee = 1
+    else:
+        isEmployee = 0
     drinkNames = []
     drinkNames2 = []
     description = ""
