@@ -1,75 +1,40 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
+
 {% endblock %}
 
 {% block body %}
-<div class="container">
-  <!-- Button trigger modal -->
-  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
-    Launch demo modal
-  </button>
+<div class="container d-flex p-2 justify-content-center align-items-center" style="height: 100vh;">
+  <div class="col px-5">
 
-  <!-- Modal -->
-  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          ...
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
-      </div>
+    <div class="row">
+      <h2 style="text-align: center;">
+        <img src="https://i.imgur.com/nD0ZH1P.png" alt="" width="auto" height="60vh">
+      </h2>
     </div>
-  </div>
-<!--<div style="background-color:#C09D73">
 
-  </div>
-  <div class="container">
-    <div style="height: 100vh">
-      <div class="row h-25"></div>
-      <div class="row h-50">
-        <div class="col">
-          <div class="d-flex p-2 justify-content-center align-items-center">
-            <div class="mb-md-4 mt-md-4">
-              <h2 style="text-align: center;">
-                <img src="https://i.imgur.com/nD0ZH1P.png" alt="" width="auto" height="40vh">
-              </h2>
-              <p class="text-center text-white text-50 mb-">welcome!</p>
-              <div class="form-outline text-white form-white text-left mb-2">
-                <input type="text" id="typeEmailX" class="form-control form-control-lg" />
-                <label class="form-label" for="typeEmailX">username</label>
-              </div>
-
-              <div class="form-outline text-white form-white text-left mb-2">
-                <input type="password" id="typePasswordX" class="form-control form-control-lg" />
-                <label class="form-label" for="typePasswordX">password</label>
-              </div>
-              <div class="text-center">
-                <a href="/dashboard" class="btn btn-secondary btn-lg" rol="button">login</a>
-                <a href="/register" class="btn btn-secondary btn-lg" rol="button">register</a>
-              </div>
-              <form id="login-form" action="/dashboard" method="POST">
-              <div class="form-outline form-white text-center mb-2">
-              <button class="btn btn-secondary btn-lg" type="submit">login</button>
-              <a href="/register" class="btn btn-secondary btn-lg" rol="button">register</a>
-            </div>
-          </form>
-        </div>
-      </div>
+    <div class ="row">
+      <p class="text-center text-white text-50 mb-">{{msg}}</p>
     </div>
+
+    <div class="row">
+      <form id="login-form" action="{{ url_for('index') }}" method="POST">
+        <div class="form-outline text-white form-white text-left mb-2">
+          <input type="text" class="form-control {{ validate }}" name="email" id="email" required/>
+          <label class="form-label" for="InputEmail">Email</label>
+        </div>
+        <div class="form-outline text-white form-white text-left mb-2">
+          <input type="password" class="form-control {{ validate }}" name="password" id="password" required/>
+          <label class="form-label" for="InputPassword">Password</label>
+        </div>
+        <div class="form-outline form-white text-center mb-2">
+          <button class="btn btn-secondary btn-lg" type="submit">login</button>
+          <a href="/register" class="btn btn-secondary btn-lg" rol="button">register</a>
+        </div>
+      </form>
+    </div>
+
   </div>
-  <div class="row h-25"></div>
-</div>
-</div>--->
 </div>
 {% endblock %}

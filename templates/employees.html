@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>6Shot | Employees</title>
+{% endblock %}
+
+{% block body %}
+<body style="height: 100vh;">
+  <div class="container">
+
+    <div class ="row" style="height: 10vh;">
+      <div class="d-flex flex-column">
+        <nav class="navbar shadow-lg fixed-top navbar-ght" style="background-color: #50403E!important; height:10vh;">
+          <a class="navbar-brand mx-auto" href="#">
+            <img src="https://i.imgur.com/nD0ZH1P.png" alt="" width="auto" height="40vh">
+          </a>
+        </nav>
+      </div>
+    </div>
+
+    <div class="row" style="height: 80vh; top: 10vh; bottom: 10vh; display: flex; overflow: scroll; flex-direction: column; flex-grow: 1;">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <h1 class="as_heading as_heading_center py-2" style="text-align: center; color: white;">Employee Dashboard</h1>
+              <table class="table" style="color: white; font-size: clamp(0rem, 3vw, 1rem); text-align: center; vertical-align: center;">
+                <thead style="text-align: center;">
+                  <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Remove</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for employee in employees %}
+                  <div class="employee">
+                    <tr>
+                      <th>{{ employee.first_name }} {{ employee.last_name }}</th>
+                      <th>{{ employee.email }}</th>
+                      <th>
+                        <form id = "remove-employee" action = "/employees" method = "POST" style="text-align: center;">
+                          <button type="submit" class="btn-close" style = "border: black" name ="remove-employee" value="{{employee.email}}"></button>
+                        </form>
+                      </th>
+                    </tr>
+                  </div>
+                  {% endfor %}
+                </tbody>
+              </table>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#addEmployeeModal">
+          Add Employee
+        </button>
+      </div>
+    </div>
+
+    <nav class="navbar fixed-bottom navbar-light justify-content-center" style="background-color: #50403E!important; height:10vh;">
+      <div class="btn-group dropup" style="right: 33vw;">
+        <a class="nav-link" href="#" id="navbarDropdown" role="button" data-bs-display="static" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="bi-list" style="font-size: 1.5rem; color: white;"></i>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-start" aria-labelledby="navbarDropdown">
+          <li><a class="dropdown-item" href="#">Filter by:</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" href="#">Something else here</a></li>
+        </ul>
+      </div>
+
+      <div class="btn-group dropup" style="left: 33vw;">
+        <a class="nav-link" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="bi-file-person" style="font-size: 1.5rem; color: white;"></i>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+          <li><a class="dropdown-item" href="/profile">Profile</a></li>
+          <li><a class="dropdown-item" href="/dashboard">Dashboard</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" href="/logout">Logout</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <form method="post">
+      <div class="modal fade" id="addEmployeeModal" tabindex="-1" aria-labelledby="employeeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="Add Employee"</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <div class="form-group">
+                  <label for="InputEmail">Enter employee email to add.</label>
+                  <input type="text" class="form-control" name="addEmployeeEmail" id="addEmployeeEmail" placeholder="Enter Employee Email"/>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <form role="form" id="add-employee-form" action="/employees" method="POST">
+                  <button type="submit" class="btn btn-primary" name="add-employee" value="add_employee" id="add-employee-submit">Add Employee</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+
+    </div>
+  </body>
+  {% endblock %}

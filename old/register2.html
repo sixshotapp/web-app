@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
+{% endblock %}
+
+{% block body %}
+<div style="background-color:#C09D73">
+  <div class="container">
+    <div style="height: 100vh">
+      <div class="row h-25"></div>
+      <div class="row h-50">
+        <div class="col">
+          <div class="d-flex p-2 justify-content-center align-items-center">
+            <div class="mb-md-4 mt-md-4">
+              <h2 style="text-align: center;">
+                <img src="https://i.imgur.com/nD0ZH1P.png" alt="" width="auto" height="40vh">
+              </h2>
+              <p class="text-center text-white text-50 mb-">{{msg}}</p>
+              <form role="form" id="create-profile-form" action="{{ url_for('register') }}" method="POST">
+                <div class="form-outline text-white form-white text-left mb-2">
+                  <input type="text" class="form-control" name="reg_firstName" id="reg_firstName"/>
+                  <label class="form-label" for="InputFirstName">First Name</label>
+                </div>
+                <div class="form-outline text-white form-white text-left mb-2">
+                  <input type="text" class="form-control" name="lastName" id="lastName"/>
+                  <label class="form-label" for="InputLastName">Last Name</label>
+                </div>
+                <div class="form-outline text-white form-white text-left mb-2">
+                  <input type="text" class="form-control" name="email" id="email"/>
+                  <label class="form-label" for="InputEmail">Email</label>
+                </div>
+                <div class="form-outline text-white form-white text-left mb-2">
+                  <input type="password" class="form-control" name="password" id="password"/>
+                  <label class="form-label" for="InputPassword">Password</label>
+                </div>
+                <div class="form-outline form-white text-center mb-2">
+                  <button class="btn btn-secondary btn-lg" type="submit" value="create-profile" id="create-profile-submit">Register</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row h-25"></div>
+    </div>
+  </div>
+</div>
+{% endblock %}
