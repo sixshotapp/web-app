@@ -1,5 +1,5 @@
 # External Imports
-from crypt import methods
+# from crypt import methods
 from flask import Flask, flash, render_template, redirect, request, redirect, session
 from flask_bcrypt import Bcrypt
 from global_var import DrinkInfo, EmployeeInfo, IngredientInfo, DrinkInfo
@@ -536,6 +536,7 @@ def logout():
     return redirect('/')
 
 if __name__ == '__main__':
+    print('test')
     testDrink = loadDrink(1)
     testDrink.info()
     # db_drink = Drinks.query.filter_by(id = 1).first()
