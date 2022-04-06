@@ -2,7 +2,13 @@
 from crypt import methods
 from flask import Flask, flash, render_template, redirect, request, redirect, session
 from flask_bcrypt import Bcrypt
+from flask_sockets import Sockets
 from global_var import DrinkInfo, EmployeeInfo, IngredientInfo, DrinkInfo
+
+import os
+import logging
+import redis
+import gevent
 
 # Local Imports
 from database import db, Employees, Users, Credentials, Drinks, Ingredients
@@ -14,6 +20,9 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///6shot_db.db'
 app.config.update(SESSION_COOKIE_SAMESITE = None, SESSION_COOKIE_SECURE = True)
 db.init_app(app)
 db.app = app
+
+sockets = Sockets(app)
+redis = redis.from_url(REDIS_URL)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
