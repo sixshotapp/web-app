@@ -2,9 +2,14 @@ bcrypt
 Flask
 Flask-Bcrypt
 Flask-RESTful
+Flask-Sockets
+gevent
+gevent-websocket
+greenlet
 gunicorn
 itsdangerous
 Jinja2
 peewee
+redis==2.10.5
 Werkzeug
 Flask-SQLAlchemy

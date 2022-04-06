@@ -1,0 +1,188 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>6Shot | Ingredients</title>
+{% endblock %}
+
+{% block body %}
+<body style="height: 100vh;">
+  <div class="container">
+
+    <div class ="row" style="height: 10vh;">
+      <div class="d-flex flex-column">
+        <nav class="navbar shadow-lg fixed-top navbar-ght" style="background-color: #50403E!important; height:10vh;">
+          <a class="navbar-brand mx-auto" href="#">
+            <img src="https://i.imgur.com/nD0ZH1P.png" alt="" width="auto" height="40vh">
+          </a>
+        </nav>
+      </div>
+    </div>
+
+    <div class="row" style="height: 80vh; top: 10vh; bottom: 10vh; display: flex; overflow: scroll; flex-direction: column; flex-grow: 1;">
+      <div class="container">
+        <div class="row" style="display: flex; align-items: center; justify-content: center;">
+          <div class="col">
+            <h1 class="as_heading as_heading_center py-2" style="text-align: center; color: white;">Employee Dashboard</h1>
+            <table class="table" style="color: white; font-size: clamp(0rem, 3vw, 1rem); text-align: center; vertical-align: center;">
+              <thead style="text-align: center;">
+                <tr>
+                  <th>Name</th>
+                  <th>Available</th>
+                  <th>Pump</th>
+                  <th>Alc %</th>
+                  <th>Remove</th>
+                  <th>Edit</th>
+                </tr>
+              </thead>
+              <tbody>
+
+                {% for ingredient in ingredients %}
+                <form method="post">
+                  <input type="hidden" id="ingredientID" name="ingredientID" value="{{ ingredient.id }}">
+                  <tr>
+                    <th>
+                      <div class="form-group">
+                        <input type="text" style="font-size: 0.8rem; width: 4rem; height: 1.15rem;" value="{{ ingredient.name }}" class="form-control" name="changeName" id="changeName"/>
+                      </div>
+                    </th>
+
+                    <th>
+                      <div class="form-group">
+                        <select id="changeAvailability" name="changeAvailability" style="background-color: white;">
+                          <option value="none" selected disabled hidden>
+                            {% if ingredient.available == 0 %}
+                            <h4>N</h4>
+                            {% else %}
+                            <h4>Y</h4>
+                            {% endif %}
+                          </option>
+                          <option value="1">Y</option>
+                          <option value="0">N</option>
+                        </select>
+                      </div>
+                    </th>
+
+                    <th>
+                      <div class="form-group">
+                        <select id="changePump" name="changePump" style="background-color: white;">
+                          <option value="none" selected disabled hidden>
+                            {% if ingredient.pump == -1 %}
+                            <h4>-1</h4>
+                            {% else %}
+                            {{ ingredient.pump }}
+                            {% endif %}
+                          </option>
+                          <option value="-1">-1</option>
+                          <option value="6">6</option>
+                          <option value="5">5</option>
+                          <option value="4">4</option>
+                          <option value="3">3</option>
+                          <option value="2">2</option>
+                          <option value="1">1</option>
+                        </select>
+                      </div>
+                    </th>
+
+                    <th>
+                      <div class="form-group">
+                        <input type="number" style="font-size: 0.8rem; width: 2.5rem; height: 1.15rem;" min="0.00" max="10000.00" step="any" class="form-control" value="{{ ingredient.alcohol }}" name="ChangeAlcohol" id="ChangeAlcohol"/>
+                      </div>
+                    </th>
+
+                    <th>
+                      <button type="submit" class="btn-close" style = "border: black" name ="remove-ingredient" value="{{ ingredient.name }}"></button>
+                    </th>
+
+                    <th>
+                      <button type="submit" class="btn-close" style="padding: 0 0; border:none; height: 1rem;" name ="edit-ingredient" value="{{ ingredient.id }}"></button>
+                    </th>
+                  </form>
+                  {% endfor %}
+
+
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="container">
+          <form method="post">
+            <button type="button" class="btn btn-secondary btm-sm" data-bs-toggle="modal" data-bs-target="#addIngredientModal">Add Ingredient</button>
+            <!-- Modal -->
+            <div class="modal fade reveal-modal" id="addIngredientModal" tabindex="-1" role="dialog" aria-labelledby="newIngredientModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <!-- Modal content-->
+                <div class="modal-content" style="background-color: white; color: black;">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Add Ingredient</h4>
+                  </div>
+                  <div class="modal-body">
+                    <div class="form-group">
+                      <label for="InputName">Name</label>
+                      <input type="text" class="form-control" name="InputName" id="InputName" placeholder="Enter name" />
+                    </div>
+                    <div class="form-group">
+                      <label for="InputAvailability">Availability</label>
+                      <select id="inputAvailability" name="inputAvailability">
+                        <option value="1">Available</option>
+                        <option value="0">Not Available</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="InputPump">Pump</label>
+                      <select id="inputPump" name="inputPump">
+                        <option value="-1">None</option>
+                        <option value="6">6</option>
+                        <option value="5">5</option>
+                        <option value="4">4</option>
+                        <option value="3">3</option>
+                        <option value="2">2</option>
+                        <option value="1">1</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="InputAlcohol">Alcohol Percentage</label>
+                      <input type="number" min="0.00" max="10000.00" step="any" class="form-control" name="InputAlcohol" id="InputAlcohol" placeholder="Enter %" />
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <form role="form" id="add-ingredient-form" action="/ingredients" method="POST">
+                      <button type="submit" class="btn btn-primary" name="add-ingredient" value="add_ingredient" id="add-ingredient-submit">Add Ingredient</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <nav class="navbar fixed-bottom navbar-light justify-content-center" style="background-color: #50403E!important; height:10vh;">
+        <div class="btn-group dropup" style="right: 33vw;">
+          <a class="nav-link" href="#" id="navbarDropdown" role="button" data-bs-display="static" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi-list" style="font-size: 1.5rem; color: white;"></i>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-start" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="#">Filter by:</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+          </ul>
+        </div>
+
+        <div class="btn-group dropup" style="left: 33vw;">
+          <a class="nav-link" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi-file-person" style="font-size: 1.5rem; color: white;"></i>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="/profile">Profile</a></li>
+            <li><a class="dropdown-item" href="/dashboard">Dashboard</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="/logout">Logout</a></li>
+          </ul>
+        </div>
+      </nav>
+
+    </div>
+  </body>
+  {% endblock %}
