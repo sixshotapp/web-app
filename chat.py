@@ -14,8 +14,6 @@ app.debug = 'DEBUG' in os.environ
 sockets = Sockets(app)
 redis = redis.from_url(REDIS_URL)
 
-
-
 class ChatBackend(object):
     """Interface for registering and updating WebSocket clients."""
 
