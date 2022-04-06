@@ -16,31 +16,6 @@ app.config.update(SESSION_COOKIE_SAMESITE = None, SESSION_COOKIE_SECURE = True)
 db.init_app(app)
 db.app = app
 
-app = Flask(__name__)
-app.debug = 'DEBUG' in os.environ
-
-@sockets.route('/submit')
-def inbox(ws):
-    """Receives incoming chat messages, inserts them into Redis."""
-    while not ws.closed:
-        # Sleep to prevent *constant* context-switches.
-        gevent.sleep(0.1)
-        message = ws.receive()
-
-        if message:
-            app.logger.info(u'Inserting message: {}'.format(message))
-            redis.publish(REDIS_CHAN, message)
-
-@sockets.route('/receive')
-def outbox(ws):
-    """Sends outgoing chat messages, via `ChatBackend`."""
-    chats.register(ws)
-
-    while not ws.closed:
-        # Context switch while `ChatBackend.start` is running in the background.
-        gevent.sleep(0.1)
-
-
 @app.route('/', methods=['GET', 'POST'])
 def index():
     msg = "welcome!"
