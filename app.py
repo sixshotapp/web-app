@@ -3,7 +3,6 @@ from crypt import methods
 from flask import Flask, flash, render_template, redirect, request, redirect, session
 from flask_bcrypt import Bcrypt
 from global_var import DrinkInfo, EmployeeInfo, IngredientInfo, DrinkInfo
-from flask_sockets import Sockets
 
 # Local Imports
 from database import db, Employees, Users, Credentials, Drinks, Ingredients
