@@ -10,6 +10,6 @@ gunicorn
 itsdangerous
 Jinja2
 peewee
-redis==2.10.5
+redis
 Werkzeug
 Flask-SQLAlchemy
