@@ -1,0 +1,299 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>6Shot | Employees</title>
+{% endblock %}
+
+{% block body %}
+<body style="height: 100vh;">
+  <div class="container">
+
+    <div class ="row" style="height: 10vh;">
+      <div class="d-flex flex-column">
+        <nav class="navbar shadow-lg fixed-top navbar-ght" style="background-color: #50403E!important; height:10vh;">
+          <a class="navbar-brand mx-auto" href="#">
+            <img src="https://i.imgur.com/nD0ZH1P.png" alt="" width="auto" height="40vh">
+          </a>
+        </nav>
+      </div>
+    </div>
+
+    <div class="row" style="height: 80vh; top: 10vh; bottom: 10vh; display: flex; overflow: scroll; flex-direction: column; flex-grow: 1;">
+
+      <div class="container">
+        <h1 class="as_heading as_heading_center py-2 text-white" style="text-align: center;">Beverages</h1>
+        <table class="table" style="color: white; font-size: clamp(0rem, 3vw, 1rem); text-align: center;">
+          <thead style="text-align: center;">
+            <tr>
+              <th>Drink</th>
+              <th>Price</th>
+              <th>Edit</th>
+            </tr>
+          </thead>
+
+          {% for drink, name in zip(drinks, names) %}
+          <form method="post">
+            <div class="modal fade" id="exampleModal{{ name }}" tabindex="-1" aria-labelledby="exampleModal{{ name }}Label" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+
+                  <div class="modal-header">
+                    <button type="button" class="close" data-bs-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">{{ drink.name }}</h4>
+                  </div>
+
+                  <div class="modal-body text-center">
+
+                    <div class ="form-group">
+
+                      <input type="hidden" id="drinkID" name="drinkID" value="{{ drink.id }}">
+                      <div class="form-group pb-2">
+                        <input type="text" style="width: 35vw;" class="form-control" value = "{{ drink.name }}" name="changeName" id="changeName"/>
+                        <input type="number" style="width: 35vw;" min="0.00" max="10000.00" step="any" class="form-control" value="{{ drink.price }}" name="ChangePrice" id="ChangePrice"/>
+                      </div>
+
+                      <div class="form-group pb-2">
+                        <select id="ChangeBev1" name="ChangeBev1" style="background-color: white;">
+                          <option value="-1">
+                            {% if drink.bev1 == -1 %}
+                            <h4>None</h4>
+                            {% else %}
+                            {{ drink.bev1 }}
+                            {% endif %}
+                          </option>
+                          {% for ingredient in ingredients %}
+                          <option value="{{ingredient}}">{{ ingredient }}</option>
+                          {% endfor %}
+                        </select>
+                        <input type="text" value="{{ drink.vol1 }}" class="form-control" name="changeVol1" id="changeVol1"/>
+                      </div>
+
+                      <div class="form-group pb-2">
+                        <select id="ChangeBev2" name="ChangeBev2" style="background-color: white;">
+                          <option value="-1">
+                            {% if drink.bev2 == -1 %}
+                            <h4>None</h4>
+                            {% else %}
+                            {{ drink.bev2 }}
+                            {% endif %}
+                          </option>
+                          {% for ingredient in ingredients %}
+                          <option value="{{ingredient}}">{{ ingredient }}</option>
+                          {% endfor %}
+                        </select>
+                        <input type="text" value="{{ drink.vol2 }}" class="form-control" name="changeVol2" id="changeVol2"/>
+                      </div>
+
+                      <div class="form-group pb-2">
+                        <select id="ChangeBev3" name="ChangeBev3" style="background-color: white;">
+                          <option value="-1">
+                            {% if drink.bev3 == -1 %}
+                            <h4>None</h4>
+                            {% else %}
+                            {{ drink.bev3 }}
+                            {% endif %}
+                          </option>
+                          {% for ingredient in ingredients %}
+                          <option value="{{ingredient}}">{{ ingredient }}</option>
+                          {% endfor %}
+                        </select>
+                        <input type="text" value="{{ drink.vol3 }}" class="form-control" name="changeVol3" id="changeVol3"/>
+                      </div>
+
+                      <div class="form-group pb-2">
+                        <select id="ChangeBev4" name="ChangeBev4" style="background-color: white;">
+                          <option value="-1">
+                            {% if drink.bev4 == "-1" %}
+                            <h4>None</h4>
+                            {% else %}
+                            {{ drink.bev4 }}
+                            {% endif %}
+                          </option>
+                          {% for ingredient in ingredients %}
+                          <option value="{{ingredient}}">{{ ingredient }}</option>
+                          {% endfor %}
+                        </select>
+                        <input type="text" value="{{ drink.vol4 }}" class="form-control" name="changeVol4" id="changeVol4"/>
+                      </div>
+
+                      <div class="form-group pb-2">
+                        <select id="ChangeBev5" name="ChangeBev5" style="background-color: white;">
+                          <option value="-1">
+                            {% if drink.bev5 == "None" %}
+                            <h4>None</h4>
+                            {% else %}
+                            {{ drink.bev5 }}
+                            {% endif %}
+                          </option>
+                          {% for ingredient in ingredients %}
+                          <option value="{{ingredient}}">{{ ingredient }}</option>
+                          {% endfor %}
+                        </select>
+                        <input type="text" value="{{ drink.vol5 }}" class="form-control" name="changeVol5" id="changeVol5"/>
+                      </div>
+
+                      <div class="form-group pb-2">
+                        <select id="ChangeBev6" name="ChangeBev6" style="background-color: white;">
+                          <option value="-1">
+                            {% if drink.bev6 == "-1" %}
+                            <h4>None</h4>
+                            {% else %}
+                            {{ drink.bev6 }}
+                            {% endif %}
+                          </option>
+                          {% for ingredient in ingredients %}
+                          <option value="{{ingredient}}">{{ ingredient }}</option>
+                          {% endfor %}
+                        </select>
+                        <input type="text" value="{{ drink.vol6 }}" class="form-control" name="changeVol6" id="changeVol6"/>
+                      </div>
+                    </div>
+
+
+
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <form role="form" id = "remove-drink" action = "/drinks" method = "POST">
+                        <button type="submit" class="btn btn-primary" name ="remove-drink" value="{{ drink.id }}" id="remove-drink-submit">Remove</button>
+                      </form>
+                      <form role="form" id = "edit-drink" action = "/drinks" method = "POST">
+                        <button type="submit" class="btn btn-primary" name ="edit-drink" value="{{ drink.id }}" id="edit-drink-submit">Submit</button>
+                      </form>
+                    </div>
+
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </form>
+
+          <tbody style="vertical-align: middle;">
+            <tr>
+              <td>{{ drink.name }}</td>
+              <td style="text-align: center; vertical-align: center;">{{ drink.price }}</td>
+              <td style="text-align: center; vertical-align: center;"><a href="#" class="btn" style="padding:0; border:0;" data-bs-toggle="modal" data-bs-display="static" data-bs-target="#exampleModal{{ name }}">
+                <i class="bi-gear" style="font-size: 0.7rem; color: white;"></i>
+              </a></td>
+            </tr>
+          </tbody>
+
+          {% endfor %}
+        </table>
+
+        <div class="container">
+          <a href="#" class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#addDrinkModal">Add Drink</a>
+          <form method="post">
+            <!-- Modal -->
+            <div class="modal fade reveal-modal" id="addDrinkModal" tabindex="-1" role="dialog" aria-labelledby="newDrinkModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <!-- Modal content-->
+                <div class="modal-content" style="background-color: white; color: black;">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-bs-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Add Drink</h4>
+                  </div>
+                  <div class="modal-body">
+                    <div class="form-group">
+                      <label for="InputName">Name</label>
+                      <input type="text" class="form-control" name="InputName" id="InputName" placeholder="Enter name" />
+                    </div>
+                    <div class="form-group">
+                      <label for="InputPrice">Price</label>
+                      <input type="number" min="0.00" max="10000.00" step="any" class="form-control" name="InputPrice" id="InputPrice" placeholder="Enter Price" />
+                    </div>
+                    <div class="form-group">
+                      <label for="InputBev1">Beverage 1</label>
+                      <select id="InputBev1" name="InputBev1">
+                        <option value="-1">None</option>
+                        {% for ingredient in ingredients %}
+                        <option value="{{ingredient}}">{{ ingredient }}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="InputVol1">Volume in mL</label>
+                      <input type="number" min="0.00" max="10000.00" step="any" class="form-control" name="InputVol1" id="InputVol1" placeholder="Enter Volume" />
+                    </div>
+                    <div class="form-group">
+                      <label for="InputBev2">Beverage 2</label>
+                      <select id="InputBev2" name="InputBev2">
+                        <option value="-1">None</option>
+                        {% for ingredient in ingredients %}
+                        <option value="{{ingredient}}">{{ ingredient }}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="InputVol2">Volume in mL</label>
+                      <input type="number" min="0.00" max="10000.00" step="any" class="form-control" name="InputVol2" id="InputVol2" placeholder="Enter Volume" />
+                    </div>
+                    <div class="form-group">
+                      <label for="InputBev3">Beverage 3</label>
+                      <select id="InputBev3" name="InputBev3">
+                        <option value="-1">None</option>
+                        {% for ingredient in ingredients %}
+                        <option value="{{ingredient}}">{{ ingredient }}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="InputVol3">Volume in mL</label>
+                      <input type="number" min="0.00" max="10000.00" step="any" class="form-control" name="InputVol3" id="InputVol3" placeholder="Enter Volume" />
+                    </div>
+                    <div class="form-group">
+                      <label for="InputBev4">Beverage 4</label>
+                      <select id="InputBev4" name="InputBev4">
+                        <option value="-1">None</option>
+                        {% for ingredient in ingredients %}
+                        <option value="{{ingredient}}">{{ ingredient }}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="InputVol4">Volume in mL</label>
+                      <input type="number" min="0.00" max="10000.00" step="any" class="form-control" name="InputVol4" id="InputVol4" placeholder="Enter Volume" />
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <form role="form" id="add-drink-form" action="/drinks" method="POST">
+                      <button type="submit" class="btn btn-primary" name="add-drink" value="add_drink" id="add-drink-submit">Add Drink</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+
+    <nav class="navbar fixed-bottom navbar-light justify-content-center" style="background-color: #50403E!important; height:10vh;">
+      <div class="btn-group dropup" style="right: 33vw;">
+        <a class="nav-link" href="#" id="navbarDropdown" role="button" data-bs-display="static" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="bi-list" style="font-size: 1.5rem; color: white;"></i>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-start" aria-labelledby="navbarDropdown">
+          <li><a class="dropdown-item" href="#">Filter by:</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" href="#">Something else here</a></li>
+        </ul>
+      </div>
+
+      <div class="btn-group dropup" style="left: 33vw;">
+        <a class="nav-link" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="bi-file-person" style="font-size: 1.5rem; color: white;"></i>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+          <li><a class="dropdown-item" href="/profile">Profile</a></li>
+          <li><a class="dropdown-item" href="/dashboard">Dashboard</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" href="/logout">Logout</a></li>
+        </ul>
+      </div>
+    </nav>
+
+  </div>
+</body>
+{% endblock %}

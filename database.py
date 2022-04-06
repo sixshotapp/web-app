@@ -34,9 +34,17 @@ class Drinks(db.Model):
     name = db.Column(db.String(20), nullable = False)
     price = db.Column(db.Integer, nullable = False)
     bev1 = db.Column(db.String(20), nullable = False)
+    vol1 = db.Column(db.Integer, nullable = True)
     bev2 = db.Column(db.String(20), nullable = True)
+    vol2 = db.Column(db.Integer, nullable = True)
     bev3 = db.Column(db.String(20), nullable = True)
+    vol3 = db.Column(db.Integer, nullable = True)
     bev4 = db.Column(db.String(20), nullable = True)
+    vol4 = db.Column(db.Integer, nullable = True)
+    bev5 = db.Column(db.String(20), nullable = True)
+    vol5 = db.Column(db.Integer, nullable = True)
+    bev6 = db.Column(db.String(20), nullable = True)
+    vol6 = db.Column(db.Integer, nullable = True)
 
     def __repr__(self):
         return '<Drink %r>' % self.id
@@ -45,7 +53,8 @@ class Ingredients(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String(20), nullable = False)
     available = db.Column(db.Integer, nullable = False)
-    pump = db.Column(db.Integer, nullable = False)
+    pump = db.Column(db.Integer, nullable = True)
+    alcohol = db.Column(db.Integer, nullable = True)
 
     def __repr__(self):
         return '<Drink %r>' % self.id

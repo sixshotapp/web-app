@@ -55,10 +55,7 @@ def index():
 
 @app.route('/dashboard', methods=['GET', 'POST'])
 def dashboard():
-    if session['role'] == 'employee':
-        isEmployee = 1
-    else:
-        isEmployee = 0
+    isEmployee = 1 if session['role'] == 'employee' else 0
     drinkNames = []
     drinkNames2 = []
     description = ""
@@ -182,6 +179,158 @@ def employees():
             new_emp.email = Credentials.query.filter_by(id = employee.credential_id).first().email
             employees.append(new_emp)
         return render_template('employees.html', employees = employees)
+
+@app.route('/drinks', methods=['POST', 'GET'])
+def drinks():
+    if request.method == 'POST':
+        print("bussy")
+        if "edit-drink" in request.form:
+            print(request.form)
+            drink_id = request.form.get("drinkID")
+            change_name = request.form.get("changeName")
+            change_price = request.form.get("ChangePrice")
+            change_bev1 = request.form.get("ChangeBev1")
+            change_bev2 = request.form.get("ChangeBev2")
+            change_bev3 = request.form.get("ChangeBev3")
+            change_bev4 = request.form.get("ChangeBev4")
+            print(drink_id, change_name)
+            try:
+                drink = Drinks.query.filter_by(id = drink_id).first()
+                change_bev1 = drink.bev1 if change_bev1 == "-1" else change_bev1
+                change_bev2 = drink.bev2 if change_bev2 == "-1" else change_bev2
+                change_bev3 = drink.bev3 if change_bev3 == "-1" else change_bev3
+                change_bev4 = drink.bev4 if change_bev4 == "-1" else change_bev4
+
+                if (change_name == drink.name and change_price == drink.price and change_bev1 == drink.bev1 and change_bev2 == drink.bev2 and change_bev3 == drink.bev3 and change_bev4 == drink.bev4):
+                    flash('No changes made.')
+
+                else:
+                    if (change_name != drink.name):
+                        drink.name = change_name
+                        db.session.commit()
+                        flash('Name changed successfully.')
+
+                    if (change_price != drink.price):
+                        drink.price = change_price
+                        db.session.commit()
+                        # flash('Price changed successfully.')
+
+                    if (change_bev1 != drink.bev1):
+                        drink.bev1 = change_bev1
+                        db.session.commit()
+                        flash('Beverage 1 changed successfully for.')
+
+                    if (change_bev2 != drink.bev2):
+                        drink.bev2 = change_bev2
+                        db.session.commit()
+                        flash('Beverage 2 changed successfully.')
+
+                    if (change_bev3 != drink.bev3):
+                        drink.bev3 = change_bev3
+                        db.session.commit()
+                        flash('Beverage 3 changed successfully.')
+
+                    if (change_bev4 != drink.bev4):
+                        drink.bev4 = change_bev4
+                        db.session.commit()
+                        flash('Beverage 4 changed successfully.')
+
+                return redirect('/drinks')
+            except Exception:
+                flash('Error updating drink, please try again.')
+
+            return redirect("/drinks")
+
+        elif "add-drink" in request.form:
+            name = request.form.get("InputName")
+            price = request.form.get("InputPrice")
+            bev1 = request.form.get("InputBev1")
+            vol1 = request.form.get("InputVol1")
+            bev2 = request.form.get("InputBev2")
+            vol2 = request.form.get("InputVol2")
+            bev3 = request.form.get("InputBev3")
+            vol3 = request.form.get("InputVol3")
+            bev4 = request.form.get("InputBev4")
+            vol4 = request.form.get("InputVol4")
+            bev5 = request.form.get("InputBev5")
+            vol5 = request.form.get("InputVol5")
+            bev6 = request.form.get("InputBev6")
+            vol6 = request.form.get("InputVol6")
+            try:
+                check_name = Drinks.query.filter_by(name = name).first()
+                if check_name is None:
+                    add_drink = Drinks(name = name,
+                                        price = price,
+                                        bev1 = bev1,
+                                        vol1 = vol1,
+                                        bev2 = bev2,
+                                        vol2 = vol2,
+                                        bev3 = bev3,
+                                        vol3 = vol3,
+                                        bev4 = bev4,
+                                        vol4 = vol4,
+                                        bev5 = bev5,
+                                        vol5 = vol5,
+                                        bev6 = bev6,
+                                        vol6 = vol6)
+                    db.session.add(add_drink)
+                    db.session.commit()
+                    return redirect("/drinks")
+                else:
+                    flash('Error adding drink, name is taken.')
+                    return redirect("/drinks")
+            except Exception:
+                flash('Error adding drink, please try again.')
+                return redirect("/drinks")
+
+        elif "remove-drink" in request.form:
+            remove_drink = request.form.get("remove-drink")
+            try:
+                drink = Drinks.query.filter_by(id = remove_drink).first()
+                db.session.delete(drink)
+                db.session.commit()
+                flash(remove_drink + ' was removed!')
+                return redirect('/drinks')
+
+            except Exception:
+                flash("Error, couldn't remove drink.")
+                return redirect("/drinks")
+
+    drinksList = []
+    drinksList2 = []
+    for drink in Drinks.query.all():
+        #print(drink.name)
+        new_drink = DrinkInfo()
+        new_drink.id = drink.id
+        new_drink.name = drink.name
+        new_drink.price = drink.price
+        new_drink.bev1 = drink.bev1
+        new_drink.vol1 = drink.vol1
+        new_drink.bev2 = drink.bev2
+        new_drink.vol2 = drink.vol2
+        new_drink.bev3 = drink.bev3
+        new_drink.vol3 = drink.vol3
+        new_drink.bev4 = drink.bev4
+        new_drink.vol4 = drink.vol4
+        new_drink.bev5 = drink.bev5
+        new_drink.vol5 = drink.vol5
+        new_drink.bev6 = drink.bev6
+        new_drink.vol6 = drink.vol6
+        drinksList.append(drink)
+        drinksList2.append(drink.name.replace(" ", ""))
+    # drinks.sort()
+
+    ingredients = []
+    for ingredient in Ingredients.query.all():
+        ingredients.append(ingredient.name)
+    ingredients.sort()
+
+    db_drink = Drinks.query.filter_by(name = "testDrink").first()
+    #print(db_drink.name)
+    #testDrink = loadDrink(db_drink)
+    #testDrink.info()
+    return render_template('drinks.html', ingredients = ingredients, drinks = drinksList, names = drinksList2, zip=zip)
+
 
 @app.route('/logout')
 def logout():
