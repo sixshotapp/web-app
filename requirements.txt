@@ -2,7 +2,6 @@ bcrypt
 Flask
 Flask-Bcrypt
 Flask-RESTful
-Flack-Sockets
 gunicorn
 itsdangerous
 Jinja2
