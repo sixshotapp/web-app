@@ -8,6 +8,39 @@ from flask_sockets import Sockets
 # Local Imports
 from database import db, Employees, Users, Credentials, Drinks, Ingredients
 
+app = Flask(__name__)
+bcrypt = Bcrypt(app)
+app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///6shot_db.db'
+app.config.update(SESSION_COOKIE_SAMESITE = None, SESSION_COOKIE_SECURE = True)
+db.init_app(app)
+db.app = app
+
+app = Flask(__name__)
+app.debug = 'DEBUG' in os.environ
+
+@sockets.route('/submit')
+def inbox(ws):
+    """Receives incoming chat messages, inserts them into Redis."""
+    while not ws.closed:
+        # Sleep to prevent *constant* context-switches.
+        gevent.sleep(0.1)
+        message = ws.receive()
+
+        if message:
+            app.logger.info(u'Inserting message: {}'.format(message))
+            redis.publish(REDIS_CHAN, message)
+
+@sockets.route('/receive')
+def outbox(ws):
+    """Sends outgoing chat messages, via `ChatBackend`."""
+    chats.register(ws)
+
+    while not ws.closed:
+        # Context switch while `ChatBackend.start` is running in the background.
+        gevent.sleep(0.1)
+
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
     msg = "welcome!"
