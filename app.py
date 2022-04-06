@@ -553,8 +553,4 @@ def logout():
     return redirect('/')
 
 if __name__ == '__main__':
-    # db_drink = Drinks.query.filter_by(id = 1).first()
-    # print(db_drink.id)
-    # testDrink = loadDrink(1)
-    # testDrink.info()
     app.run(debug=True)
