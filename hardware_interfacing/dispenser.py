@@ -1,4 +1,5 @@
-#Control for 6Shot dispensing mechanism 
+# Control for 6Shot dispensing mechanism 
+
 #imports
 import sys
 import os
@@ -7,7 +8,7 @@ parent = os.path.dirname(current)
 sys.path.append(parent)
 sys.path.append('../web-app')
 from global_var import DrinkInfo, EmployeeInfo, IngredientInfo
-from database import db, Employees, Users, Credentials, Drinks, Ingredients, Orders
+from database import *
 from flask_sqlalchemy import SQLAlchemy
 
 
@@ -44,7 +45,8 @@ class can:
 
     def info(self):
         print("\tINGREDIENT: " + self.ingredient_name)
-        print("\tVOLUME: %.2f" % self.current_volume)
+        if (self.ingredient_name != 'EMPTY'):
+            print("\tVOLUME: %.2f" % self.current_volume)
 # END OF CANISTER
 
 # DRINK
@@ -131,7 +133,7 @@ class cylinder:
             self.slot[i].info()
 
     def editCan(self, pos, ingr_name, vol):
-        self.slot[pos].edit(ingr_name, vol)
+        self.slot[pos-1].edit(ingr_name, vol)
 
     def rotate(self):
         #<PHYSICAL ROTATING>
@@ -189,12 +191,12 @@ class cylinder:
                 if (c.ingredient_name==i[0]):
                     c.drain(i[1])
                     continue
-        
-
+        # for ing in d.ingredients:
+        #     self.dispense(ing[1], )
 # END OF CYLINDER
 
-
-# drink loading from database
+# DATABASE INTERFACING
+# drink loading
 def loadDrink(drinkID):
     db_drink = Drinks.query.filter_by(id = drinkID).first()
     dr = drink(str(db_drink.name))
@@ -239,6 +241,46 @@ def loadDrink(drinkID):
 
     return dr
     
-def MakeOrder(cyl:cylinder):
+def makeOrder(cyl:cylinder):
     order = Orders.query.first()
-    print(order.id)
+    print(order.drink_id)
+    dr = loadDrink(order.drink_id)
+    cyl.makeDrink(dr)
+    cyl.info()
+    # update slot database entry
+    for i in range(6):
+        slot = Slots.query.filter_by(slot = i+1).first()
+        # print(float(slot.volume))
+        # print(float(cyl.slot[i].current_volume))
+        if (float(slot.volume) != float(cyl.slot[i].current_volume)):
+            slot.volume = cyl.slot[i].current_volume
+            db.session.commit()
+        if (i != cyl.spout):
+            print('n')
+        else:
+            print('y')
+        # !! NEED TO UPDATE SPOUT !!
+    # pop queue
+    db.session.delete(order)
+    db.session.commit()
+
+# dispenser contents loading
+def loadCylinder():
+    cyl = cylinder()
+    for s in Slots.query.all():
+        # print(s.ingredient_id)
+        if (str(s.ingredient_id) != "None"):
+            ing_pos = s.slot
+            # print(ing_pos)
+            ing = Ingredients.query.filter_by(id = s.ingredient_id).first()
+            ing_name = str(ing.name)
+            # print(ing_name)
+            ing_vol = float(s.volume)
+            # print(ing_vol)
+            cyl.editCan(ing_pos, ing_name, ing_vol)
+    print('CYLINDER DATA LOADED')
+    cyl.info()
+    return cyl
+
+def loadOrders():
+    pass

@@ -1,4 +1,4 @@
-from dispenser import *
+from hardware_interfacing.dispenser import *
 from time import sleep
 
 #TEST FUNCTIONS
@@ -54,6 +54,16 @@ def qTest():
 def loadTest():
     testDrink = loadDrink(2)
     testDrink.info()
+
+def dbTest():
+    # testDrink = loadDrink(2)
+    # testDrink.info()
+
+    testcyl = loadCylinder()
+    # add_order = Orders(user_id = 1, drink_id = 2)
+    # db.session.add(add_order)
+    # db.session.commit()
+    makeOrder(testcyl)
 
 #MAIN
 def main():

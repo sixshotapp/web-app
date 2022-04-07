@@ -67,11 +67,11 @@ class Orders(db.Model):
     def __repr__(self):
         return '<Orders %r>' % self.id
 
-class DispenserSlots(db.Model): # NEEDS TO BE ADDED TO .DB FILE
+class Slots(db.Model): 
     slot = db.Column(db.Integer, primary_key = True)
     ingredient_id = db.Column(db.Integer, nullable = False)
     is_current_spout = db.Column(db.Boolean, nullable = False)
-    volume = db.Column(db.Double, nullable = False)
+    volume = db.Column(db.Integer, nullable = False)
 
     def __repr__(self):
-        return '<Slots %r>' % self.id
+        return '<Slots %r>' % self.slot

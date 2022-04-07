@@ -1,12 +1,13 @@
 # External Imports
 # from crypt import methods
+from time import sleep
 from flask import Flask, flash, render_template, redirect, request, redirect, session
 from flask_bcrypt import Bcrypt
 from global_var import DrinkInfo, EmployeeInfo, IngredientInfo, DrinkInfo
 from flask_sqlalchemy import SQLAlchemy
 
 # Local Imports
-from database import db, Employees, Users, Credentials, Drinks, Ingredients
+from database import *
 from hardware_interfacing.dispenser import *
 
 app = Flask(__name__)
@@ -532,10 +533,20 @@ def logout():
     return redirect('/')
 
 if __name__ == '__main__':
-    testDrink = loadDrink(2)
-    testDrink.info()
-    # testCylinder = cylinder()
-    # testCylinder.editCan("jackdaniels", 750)
-    # testCylinder.editCan("coke")
+    # testDrink = loadDrink(2)
+    # testDrink.info()
+
+    s1 = Slots.query.filter_by(slot = 1).first()
+    s1.volume = 2000
+    s2 = Slots.query.filter_by(slot = 2).first()
+    s2.volume = 750
+    testcyl = loadCylinder()
+    sleep(2.5)
+    add_order = Orders(user_id = 1, drink_id = 2)
+    db.session.add(add_order)
+    db.session.commit()
+    makeOrder(testcyl)
+    sleep(2.5)
+    testcyl.info()
     
-    app.run(debug=True)
+    app.run(debug=True, use_reloader=False)
