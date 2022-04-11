@@ -2,14 +2,9 @@ bcrypt
 Flask
 Flask-Bcrypt
 Flask-RESTful
-Flask-Sockets
-gevent
-gevent-websocket
 gunicorn
 itsdangerous
 Jinja2
 peewee
-MarkupSafe==0.23
 Werkzeug
 Flask-SQLAlchemy
-redis
