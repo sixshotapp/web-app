@@ -56,7 +56,7 @@ chats.start()
 
 
 @app.route('/')
-def hello():
+def test():
     return render_template('index.html')
 
 @sockets.route('/submit')
