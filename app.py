@@ -21,6 +21,9 @@ app.config.update(SESSION_COOKIE_SAMESITE = None, SESSION_COOKIE_SECURE = True)
 db.init_app(app)
 db.app = app
 
+REDIS_URL = os.environ['REDIS_URL']
+REDIS_CHAN = 'chat'
+
 sockets = Sockets(app)
 redis = redis.from_url(REDIS_URL)
 
