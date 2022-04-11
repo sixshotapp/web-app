@@ -6,6 +6,7 @@ from global_var import DrinkInfo, EmployeeInfo, IngredientInfo, DrinkInfo
 
 # Local Imports
 from database import db, Employees, Users, Credentials, Drinks, Ingredients
+SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
