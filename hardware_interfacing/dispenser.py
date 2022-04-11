@@ -7,7 +7,7 @@ current = os.path.dirname(os.path.realpath(__file__))
 parent = os.path.dirname(current)
 sys.path.append(parent)
 sys.path.append('../web-app')
-from global_var import DrinkInfo, EmployeeInfo, IngredientInfo
+# from global_var import DrinkInfo, EmployeeInfo, IngredientInfo
 from database import *
 from flask_sqlalchemy import SQLAlchemy
 
@@ -35,12 +35,14 @@ class can:
 
     def drain(self, n):
         if (n > self.current_volume):
-            print('INSUFFICIENT CAN VOLUME\n')
+            print('INSUFFICIENT CAN VOLUME (%.2f)' % n)
             return False
         else:
             #<PHYSICAL DRAINING>
             # volume detection?
+            print('%.2f - %.2f' % (self.current_volume, n))
             self.current_volume -= n
+            print('= %.2f' % self.current_volume)
             return True
 
     def info(self):
@@ -57,8 +59,6 @@ class drink:
     ingredients = []
     for i in range(6):
         ingredients.append(EMPTY_INGREDIENT) # name, mL, alc %
-    
-    #  ALL TEMP INSTANCES?
 
     def __init__(self, namestr):
         self.name = namestr
@@ -137,20 +137,21 @@ class cylinder:
 
     def rotate(self):
         #<PHYSICAL ROTATING>
+        print('%d -> %d' % (self.spout, (self.spout + 1) % 6))
         self.spout = (self.spout + 1) % 6 
 
-    def rotate(self, n):
+    def rotateN(self, n):
         for i in range(n):
             self.rotate()
 
     def dispense(self, vol, pos):
-        # for each can, if a cup under it needs the ingredient,
-        # drain the can
         if (self.spout != pos):
             while (self.spout != pos):
                 self.rotate()
-        for i in range(len(self.slot)):
-            self.slot[i].drain(vol)
+        if not self.slot[pos].drain(vol):
+            print('DISPENSING FAILED')
+            return False
+        return True
 
     def checkDrink(self, d:drink):
         # valid drink check
@@ -189,7 +190,10 @@ class cylinder:
         for c in self.slot:
             for i in d.ingredients:
                 if (c.ingredient_name==i[0]):
-                    c.drain(i[1])
+                    # c.drain(i[1])
+                    v = i[1]
+                    p = self.slot.index(c)
+                    self.dispense(v, p)
                     continue
         # for ing in d.ingredients:
         #     self.dispense(ing[1], )
@@ -256,10 +260,10 @@ def makeOrder(cyl:cylinder):
             slot.volume = cyl.slot[i].current_volume
             db.session.commit()
         if (i != cyl.spout):
-            print('n')
+            # print('n')
+            slot.is_current_spout = 0
         else:
-            print('y')
-        # !! NEED TO UPDATE SPOUT !!
+            slot.is_current_spout = 1
     # pop queue
     db.session.delete(order)
     db.session.commit()
@@ -282,5 +286,5 @@ def loadCylinder():
     cyl.info()
     return cyl
 
-def loadOrders():
-    pass
+# def loadOrders():
+#     pass

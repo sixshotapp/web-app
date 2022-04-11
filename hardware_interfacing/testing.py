@@ -1,4 +1,4 @@
-from hardware_interfacing.dispenser import *
+from dispenser import *
 from time import sleep
 
 #TEST FUNCTIONS
@@ -65,6 +65,17 @@ def dbTest():
     # db.session.commit()
     makeOrder(testcyl)
 
+def postest():
+    # a = ['w', 'x', 'y', 'z']
+    # print(a.index('x'))
+    testCylinder = cylinder()
+    testCylinder.editCan(0, "stoli_vodka", 750)
+    testCylinder.editCan(1, "wildTurkey_bourbon", 750)
+    testCylinder.editCan(2, "coca_cola", 2000)
+    print(testCylinder.slot.index(testCylinder.can4))
+    
+
+
 #MAIN
 def main():
     # infotest()
@@ -72,7 +83,8 @@ def main():
     # waterTest()
     # qTest()
     # dispenseTest()
-    loadTest()
+    # loadTest()
+    postest()
     
 
 

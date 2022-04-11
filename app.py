@@ -14,6 +14,8 @@ app = Flask(__name__)
 bcrypt = Bcrypt(app)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///6shot_db.db'
+# postgresURI = 'postgres://stjnqazcphtydh:44eb71e49c23361ff7fdee825421c36da14e3c800c4b894084386877e8157f63@ec2-34-233-0-64.compute-1.amazonaws.com:5432/dassugkj4rqm0n'
+# app.config['SQLALCHEMY_DATABASE_URI'] = postgresURI
 app.config.update(SESSION_COOKIE_SAMESITE = "None", SESSION_COOKIE_SECURE = True)
 # db = SQLAlchemy(app)
 db.init_app(app)
@@ -540,13 +542,14 @@ if __name__ == '__main__':
     s1.volume = 2000
     s2 = Slots.query.filter_by(slot = 2).first()
     s2.volume = 750
+    # db.session.commit()
     testcyl = loadCylinder()
     sleep(2.5)
     add_order = Orders(user_id = 1, drink_id = 2)
     db.session.add(add_order)
     db.session.commit()
     makeOrder(testcyl)
-    sleep(2.5)
-    testcyl.info()
+    # sleep(2.5)
+    # testcyl.info()
     
     app.run(debug=True, use_reloader=False)
