@@ -67,7 +67,6 @@ class ChatBackend(object):
 chats = ChatBackend()
 chats.start()
 
-
 @app.route('/test')
 def test():
     return render_template('test.html')
@@ -506,4 +505,4 @@ def logout():
     return redirect('/')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=app.config['DEBUG'], port=app.config['PORT'])
