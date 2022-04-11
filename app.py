@@ -69,7 +69,7 @@ chats.start()
 
 
 @app.route('/test')
-def hello():
+def test():
     return render_template('test.html')
 
 @sockets.route('/submit')
@@ -504,10 +504,6 @@ def ingredients():
 def logout():
     session.pop('email', None)
     return redirect('/')
-
-@app.route('/test')
-def hello():
-    return render_template('test.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
