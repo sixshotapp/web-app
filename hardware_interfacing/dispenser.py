@@ -15,10 +15,10 @@ from flask_sqlalchemy import SQLAlchemy
 #global constants
 CAN_CAPACITY = 2000 #mL
 MAX_DRINK_VOLUME = 341 # mL ~= 12oz, top line of a red solo cup
-EMPTY_INGREDIENT = ['NONE', 0 , 0]
+EMPTY_INGREDIENT = ['NONE', 0 , 0] # name, mL, alc %
 
 # local vars
-drinkQueue = []
+# drinkQueue = []
 
 # CANISTER
 class can:
@@ -60,7 +60,7 @@ class drink:
     for i in range(6):
         ingredients.append(EMPTY_INGREDIENT) # name, mL, alc %
 
-    def __init__(self, namestr):
+    def __init__(self, namestr = ''):
         self.name = namestr
 
     def addIngredient(self, ingstr, v, a=0.00):
@@ -249,6 +249,7 @@ def makeOrder(cyl:cylinder):
     order = Orders.query.first()
     print(order.drink_id)
     dr = loadDrink(order.drink_id)
+    dr.info()
     cyl.makeDrink(dr)
     cyl.info()
     # update slot database entry
@@ -286,5 +287,8 @@ def loadCylinder():
     cyl.info()
     return cyl
 
-# def loadOrders():
-#     pass
+def queueDrink(sequence:str):
+    # PUSH SEQEUNCE TO POSTGRES TABLE
+    pass
+
+

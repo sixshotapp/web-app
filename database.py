@@ -63,6 +63,8 @@ class Orders(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     user_id = db.Column(db.Integer, nullable = False)
     drink_id = db.Column(db.Integer, nullable = False)
+    pump_sequence = db.Column(db.String(20), nullable = False)
+    
 
     def __repr__(self):
         return '<Orders %r>' % self.id
