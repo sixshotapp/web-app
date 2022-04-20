@@ -13,15 +13,15 @@ from flask_sqlalchemy import SQLAlchemy
 
 
 #global constants
-CAN_CAPACITY = 2000 #mL
+BOTTLE_CAPACITY = 2000 #mL
 MAX_DRINK_VOLUME = 341 # mL ~= 12oz, top line of a red solo cup
 EMPTY_INGREDIENT = ['NONE', 0 , 0] # name, mL, alc %
 
 # local vars
 # drinkQueue = []
 
-# CANISTER
-class can:
+# BOTTLE
+class bottle:
     ingredient_name = 'EMPTY'
     current_volume = 0
 
@@ -35,7 +35,7 @@ class can:
 
     def drain(self, n):
         if (n > self.current_volume):
-            print('INSUFFICIENT CAN VOLUME (%.2f)' % n)
+            print('INSUFFICIENT BOTTLE VOLUME (%.2f)' % n)
             return False
         else:
             #<PHYSICAL DRAINING>
@@ -49,7 +49,7 @@ class can:
         print("\tINGREDIENT: " + self.ingredient_name)
         if (self.ingredient_name != 'EMPTY'):
             print("\tVOLUME: %.2f" % self.current_volume)
-# END OF CANISTER
+# END OF BOTTLE
 
 # DRINK
 class drink:
@@ -112,14 +112,14 @@ class drink:
 
 # CYLINDER
 class cylinder:
-    can1 = can()
-    can2 = can()
-    can3 = can()
-    can4 = can()
-    can5 = can()
-    can6 = can()
-    slot = [can1, can2, can3, can4, can5, can6]
-    spout = 0 # current can; adjust to detect?
+    bottle1 = bottle()
+    bottle2 = bottle()
+    bottle3 = bottle()
+    bottle4 = bottle()
+    bottle5 = bottle()
+    bottle6 = bottle()
+    slot = [bottle1, bottle2, bottle3, bottle4, bottle5, bottle6]
+    spout = 0 # current bottle; adjust to detect?
 
     def __init__(self):
         pass
@@ -129,10 +129,10 @@ class cylinder:
             isSpoutStr = ''
             if (self.spout == i):
                 isSpoutStr = "(current spout)"
-            print("CAN %d: %s" % (i+1, isSpoutStr))
+            print("BOTTLE %d: %s" % (i+1, isSpoutStr))
             self.slot[i].info()
 
-    def editCan(self, pos, ingr_name, vol):
+    def editBottle(self, pos, ingr_name, vol):
         self.slot[pos-1].edit(ingr_name, vol)
 
     def rotate(self):
@@ -282,13 +282,13 @@ def loadCylinder():
             # print(ing_name)
             ing_vol = float(s.volume)
             # print(ing_vol)
-            cyl.editCan(ing_pos, ing_name, ing_vol)
+            cyl.editBottle(ing_pos, ing_name, ing_vol)
     print('CYLINDER DATA LOADED')
     cyl.info()
     return cyl
 
-def queueDrink(sequence:str):
-    # PUSH SEQEUNCE TO POSTGRES TABLE
-    pass
+# def queueDrink(sequence:str):
+#     # PUSH SEQEUNCE TO POSTGRES TABLE
+#     pass
 
 

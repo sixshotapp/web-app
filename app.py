@@ -535,21 +535,21 @@ def logout():
     return redirect('/')
 
 if __name__ == '__main__':
-    # testDrink = loadDrink(2)
-    # testDrink.info()
+    # # testDrink = loadDrink(2)
+    # # testDrink.info()
 
-    s1 = Slots.query.filter_by(slot = 1).first()
-    s1.volume = 2000
-    s2 = Slots.query.filter_by(slot = 2).first()
-    s2.volume = 750
-    # db.session.commit()
-    testcyl = loadCylinder()
-    sleep(2.5)
-    add_order = Orders(user_id = 1, drink_id = 2)
-    db.session.add(add_order)
-    db.session.commit()
-    makeOrder(testcyl)
+    # s1 = Slots.query.filter_by(slot = 1).first()
+    # s1.volume = 2000
+    # s2 = Slots.query.filter_by(slot = 2).first()
+    # s2.volume = 750
+    # # db.session.commit()
+    # testcyl = loadCylinder()
     # sleep(2.5)
-    # testcyl.info()
+    # add_order = Orders(user_id = 1, drink_id = 2)
+    # db.session.add(add_order)
+    # db.session.commit()
+    # makeOrder(testcyl)
+    # # sleep(2.5)
+    # # testcyl.info()
     
     app.run(debug=True, use_reloader=False)
