@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block head %}
-
+<title>6Shot | Dashboard</title>
 {% endblock %}
 
 {% block body %}
@@ -20,85 +20,86 @@
 
     <div class="row" style=" height: 80vh; top: 10vh; bottom: 10vh; display: flex; overflow: scroll; flex-direction: column; flex-grow: 1;">
       <div class="container">
-        <div class="row row-cols-2 mb-2">
-          {% for name, name2, desc in zip(names, names2, desc) %}
-          <div class="col mt-3 d-flex">
-            <div class="container">
-              <div class="row">
-                <div class="card mx-auto shadow border-0 rounded justify-content-center align-items-center" style="background-color: #917B63!important; width:35vw; height:35vw;">
-                  <img src="https://img.icons8.com/cotton/50/000000/alcoholic-cocktail.png" style="width:50%" class="card-img-top mt-4 mb-3" alt="..."></img>
-                  <a href="#" class="btn stretched-link" data-bs-toggle="modal" data-bs-target="#exampleModal{{ name2 }}"></a>
-                </div>
+        <div class="row justify-content-center align-items-center mt-2"
+        <h>You are at table {{ table }}.</h>
+      </div>
+      <div class="row row-cols-2 mb-2">
+        {% for name, name2, desc, drink in zip(names, names2, desc, drinkID) %}
+        <div class="col mt-3 d-flex">
+          <div class="container">
+            <div class="row">
+              <div class="card mx-auto shadow border-0 rounded justify-content-center align-items-center" style="background-color: #917B63!important; width:35vw; height:35vw;">
+                <img src="https://img.icons8.com/cotton/50/000000/alcoholic-cocktail.png" style="width:50%" class="card-img-top mt-4 mb-3" alt="..."></img>
+                <a href="#" class="btn stretched-link" data-bs-toggle="modal" data-bs-target="#exampleModal{{ name2 }}"></a>
               </div>
+            </div>
 
-              <div class="modal fade" id="exampleModal{{ name2 }}" tabindex="-1" aria-labelledby="exampleModal{{ name2 }}Label" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                  <div class="modal-content" style="white-space: pre-line;">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModal{{ name2 }}Label">{{ name }}</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body text-center">
-                      {%- if desc -%}
-                      {{ desc }}
-                      {%- endif -%}
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                      <button type="button" class="btn btn-primary">Order</button>
-                    </div>
+            <div class="modal fade" id="exampleModal{{ name2 }}" tabindex="-1" aria-labelledby="exampleModal{{ name2 }}Label" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered">
+
+                <div class="modal-content" style="white-space: pre-line;">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModal{{ name2 }}Label">{{ name }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body text-center">
+                    {%- if desc -%}
+                    {{ desc }}
+                    {%- endif -%}
+                  </div>
+                  <div class="modal-footer">
+                    <form action="{{ url_for('dashboard') }}" method="POST">
+                      <button type="submit" class="btn btn-secondary" name="drinkOrder" value="{{ drink }}" style="box-sizing: border-box;">Order</button>
+                    </form>
                   </div>
                 </div>
               </div>
+            </div>
 
-              <div class="row mt-1 text-center">
-                <p2 class="text-light">{{name}}</p2>
-              </div>
+            <div class="row mt-1 text-center">
+              <p2 class="text-light">{{name}}</p2>
             </div>
           </div>
-          {% endfor %}
         </div>
+        {% endfor %}
       </div>
     </div>
-
-
-    <nav class="navbar fixed-bottom navbar-light justify-content-center align-items-top" style="background-color: #50403E!important; height:10vh;">
-      <div class="btn-group dropup" style="right: 33vw;">
-        <a class="nav-link" href="#" id="navbarDropdown" role="button" data-bs-display="static" data-bs-toggle="dropdown" aria-expanded="false">
-          <i class="bi-list" style="font-size: 1.5rem; color: white;"></i>
-        </a>
-        <ul class="dropdown-menu dropdown-menu-start" aria-labelledby="navbarDropdown">
-          <li><a class="dropdown-item" href="#">Filter by:</a></li>
-          <li><form action="{{ url_for('dashboard') }}" method="POST">
-            <a class="dropdown-item" href="#"><input class="btn btn-light text-dark" type="submit" name="variable" value="Show All" style="background-color:Transparent!important;"></a>
-          </form></li>
-          {% for ingredient in ingredients %}
-          <li><form action="{{ url_for('dashboard') }}" method="POST">
-            <a class="dropdown-item" href="#"><input class="btn btn-light text-dark" type="submit" name="variable" value="{{ ingredient }}" style="background-color:Transparent!important;"></a>
-          </form></li>
-          {% endfor %}
-          <li><hr class="dropdown-divider"></li>
-          <li><a class="dropdown-item" href="#">Something else here</a></li>
-        </ul>
-      </div>
-
-      <div class="btn-group dropup" style="left: 33vw;">
-        <a class="nav-link" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-          <i class="bi-file-person" style="font-size: 1.5rem; color: white;"></i>
-        </a>
-        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-          <li><a class="dropdown-item" href="/profile">Profile</a></li>
-          {% if isEmployee %}
-          <li><a class="dropdown-item" href="/employees">Employee</a></li>
-          {% endif %}
-          <li><hr class="dropdown-divider"></li>
-          <li><a class="dropdown-item" href="/logout">Logout</a></li>
-        </ul>
-      </div>
-    </nav>
-
-
   </div>
 
+  <nav class="navbar fixed-bottom navbar-light justify-content-center align-items-top" style="background-color: #50403E!important; height:10vh;">
+    <div class="btn-group dropup" style="right: 33vw;">
+      <a class="nav-link" href="#" id="navbarDropdown" role="button" data-bs-display="static" data-bs-toggle="dropdown" aria-expanded="false">
+        <i class="bi-list" style="font-size: 1.5rem; color: white;"></i>
+      </a>
+      <ul class="dropdown-menu dropdown-menu-start" aria-labelledby="navbarDropdown">
+        <li><a class="dropdown-item" href="#">Filter by:</a></li>
+        <li><form action="{{ url_for('dashboard') }}" method="POST" name="filter">
+          <a class="dropdown-item" href="#"><input class="btn btn-light text-dark" type="submit" name="variable" value="Show All" style="background-color:Transparent!important;"></a>
+        </form></li>
+        {% for ingredient in ingredients %}
+        <li><form action="{{ url_for('dashboard') }}" method="POST" name="filter">
+          <a class="dropdown-item" href="#"><input class="btn btn-light text-dark" type="submit" name="variable" value="{{ ingredient }}" style="background-color:Transparent!important;"></a>
+        </form></li>
+        {% endfor %}
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item" href="#">Something else here</a></li>
+      </ul>
+    </div>
+
+    <div class="btn-group dropup" style="left: 33vw;">
+      <a class="nav-link" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <i class="bi-file-person" style="font-size: 1.5rem; color: white;"></i>
+      </a>
+      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+        <li><a class="dropdown-item" href="/profile">Profile</a></li>
+        {% if isEmployee %}
+        <li><a class="dropdown-item" href="/employees">Employee</a></li>
+        {% endif %}
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item" href="/logout">Logout</a></li>
+      </ul>
+    </div>
+  </nav>
+</div>
 </body>
 {% endblock %}

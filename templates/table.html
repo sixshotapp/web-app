@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>6Shot | Dashboard</title>
+{% endblock %}
+
+{% block body %}
+<body style="height: 100vh;">
+  <div class="container">
+
+    <div class ="row" style="height: 10vh;">
+      <div class="d-flex flex-column">
+        <nav class="navbar shadow-lg fixed-top navbar-ght" style="background-color: #50403E!important; height:10vh;">
+          <a class="navbar-brand mx-auto" href="#">
+            <img src="https://i.imgur.com/nD0ZH1P.png" alt="" width="auto" height="40vh">
+          </a>
+        </nav>
+      </div>
+    </div>
+
+    <div class="row" style=" height: 80vh; top: 10vh; bottom: 10vh; display: flex; overflow: scroll; flex-direction: column; flex-grow: 1;">
+      <div class="container">
+        <div class="row justify-content-center align-items-center mt-2"
+          <h>Select Table</h>
+        </div>
+        <div class="row row-cols-2 mb-2">
+          {% for i in range(6) %}
+          <div class="col mt-3 d-flex">
+            <div class="container">
+              <div class="row">
+                <div class="card mx-auto shadow border-0 rounded justify-content-center align-items-center" style="background-color: #917B63!important; width:35vw; height:35vw;">
+                  <form id="tableSelect" action="#" method="POST">
+                    <input class="btn stretched-link" type="submit" name="tableSelect" value="{{ loop.index }}">
+                  </form>
+                </div>
+              </div>
+            </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <nav class="navbar fixed-bottom navbar-light justify-content-center align-items-top" style="background-color: #50403E!important; height:10vh;">
+      <div class="btn-group dropup" style="right: 33vw;">
+        <a class="nav-link" href="#" id="navbarDropdown" role="button" data-bs-display="static" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="bi-list" style="font-size: 1.5rem; color: white;"></i>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-start" aria-labelledby="navbarDropdown">
+          <li><a class="dropdown-item" href="#">Something else here</a></li>
+        </ul>
+      </div>
+
+      <div class="btn-group dropup" style="left: 33vw;">
+        <a class="nav-link" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="bi-file-person" style="font-size: 1.5rem; color: white;"></i>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+          <li><a class="dropdown-item" href="/profile">Profile</a></li>
+          {% if isEmployee %}
+          <li><a class="dropdown-item" href="/employees">Employee</a></li>
+          {% endif %}
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" href="/logout">Logout</a></li>
+        </ul>
+      </div>
+    </nav>
+</body>
+{% endblock %}

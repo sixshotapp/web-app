@@ -2,7 +2,8 @@
 from crypt import methods
 from flask import Flask, flash, render_template, redirect, request, redirect, session
 from flask_bcrypt import Bcrypt
-from global_var import DrinkInfo, EmployeeInfo, IngredientInfo, DrinkInfo
+from global_var import DrinkInfo, EmployeeInfo, IngredientInfo, DrinkInfo, drink
+import psycopg2
 
 # Local Imports
 from database import db, Employees, Users, Credentials, Drinks, Ingredients
@@ -15,6 +16,74 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///6shot_db.db'
 app.config.update(SESSION_COOKIE_SAMESITE = None, SESSION_COOKIE_SECURE = True)
 db.init_app(app)
 db.app = app
+
+def connect(line):
+    try:
+        print('Attempting to connect to PostgreSQL database...')
+
+        conn = psycopg2.connect(
+            host="ec2-34-233-0-64.compute-1.amazonaws.com",
+            database="dassugkj4rqm0n",
+            user="stjnqazcphtydh",
+            password="44eb71e49c23361ff7fdee825421c36da14e3c800c4b894084386877e8157f63"
+        )
+
+        cur = conn.cursor()
+
+        Insert_Query = "INSERT INTO queue(tablenum, code) VALUES (" + line + ");"
+        print(Insert_Query)
+        cur.execute(Insert_Query)
+        print("inserted successfully")
+
+        cur.close()
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+    finally:
+        if conn is not None:
+            conn.commit()
+            conn.close()
+            print('Database connection closed')
+
+def loadDrink(drinkID):
+    db_drink = Drinks.query.filter_by(id = drinkID).first()
+    dr = drink(str(db_drink.name))
+    if (str(db_drink.bev1) != "None"):
+        ingredient1 = Ingredients.query.filter_by(name = db_drink.bev1).first()
+        dr.addIngredient(
+            str(db_drink.bev1),
+            float(db_drink.vol1),
+            float(ingredient1.alcohol))
+    if (str(db_drink.bev2) != "None"):
+        ingredient2 = Ingredients.query.filter_by(name = db_drink.bev2).first()
+        dr.addIngredient(
+            str(db_drink.bev2),
+            float(db_drink.vol2),
+            float(ingredient2.alcohol))
+    if (str(db_drink.bev3) != "None"):
+        ingredient3 = Ingredients.query.filter_by(name = db_drink.bev3).first()
+        dr.addIngredient(
+            str(db_drink.bev3),
+            float(db_drink.vol3),
+            float(ingredient3.alcohol))
+    if (str(db_drink.bev4) != "None"):
+        ingredient4 = Ingredients.query.filter_by(name = db_drink.bev4).first()
+        dr.addIngredient(
+            str(db_drink.bev4),
+            float(db_drink.vol4),
+            float(ingredient4.alcohol))
+    if (str(db_drink.bev5) != "None"):
+        ingredient5 = Ingredients.query.filter_by(name = db_drink.bev5).first()
+        dr.addIngredient(
+            str(db_drink.bev5),
+            float(db_drink.vol5),
+            float(ingredient5.alcohol))
+    if (str(db_drink.bev6) != "None"):
+        ingredient6 = Ingredients.query.filter_by(name = db_drink.bev6).first()
+        dr.addIngredient(
+            str(db_drink.bev6),
+            float(db_drink.vol6),
+            float(ingredient6.alcohol))
+    return dr
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -37,7 +106,7 @@ def index():
                         session['first_name'] = get_user.first_name
                         session['last_name'] = get_user.last_name
                         session['role'] = 'member'
-                        return redirect('/dashboard')
+                        return redirect('/table')
                     else:
                         session['id'] = check_user.id
                         session['email'] = check_user.email
@@ -45,7 +114,7 @@ def index():
                         session['first_name'] = check_employee.first_name
                         session['last_name'] = check_employee.last_name
                         session['role'] = 'employee'
-                        return redirect('/dashboard')
+                        return redirect('/employees')
                 else:
                     msg = "Invalid Username/Password"
                     valid = "is-invalid"
@@ -54,45 +123,78 @@ def index():
                 valid = "is-invalid"
     return render_template('index.html', msg=msg, validate=valid)
 
+@app.route('/table', methods=['POST', 'GET'])
+def table():
+    if request.method == "POST" and "tableSelect" in request.form :
+        table = str(request.form.get('tableSelect', False))
+        session['table'] = table
+        return redirect('/dashboard')
+    return render_template('table.html')
+
 @app.route('/dashboard', methods=['GET', 'POST'])
 def dashboard():
     isEmployee = 1 if session['role'] == 'employee' else 0
     drinkNames = []
     drinkNames2 = []
+    drinkIDs = []
     description = ""
     desc = []
     availableIngredients = []
     filter = "Show All"
-    if request.method == "POST":
+    if request.method == "POST" and "variable" in request.form :
         filter = str(request.form.get('variable', False))
-    print(filter)
 
+    if request.method  == "POST"and "drinkOrder" in request.form:
+        que = [0, 0, 0, 0, 0, 0]
+        drinkOrder = str(request.form.get('drinkOrder', False))
+        drinkOrdered = Drinks.query.filter(Drinks.id == drinkOrder).first()
+        orderedIngredients = [str(drinkOrdered.bev1), str(drinkOrdered.bev2), str(drinkOrdered.bev3), str(drinkOrdered.bev4), str(drinkOrdered.bev5), str(drinkOrdered.bev6)]
+        orderedmL = [drinkOrdered.vol1, drinkOrdered.vol2, drinkOrdered.vol3, drinkOrdered.vol4, drinkOrdered.vol5, drinkOrdered.vol6]
+        orderedmL = [i for i in orderedmL if i]
+        orderedPumps = []
+
+        for ingredient in orderedIngredients:
+            if ingredient != "None":
+                orderedPumps.append(Ingredients.query.filter(Ingredients.name == ingredient).first().pump)
+
+        for i,x in zip(orderedPumps, orderedmL):
+            que[i-1] = x
+
+        queString = ','.join(map(str,que))
+        orderString = str(session['table']) + ", '" + queString + "'"
+        connect(orderString)
     for ingredient in Ingredients.query.filter(Ingredients.available == 1):
         availableIngredients.append(ingredient.name)
-    for drink in Drinks.query.all():
-        if bevCheck(availableIngredients, drink) == 1:
-            if filter != "Show All" and bevCheck(filter, drink) == 0:
+
+    for bev in Drinks.query.all():
+        if bevCheck(availableIngredients, bev) == 1:
+            if filter != "Show All" and bevCheck(filter, bev) == 0:
                 continue
             else:
-                drinkNames.append(drink.name)
-                drinkNames2.append((drink.name).replace(" ", ""))
-                if drink.bev1 != None:
-                    description += str(drink.bev1)
-                if drink.bev2 != None:
-                    description += "\n" + str(drink.bev2)
-                if drink.bev3 != None:
-                    description += "\n" + str(drink.bev3)
-                if drink.bev4 != None:
-                    description += "\n" + str(drink.bev4)
+                drinkNames.append(bev.name)
+                drinkNames2.append((bev.name).replace(" ", ""))
+                drinkIDs.append(bev.id)
+                if bev.bev1 != None:
+                    description += str(bev.bev1)
+                if bev.bev2 != None:
+                    description += "\n" + str(bev.bev2)
+                if bev.bev3 != None:
+                    description += "\n" + str(bev.bev3)
+                if bev.bev4 != None:
+                    description += "\n" + str(bev.bev4)
+                if bev.bev5 != None:
+                    description += "\n" + str(bev.bev5)
+                if bev.bev6 != None:
+                    description += "\n" + str(bev.bev6)
                 desc.append(description.lstrip())
                 description = ""
 
     return render_template('dashboard.html', names=drinkNames,
-    names2=drinkNames2, desc=desc, zip=zip, ingredients=availableIngredients,
-    isEmployee=isEmployee)
+    names2=drinkNames2, desc=desc, drinkID = drinkIDs, zip=zip, ingredients=availableIngredients,
+    isEmployee=isEmployee, table=session['table'])
 
 def bevCheck(ingredientsList, drink):
-    drinkIngredients = [drink.bev1, drink.bev2, drink.bev3, drink.bev4]
+    drinkIngredients = [drink.bev1, drink.bev2, drink.bev3, drink.bev4, drink.bev5, drink.bev6]
     for ing in drinkIngredients:
         if ing not in ingredientsList:
             return 0
@@ -120,6 +222,8 @@ def register():
                          credential_id = Credentials.query.filter_by(email = email).first().id)
                 db.session.add(new_user)
                 db.session.commit()
+                return redirect("/")
+
             else:
                 msg = "email already registered."
         except Exception:
@@ -192,46 +296,54 @@ def drinks():
             change_bev2 = request.form.get("ChangeBev2")
             change_bev3 = request.form.get("ChangeBev3")
             change_bev4 = request.form.get("ChangeBev4")
+            change_bev5 = request.form.get("ChangeBev3")
+            change_bev6 = request.form.get("ChangeBev4")
             try:
                 drink = Drinks.query.filter_by(id = drink_id).first()
                 change_bev1 = drink.bev1 if change_bev1 == "-1" else change_bev1
                 change_bev2 = drink.bev2 if change_bev2 == "-1" else change_bev2
                 change_bev3 = drink.bev3 if change_bev3 == "-1" else change_bev3
                 change_bev4 = drink.bev4 if change_bev4 == "-1" else change_bev4
+                change_bev5 = drink.bev5 if change_bev3 == "-1" else change_bev3
+                change_bev6 = drink.bev6 if change_bev4 == "-1" else change_bev4
 
-                if (change_name == drink.name and change_price == drink.price and change_bev1 == drink.bev1 and change_bev2 == drink.bev2 and change_bev3 == drink.bev3 and change_bev4 == drink.bev4):
+                if (change_name == drink.name and change_price == drink.price and change_bev1 == drink.bev1
+                and change_bev2 == drink.bev2 and change_bev3 == drink.bev3 and change_bev4 == drink.bev4
+                and change_bev5 == drink.bev5 and change_bev6 == drink.bev6):
                     flash('No changes made.')
 
                 else:
                     if (change_name != drink.name):
                         drink.name = change_name
                         db.session.commit()
-                        flash('Name changed successfully.')
 
                     if (change_price != drink.price):
                         drink.price = change_price
                         db.session.commit()
-                        # flash('Price changed successfully.')
 
                     if (change_bev1 != drink.bev1):
                         drink.bev1 = change_bev1
                         db.session.commit()
-                        flash('Beverage 1 changed successfully for.')
 
                     if (change_bev2 != drink.bev2):
                         drink.bev2 = change_bev2
                         db.session.commit()
-                        flash('Beverage 2 changed successfully.')
 
                     if (change_bev3 != drink.bev3):
                         drink.bev3 = change_bev3
                         db.session.commit()
-                        flash('Beverage 3 changed successfully.')
 
                     if (change_bev4 != drink.bev4):
                         drink.bev4 = change_bev4
                         db.session.commit()
-                        flash('Beverage 4 changed successfully.')
+
+                    if (change_bev5 != drink.bev5):
+                        drink.bev5 = change_bev5
+                        db.session.commit()
+
+                    if (change_bev6 != drink.bev6):
+                        drink.bev6 = change_bev6
+                        db.session.commit()
 
                 return redirect('/drinks')
             except Exception:
@@ -256,21 +368,22 @@ def drinks():
             vol6 = request.form.get("InputVol6")
             try:
                 check_name = Drinks.query.filter_by(name = name).first()
+
                 if check_name is None:
                     add_drink = Drinks(name = name,
                                         price = price,
-                                        bev1 = bev1,
-                                        vol1 = vol1,
-                                        bev2 = bev2,
-                                        vol2 = vol2,
-                                        bev3 = bev3,
-                                        vol3 = vol3,
-                                        bev4 = bev4,
-                                        vol4 = vol4,
-                                        bev5 = bev5,
-                                        vol5 = vol5,
-                                        bev6 = bev6,
-                                        vol6 = vol6)
+                                        bev1 = None if bev1 == "None" else bev1,
+                                        vol1 = None if vol1 == " " else vol1,
+                                        bev2 = None if bev2 == "None" else bev2,
+                                        vol2 = None if vol2 == " " else vol2,
+                                        bev3 = None if bev3 == "None" else bev3,
+                                        vol3 = None if vol3 == " " else vol3,
+                                        bev4 = None if bev4 == "None" else bev4,
+                                        vol4 = None if vol4 == " " else vol4,
+                                        bev5 = None if bev5 == "None" else bev5,
+                                        vol5 = None if vol5 == " " else vol5,
+                                        bev6 = None if bev6 == "None" else bev6,
+                                        vol6 = None if vol6 == " " else vol6)
                     db.session.add(add_drink)
                     db.session.commit()
                     return redirect("/drinks")
@@ -297,7 +410,6 @@ def drinks():
     drinksList = []
     drinksList2 = []
     for drink in Drinks.query.all():
-        #print(drink.name)
         new_drink = DrinkInfo()
         new_drink.id = drink.id
         new_drink.name = drink.name
@@ -323,10 +435,6 @@ def drinks():
         ingredients.append(ingredient.name)
     ingredients.sort()
 
-    db_drink = Drinks.query.filter_by(name = "testDrink").first()
-    #print(db_drink.name)
-    #testDrink = loadDrink(db_drink)
-    #testDrink.info()
     return render_template('drinks.html', ingredients = ingredients, drinks = drinksList, names = drinksList2, zip=zip)
 
 @app.route('/ingredients', methods=['POST', 'GET'])

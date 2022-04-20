@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<title>6Shot | Employees</title>
+<title>6Shot | Drinks</title>
 {% endblock %}
 
 {% block body %}
@@ -54,7 +54,7 @@
                       <div class="input-group pb-2">
                         <select id="ChangeBev1" name="ChangeBev1" style="background-color: white;">
                           <option value="-1">
-                            {% if drink.bev1 == -1 %}
+                            {% if drink.bev1 == "-1" %}
                             <h4>None</h4>
                             {% else %}
                             {{ drink.bev1 }}
@@ -70,7 +70,7 @@
                       <div class="input-group pb-2">
                         <select id="ChangeBev2" name="ChangeBev2" style="background-color: white;">
                           <option value="-1">
-                            {% if drink.bev2 == -1 %}
+                            {% if drink.bev2 == "-1" %}
                             <h4>None</h4>
                             {% else %}
                             {{ drink.bev2 }}
@@ -86,7 +86,7 @@
                       <div class="input-group pb-2">
                         <select id="ChangeBev3" name="ChangeBev3" style="background-color: white;">
                           <option value="-1">
-                            {% if drink.bev3 == -1 %}
+                            {% if drink.bev3 == "-1" %}
                             <h4>None</h4>
                             {% else %}
                             {{ drink.bev3 }}
@@ -118,7 +118,7 @@
                       <div class="input-group pb-2">
                         <select id="ChangeBev5" name="ChangeBev5" style="background-color: white;">
                           <option value="-1">
-                            {% if drink.bev5 == "None" %}
+                            {% if drink.bev5 == "-1" %}
                             <h4>None</h4>
                             {% else %}
                             {{ drink.bev5 }}
@@ -185,79 +185,82 @@
                     <button type="button" class="close" data-bs-dismiss="modal">&times;</button>
                     <h4 class="modal-title">Add Drink</h4>
                   </div>
+
                   <div class="modal-body">
-                    <div class="input-group">
-                      <label for="InputName">Name</label>
+
+                    <div class="input-group pb-2">
                       <input type="text" class="form-control" name="InputName" id="InputName" placeholder="Enter name" />
-                    </div>
-                    <div class="input-group">
-                      <label for="InputPrice">Price</label>
                       <input type="number" min="0.00" max="10000.00" step="any" class="form-control" name="InputPrice" id="InputPrice" placeholder="Enter Price" />
                     </div>
-                    <div class="input-group">
-                      <label for="InputBev1">Beverage 1</label>
+
+                    <div class="input-group pb-2">
                       <select id="InputBev1" name="InputBev1">
-                        <option value="-1">None</option>
+                        <option value="None">None</option>
                         {% for ingredient in ingredients %}
                         <option value="{{ingredient}}">{{ ingredient }}</option>
                         {% endfor %}
                       </select>
-                    </div>
-                    <div class="input-group">
-                      <label for="InputVol1">Volume in mL</label>
                       <input type="number" min="0.00" max="10000.00" step="any" class="form-control" name="InputVol1" id="InputVol1" placeholder="Enter Volume" />
                     </div>
-                    <div class="input-group">
-                      <label for="InputBev2">Beverage 2</label>
+
+                    <div class="input-group pb-2">
                       <select id="InputBev2" name="InputBev2">
-                        <option value="-1">None</option>
+                        <option value="None">None</option>
                         {% for ingredient in ingredients %}
                         <option value="{{ingredient}}">{{ ingredient }}</option>
                         {% endfor %}
                       </select>
-                    </div>
-                    <div class="input-group">
-                      <label for="InputVol2">Volume in mL</label>
                       <input type="number" min="0.00" max="10000.00" step="any" class="form-control" name="InputVol2" id="InputVol2" placeholder="Enter Volume" />
                     </div>
-                    <div class="input-group">
-                      <label for="InputBev3">Beverage 3</label>
+
+                    <div class="input-group pb-2">
                       <select id="InputBev3" name="InputBev3">
-                        <option value="-1">None</option>
+                        <option value="None">None</option>
                         {% for ingredient in ingredients %}
                         <option value="{{ingredient}}">{{ ingredient }}</option>
                         {% endfor %}
                       </select>
-                    </div>
-                    <div class="input-group">
-                      <label for="InputVol3">Volume in mL</label>
                       <input type="number" min="0.00" max="10000.00" step="any" class="form-control" name="InputVol3" id="InputVol3" placeholder="Enter Volume" />
                     </div>
-                    <div class="input-group">
-                      <label for="InputBev4">Beverage 4</label>
+
+                    <div class="input-group pb-2">
                       <select id="InputBev4" name="InputBev4">
-                        <option value="-1">None</option>
+                        <option value="None">None</option>
                         {% for ingredient in ingredients %}
                         <option value="{{ingredient}}">{{ ingredient }}</option>
                         {% endfor %}
                       </select>
-                    </div>
-                    <div class="input-group">
-                      <label for="InputVol4">Volume in mL</label>
                       <input type="number" min="0.00" max="10000.00" step="any" class="form-control" name="InputVol4" id="InputVol4" placeholder="Enter Volume" />
                     </div>
+
+                  <div class="input-group pb-2">
+                    <select id="InputBev5" name="InputBev5">
+                      <option value="None">None</option>
+                      {% for ingredient in ingredients %}
+                      <option value="{{ingredient}}">{{ ingredient }}</option>
+                      {% endfor %}
+                    </select>
+                    <input type="number" min="0.00" max="10000.00" step="any" class="form-control" name="InputVol5" id="InputVol5" placeholder="Enter Volume" />
                   </div>
-                  <div class="modal-footer">
-                    <form role="form" id="add-drink-form" action="/drinks" method="POST">
-                      <button type="submit" class="btn btn-primary" name="add-drink" value="add_drink" id="add-drink-submit">Add Drink</button>
-                    </form>
-                  </div>
+
+                <div class="input-group pb-2">
+                  <select id="InputBev6" name="InputBev6">
+                    <option value="None">None</option>
+                    {% for ingredient in ingredients %}
+                    <option value="{{ingredient}}">{{ ingredient }}</option>
+                    {% endfor %}
+                  </select>
+                  <input type="number" min="0.00" max="10000.00" step="any" class="form-control" name="InputVol6" id="InputVol6" placeholder="Enter Volume" />
                 </div>
+
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" name="add-drink" value="add_drink" id="add-drink-submit">Add Drink</button>
               </div>
             </div>
           </form>
         </div>
       </div>
+
     </div>
 
     <nav class="navbar fixed-bottom navbar-light justify-content-center" style="background-color: #50403E!important; height:10vh;">
@@ -266,9 +269,8 @@
           <i class="bi-list" style="font-size: 1.5rem; color: white;"></i>
         </a>
         <ul class="dropdown-menu dropdown-menu-start" aria-labelledby="navbarDropdown">
-          <li><a class="dropdown-item" href="#">Filter by:</a></li>
-          <li><hr class="dropdown-divider"></li>
-          <li><a class="dropdown-item" href="#">Something else here</a></li>
+          <li><a class="dropdown-item" href="/employees">Employees</a></li>
+          <li><a class="dropdown-item" href="/ingredients">Ingredients</a></li>
         </ul>
       </div>
 

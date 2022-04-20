@@ -8,3 +8,4 @@ Jinja2
 peewee
 Werkzeug
 Flask-SQLAlchemy
+psycopg2
